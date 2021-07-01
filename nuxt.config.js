@@ -30,6 +30,7 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
+    '@nuxtjs/composition-api/module',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -38,6 +39,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/toast',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -52,5 +54,18 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  toast: {
+    position: 'top-center',
+    register: [
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      }
+    ]
   }
 }
