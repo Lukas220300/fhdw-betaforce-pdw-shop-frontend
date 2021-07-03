@@ -1,13 +1,20 @@
 <template>
   <div>
-    <h1>Layout website</h1>
-    <Nuxt />
+    <NavBar />
+    <div class="container">
+      <Nuxt />
+    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+
 export default {
-  name: "default"
+  name: "default",
+  components: { NavBar, Footer }
 }
 </script>
 
