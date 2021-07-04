@@ -97,15 +97,41 @@
     <button class="button is-warning" title="Disabled button" disabled>Disabled</button>
     <button class="button is-danger" title="Disabled button" disabled>Disabled</button>
 
+    <h1 class="title is-1 styleguide-header">Slider</h1>
+    <StageSlider :slides="slides" />
 
+    <h1 class="title is-1 styleguide-header">Images</h1>
+    <div class="todo"></div>
+
+    <h1 class="title is-1 styleguide-header">Icons</h1>
+    <div class="todo"></div>
+
+    <h1 class="title is-1 styleguide-header">Teaser</h1>
+    <div class="todo"></div>
+
+    <h1 class="title is-1 styleguide-header">Tables</h1>
+    <div class="todo"></div>
 
   </div>
 </template>
 
 <script>
+import StageSlider from "@/components/StageSlider";
 
 export default {
-  name: "styleguide"
+  components: { StageSlider },
+  name: "styleguide",
+  setup(){
+    return {
+      slides: [
+        { text: 'Slide 1', color: 'primary' },
+        { text: 'Slide 2', color: 'info' },
+        { text: 'Slide 3', color: 'success' },
+        { text: 'Slide 4', color: 'warning' },
+        { text: 'Slide 5', color: 'danger' }
+      ]
+    }
+  },
 }
 </script>
 
