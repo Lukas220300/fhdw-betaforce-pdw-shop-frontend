@@ -107,7 +107,7 @@
     <div class="todo"></div>
 
     <h1 class="title is-1 styleguide-header">Teaser</h1>
-    <div class="todo"></div>
+    <Teaser :title="'Teaser Title'" :sub-title="'Teaser subtitle'" />
 
     <h1 class="title is-1 styleguide-header">Tables</h1>
     <Table :data="tableData" :columns="tableColumns" />
@@ -117,9 +117,10 @@
 
 <script>
 import StageSlider from "@/components/StageSlider";
+import Teaser from "@/components/Teaser";
 
 export default {
-  components: { StageSlider },
+  components: { StageSlider, Teaser },
   name: "styleguide",
   setup(){
     return {
