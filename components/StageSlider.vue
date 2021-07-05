@@ -2,11 +2,14 @@
   <div>
     <b-carousel>
       <b-carousel-item v-for="(carousel, i) in slides" :key="i">
-        <section :class="`hero is-medium is-${carousel.color}`">
-          <div class="hero-body has-text-centered">
-            <h1 class="title">{{carousel.text}}</h1>
+        <nuxt-link v-if="carousel.link" to="/">
+          <div class="image-container">
+            <img :src="carousel.image">
           </div>
-        </section>
+        </nuxt-link>
+        <div v-else class="image-container">
+          <img :src="carousel.image">
+        </div>
       </b-carousel-item>
     </b-carousel>
   </div>

@@ -127,11 +127,11 @@ export default {
   setup() {
     return {
       slides: [
-        {text: 'Slide 1', color: 'primary'},
-        {text: 'Slide 2', color: 'info'},
-        {text: 'Slide 3', color: 'success'},
-        {text: 'Slide 4', color: 'warning'},
-        {text: 'Slide 5', color: 'danger'}
+        {image: 'https://bulma.io/images/placeholders/1280x960.png'},
+        {image: 'https://bulma.io/images/placeholders/1280x960.png'},
+        {image: 'https://bulma.io/images/placeholders/1280x960.png'},
+        {image: 'https://bulma.io/images/placeholders/1280x960.png'},
+        {image: 'https://bulma.io/images/placeholders/1280x960.png'}
       ],
       tableData: [
         {'id': 1, 'first_name': 'Jesse', 'last_name': 'Simmons', 'date': '2016-10-15 13:43:27', 'gender': 'Male'},
