@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-    <div class="card-image">
+    <div v-if="imageLink" class="card-image">
       <figure class="image is-4by3">
-        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+        <img :src="imageLink" :alt="imageAlt">
       </figure>
     </div>
     <div class="card-content">
@@ -32,8 +32,17 @@ export default {
     },
     route: {
       type: Object,
-      default: () => {return { path: '/' }}
-
+      default: () => {
+        return {path: '/'}
+      }
+    },
+    imageLink: {
+      type: String,
+      default: undefined,
+    },
+    imageAlt: {
+      type: String,
+      default: '',
     }
   }
 }
@@ -42,6 +51,14 @@ export default {
 <style lang="scss">
 .card {
   max-width: 15rem;
+  width: 15rem;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  display: inline-block;
+
+  .card-footer-item {
+    border-radius: 0;
+  }
 }
 </style>
 

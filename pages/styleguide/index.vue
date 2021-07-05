@@ -98,7 +98,7 @@
     <button class="button is-danger" title="Disabled button" disabled>Disabled</button>
 
     <h1 class="title is-1 styleguide-header">Slider</h1>
-    <StageSlider :slides="slides" />
+    <StageSlider :slides="slides"/>
 
     <h1 class="title is-1 styleguide-header">Images</h1>
     <div class="todo"></div>
@@ -107,10 +107,12 @@
     <div class="todo"></div>
 
     <h1 class="title is-1 styleguide-header">Teaser</h1>
-    <Teaser :title="'Teaser Title'" :sub-title="'Teaser subtitle'" />
+    <Teaser :title="'Teaser Title'" :sub-title="'Teaser subtitle'"
+            imageLink="https://bulma.io/images/placeholders/1280x960.png"/>
+    <Teaser :title="'Teaser Title'" :sub-title="'Teaser subtitle'"/>
 
     <h1 class="title is-1 styleguide-header">Tables</h1>
-    <Table :data="tableData" :columns="tableColumns" />
+    <Table :data="tableData" :columns="tableColumns"/>
 
   </div>
 </template>
@@ -120,30 +122,30 @@ import StageSlider from "@/components/StageSlider";
 import Teaser from "@/components/Teaser";
 
 export default {
-  components: { StageSlider, Teaser },
+  components: {StageSlider, Teaser},
   name: "styleguide",
-  setup(){
+  setup() {
     return {
       slides: [
-        { text: 'Slide 1', color: 'primary' },
-        { text: 'Slide 2', color: 'info' },
-        { text: 'Slide 3', color: 'success' },
-        { text: 'Slide 4', color: 'warning' },
-        { text: 'Slide 5', color: 'danger' }
+        {text: 'Slide 1', color: 'primary'},
+        {text: 'Slide 2', color: 'info'},
+        {text: 'Slide 3', color: 'success'},
+        {text: 'Slide 4', color: 'warning'},
+        {text: 'Slide 5', color: 'danger'}
       ],
       tableData: [
-        { 'id': 1, 'first_name': 'Jesse', 'last_name': 'Simmons', 'date': '2016-10-15 13:43:27', 'gender': 'Male' },
-        { 'id': 2, 'first_name': 'John', 'last_name': 'Jacobs', 'date': '2016-12-15 06:00:53', 'gender': 'Male' },
-        { 'id': 3, 'first_name': 'Tina', 'last_name': 'Gilbert', 'date': '2016-04-26 06:26:28', 'gender': 'Female' },
-        { 'id': 4, 'first_name': 'Clarence', 'last_name': 'Flores', 'date': '2016-04-10 10:28:46', 'gender': 'Male' },
-        { 'id': 5, 'first_name': 'Anne', 'last_name': 'Lee', 'date': '2016-12-06 14:38:38', 'gender': 'Female' }
+        {'id': 1, 'first_name': 'Jesse', 'last_name': 'Simmons', 'date': '2016-10-15 13:43:27', 'gender': 'Male'},
+        {'id': 2, 'first_name': 'John', 'last_name': 'Jacobs', 'date': '2016-12-15 06:00:53', 'gender': 'Male'},
+        {'id': 3, 'first_name': 'Tina', 'last_name': 'Gilbert', 'date': '2016-04-26 06:26:28', 'gender': 'Female'},
+        {'id': 4, 'first_name': 'Clarence', 'last_name': 'Flores', 'date': '2016-04-10 10:28:46', 'gender': 'Male'},
+        {'id': 5, 'first_name': 'Anne', 'last_name': 'Lee', 'date': '2016-12-06 14:38:38', 'gender': 'Female'}
       ],
       tableColumns: [
-        { field: 'id', label: 'ID', width: '40', numeric: true },
-        { field: 'first_name', label: 'First Name', },
-        { field: 'last_name', label: 'Last Name', },
-        { field: 'date', label: 'Date', centered: true },
-        { field: 'gender', label: 'Gender', }
+        {field: 'id', label: 'ID', width: '40', numeric: true},
+        {field: 'first_name', label: 'First Name',},
+        {field: 'last_name', label: 'Last Name',},
+        {field: 'date', label: 'Date', centered: true},
+        {field: 'gender', label: 'Gender',}
       ],
     }
   },
