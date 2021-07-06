@@ -101,7 +101,7 @@
     <StageSlider :slides="slides"/>
 
     <h1 class="title is-1 styleguide-header">Images</h1>
-    <div class="todo"></div>
+    <img :src="require(`~/assets/img/bird-thumbnail.jpeg`)" />
 
     <h1 class="title is-1 styleguide-header">Icons</h1>
     <div class="todo"></div>
