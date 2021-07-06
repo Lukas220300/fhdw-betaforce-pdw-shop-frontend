@@ -104,7 +104,12 @@
     <img :src="require(`~/assets/img/bird-thumbnail.jpeg`)" />
 
     <h1 class="title is-1 styleguide-header">Icons</h1>
-    <div class="todo"></div>
+    <div class="">
+      <div class="icon-container">
+        <Icon name="arrow-right" />
+        arrow-right
+      </div>
+    </div>
 
     <h1 class="title is-1 styleguide-header">Teaser</h1>
     <Teaser :title="'Teaser Title'" :sub-title="'Teaser subtitle'"
@@ -152,7 +157,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
 .styleguide-header {
   background-color: darkgray;
   padding: 1rem;
@@ -165,5 +170,18 @@ export default {
   padding: 0.5rem 1rem;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+}
+.icon-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+  flex-direction: column;
+
+  > svg {
+    height: 4rem;
+    width: 4rem;
+    margin-bottom: 1rem;
+  }
 }
 </style>
