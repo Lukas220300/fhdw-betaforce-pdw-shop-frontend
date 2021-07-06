@@ -1,0 +1,33 @@
+<template>
+  <div>
+    <b-carousel>
+      <b-carousel-item v-for="(carousel, i) in slides" :key="i">
+        <nuxt-link v-if="carousel.link" to="/">
+          <div class="image-container">
+            <img :src="carousel.image">
+          </div>
+        </nuxt-link>
+        <div v-else class="image-container">
+          <img :src="carousel.image">
+        </div>
+      </b-carousel-item>
+    </b-carousel>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "StageSlider",
+  props: {
+    slides: {
+      type: Array,
+      required: true,
+    }
+  },
+  setup() {
+    return {
+    }
+  },
+}
+</script>
+
