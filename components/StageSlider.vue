@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="c-StageSlider">
     <b-carousel>
       <b-carousel-item v-for="(carousel, i) in slides" :key="i">
         <nuxt-link v-if="carousel.link" :to="carousel.link">
@@ -34,6 +34,9 @@ export default {
 </script>
 
 <style lang="scss">
+.c-StageSlider {
+  margin-bottom: 2rem;
+}
 .carousel-items {
   max-height: 40rem;
 
