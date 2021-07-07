@@ -33,3 +33,13 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.carousel-items {
+  max-height: 40rem;
+
+  img {
+    object-fit: cover;
+  }
+
+}
+</style>
