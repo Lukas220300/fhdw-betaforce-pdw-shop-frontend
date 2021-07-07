@@ -113,7 +113,7 @@
 
     <h1 class="title is-1 styleguide-header">Teaser</h1>
     <Teaser :title="'Teaser Title'" :sub-title="'Teaser subtitle'"
-            imageLink="https://bulma.io/images/placeholders/1280x960.png"/>
+            image-link="https://bulma.io/images/placeholders/1280x960.png"/>
     <Teaser :title="'Teaser Title'" :sub-title="'Teaser subtitle'"/>
 
     <h1 class="title is-1 styleguide-header">Tables</h1>
@@ -127,8 +127,8 @@ import StageSlider from "@/components/StageSlider";
 import Teaser from "@/components/Teaser";
 
 export default {
+  name: "Styleguide",
   components: {StageSlider, Teaser},
-  name: "styleguide",
   setup() {
     return {
       slides: [
