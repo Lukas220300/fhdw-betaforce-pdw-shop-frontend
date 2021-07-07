@@ -2,7 +2,7 @@
   <div>
     <b-carousel>
       <b-carousel-item v-for="(carousel, i) in slides" :key="i">
-        <nuxt-link v-if="carousel.link" to="/">
+        <nuxt-link v-if="carousel.link" :to="carousel.link">
           <div class="image-container">
             <img :src="carousel.image">
           </div>
