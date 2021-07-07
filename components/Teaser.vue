@@ -33,7 +33,8 @@ export default {
     },
     route: {
       type: Object,
-      required: false
+      required: false,
+      default: () => {return {}},
     },
     imageLink: {
       type: String,
