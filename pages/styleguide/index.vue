@@ -132,11 +132,11 @@ export default {
   setup() {
     return {
       slides: [
-        {image: 'https://bulma.io/images/placeholders/1280x960.png', link: '/styleguide'},
-        {image: 'https://bulma.io/images/placeholders/1280x960.png', link: '/styleguide'},
-        {image: 'https://bulma.io/images/placeholders/1280x960.png', link: '/styleguide'},
-        {image: 'https://bulma.io/images/placeholders/1280x960.png', link: '/styleguide'},
-        {image: 'https://bulma.io/images/placeholders/1280x960.png', link: '/styleguide'}
+        {imageWithLink: 'https://bulma.io/images/placeholders/1280x960.png', imageName: 'sample/sample-1.jpg', link: '/styleguide'},
+        {imageWithLink: 'https://bulma.io/images/placeholders/1280x960.png', imageName: 'sample/sample-2.jpg', link: '/styleguide'},
+        {imageName: 'sample/sample-3.jpg', link: '/styleguide'},
+        {imageWithLink: 'https://bulma.io/images/placeholders/1280x960.png', link: '/styleguide'},
+        {imageWithLink: 'https://bulma.io/images/placeholders/1280x960.png', link: '/styleguide'}
       ],
       tableData: [
         {'id': 1, 'first_name': 'Jesse', 'last_name': 'Simmons', 'date': '2016-10-15 13:43:27', 'gender': 'Male'},
