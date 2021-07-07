@@ -15,6 +15,7 @@ export default defineComponent({
     name: {
       type: String,
       require: true,
+      default: undefined,
     }
   }
 })
