@@ -2,7 +2,7 @@ import {NuxtAxiosInstance} from "@nuxtjs/axios";
 import {AxiosRequestConfig} from 'axios'
 
 interface RepositoryInterface<T> {
-  findAll(): Promise<[T]>
+  findAll(): Promise<T[]>
 }
 
 export default abstract class AbstractRepository<T> implements RepositoryInterface<T>{
@@ -13,7 +13,7 @@ export default abstract class AbstractRepository<T> implements RepositoryInterfa
     this.httpClient = httpClient
   }
 
-  findAll(config?: AxiosRequestConfig): Promise<[T]> {
+  findAll(config?: AxiosRequestConfig): Promise<T[]> {
     return this.httpClient.$get(this.baseUrl,config)
   }
 }

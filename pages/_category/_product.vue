@@ -1,13 +1,12 @@
 <template>
   <div>
-    <h1>Layout admin</h1>
-    <Nuxt />
+    product detail
   </div>
 </template>
 
 <script>
 export default {
-  name: "Admin"
+  name: "ProductDetail"
 }
 </script>
 

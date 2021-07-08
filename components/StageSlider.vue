@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div class="c-StageSlider">
     <b-carousel>
       <b-carousel-item v-for="(carousel, i) in slides" :key="i">
-        <nuxt-link v-if="carousel.link" to="/">
+        <nuxt-link v-if="carousel.link" :to="carousel.link">
           <div class="image-container">
-            <img :src="carousel.image">
+            <img v-if="carousel.imageName" :src="require('~/assets/img/' + carousel.imageName)">
+            <img v-else-if="carousel.imageWithLink" :src="carousel.imageWithLink">
           </div>
         </nuxt-link>
         <div v-else class="image-container">
-          <img :src="carousel.image">
+          <img v-if="carousel.imageName" :src="require('~/assets/img/' + carousel.imageName)">
+          <img v-else-if="carousel.imageWithLink" :src="carousel.imageWithLink">
         </div>
       </b-carousel-item>
     </b-carousel>
@@ -31,3 +33,16 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.c-StageSlider {
+  margin-bottom: 2rem;
+}
+.carousel-items {
+  max-height: 40rem;
+
+  img {
+    object-fit: cover;
+  }
+
+}
+</style>

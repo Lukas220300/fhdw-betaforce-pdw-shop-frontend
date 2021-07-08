@@ -2,7 +2,8 @@
   <div class="card">
     <div v-if="imageLink" class="card-image">
       <figure class="image is-4by3">
-        <img :src="imageLink" :alt="imageAlt">
+        <img v-if="internalImage" :src="require('~/assets/img/' + imageLink)" :alt="imageAlt">
+        <img v-else :src="imageLink" :alt="imageAlt">
       </figure>
     </div>
     <div class="card-content">
@@ -32,13 +33,17 @@ export default {
     },
     route: {
       type: Object,
-      default: () => {
-        return {path: '/'}
-      }
+      required: false,
+      default: () => {return {}},
     },
     imageLink: {
       type: String,
       default: undefined,
+    },
+    internalImage: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     imageAlt: {
       type: String,
@@ -60,5 +65,6 @@ export default {
     border-radius: 0;
   }
 }
+
 </style>
 
