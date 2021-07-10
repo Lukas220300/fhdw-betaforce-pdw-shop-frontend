@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="c-Teaser card">
     <div v-if="imageLink" class="card-image">
       <figure class="image is-4by3">
         <img v-if="internalImage" :src="require('~/assets/img/' + imageLink)" :alt="imageAlt">
@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss">
-.card {
+.c-Teaser.card {
   max-width: 15rem;
   width: 15rem;
   margin-bottom: 1rem;
