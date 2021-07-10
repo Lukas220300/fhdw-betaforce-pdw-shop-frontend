@@ -18,3 +18,12 @@ export default {
 }
 </script>
 
+<style lang="scss">
+@media only screen and (max-width: 1024px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+</style>
+

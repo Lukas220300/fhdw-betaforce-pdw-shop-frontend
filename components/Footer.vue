@@ -11,7 +11,7 @@
       <div class="c-Footer__linkList">
         <nuxt-link to="/">Kontakt</nuxt-link>
         <nuxt-link to="/">FAQ</nuxt-link>
-        <nuxt-link to="/">Allergene</nuxt-link>
+        <nuxt-link to="/allergene">Allergene</nuxt-link>
       </div>
     </div>
     <div class="column">
