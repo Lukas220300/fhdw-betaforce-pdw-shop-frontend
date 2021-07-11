@@ -3,11 +3,11 @@
     <h1 class="title is-1">FAQ</h1>
 
     <b-collapse
-      class="card"
-      animation="slide"
       v-for="(collapse, index) of collapses"
       :key="index"
       :open="isOpen == index"
+      class="card"
+      animation="slide"
       >
       <template #trigger="props">
         <div
@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name: "faq",
+  name: "Faq",
   setup() {
     const collapses = [
       {

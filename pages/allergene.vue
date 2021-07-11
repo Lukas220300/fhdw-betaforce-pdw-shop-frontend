@@ -68,7 +68,7 @@
 
 <script>
 export default {
-  name: "allergene",
+  name: "Allergene",
 }
 </script>
 
