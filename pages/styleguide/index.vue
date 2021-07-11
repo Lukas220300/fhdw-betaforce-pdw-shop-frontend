@@ -109,6 +109,14 @@
         <Icon name="arrow-right" />
         arrow-right
       </div>
+      <div class="icon-container">
+        <Icon name="logo" />
+        logo
+      </div>
+      <div class="icon-container">
+        <Icon name="logo-only-icon" />
+        logo-only-icon
+      </div>
     </div>
 
     <h1 class="title is-1 styleguide-header">Teaser</h1>

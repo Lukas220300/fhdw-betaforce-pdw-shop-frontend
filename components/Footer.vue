@@ -1,11 +1,26 @@
 <template>
-  <footer class="footer">
-    <div class="content has-text-centered container">
-      <p>
-        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-      </p>
+  <footer class="c-Footer footer columns">
+    <div class="column">
+      <div class="c-Footer__headline">Unternehmen</div>
+      <div class="c-Footer__linkList">
+        <nuxt-link to="/ueber-uns">Über Uns</nuxt-link>
+      </div>
+    </div>
+    <div class="column">
+      <div class="c-Footer__headline">Service</div>
+      <div class="c-Footer__linkList">
+        <nuxt-link to="/contact">Kontakt</nuxt-link>
+        <nuxt-link to="/faq">FAQ</nuxt-link>
+        <nuxt-link to="/allergene">Allergene</nuxt-link>
+      </div>
+    </div>
+    <div class="column">
+      <div class="c-Footer__headline">Rechtliches</div>
+      <div class="c-Footer__linkList">
+        <nuxt-link to="/agb">AGB</nuxt-link>
+        <nuxt-link to="/privacy">Datenschutzbestimmung</nuxt-link>
+        <nuxt-link to="/impressum">Impressum</nuxt-link>
+      </div>
     </div>
   </footer>
 </template>
@@ -15,4 +30,20 @@ export default {
   name: "Footer"
 }
 </script>
+
+<style lang="scss">
+.c-Footer {
+  padding-left: 3rem;
+  padding-right: 3rem;
+  margin-top: 1rem;
+
+  &__headline {
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+}
+.c-Footer__linkList a {
+  display: block;
+}
+</style>
 
