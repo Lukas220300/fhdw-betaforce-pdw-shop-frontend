@@ -1,12 +1,9 @@
 <template>
   <div>
-    <b-navbar class="container">
+    <b-navbar class="c-navbar container">
       <template #brand>
-        <b-navbar-item tag="router-link" :to="{ path: '/' }">
-          <img
-            src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
-            alt="Lightweight UI components for Vue.js based on Bulma"
-          >
+        <b-navbar-item tag="router-link" :to="{ path: '/' }" class="c-navbar__logo" >
+          <Icon name="logo-only-icon" />
         </b-navbar-item>
       </template>
       <template #start>
@@ -43,8 +40,20 @@
 </template>
 
 <script>
+import Icon from "./Icon";
 export default {
-  name: "NavBar"
+  name: "NavBar",
+  components: {Icon}
 }
 </script>
 
+<style lang="scss">
+.c-navbar {
+  &__logo {
+    > svg {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+  }
+}
+</style>
