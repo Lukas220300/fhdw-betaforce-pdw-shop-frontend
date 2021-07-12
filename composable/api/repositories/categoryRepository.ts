@@ -10,64 +10,68 @@ export class CategoryRepository extends AbstractRepository<Category> {
   findAll(config?: AxiosRequestConfig): Promise<Category[]> {
 
     return new Promise<Category[]>((resolve) => {
-      const cat = []
+      window.setTimeout(() => {
 
-      const alcoholic: Category = {
-        id: '1',
-        title: 'Alkoholish',
-        cover: 'categories/alcoholic.svg'
-      }
-      cat.push(alcoholic)
+        const cat = []
 
-      const nonAlcoholic: Category = {
-        id: '2',
-        title: 'Nicht Alkoholish',
-        cover: 'categories/nonAlcoholic.svg'
-      }
-      cat.push(nonAlcoholic)
+        const alcoholic: Category = {
+          id: '1',
+          title: 'Alkoholish',
+          cover: 'categories/alcoholic.svg'
+        }
+        cat.push(alcoholic)
 
-      const spirits: Category = {
-        id: '3',
-        title: 'Spirituosen',
-        cover: 'categories/alcoholic.svg'
-      }
-      cat.push(spirits)
+        const nonAlcoholic: Category = {
+          id: '2',
+          title: 'Nicht Alkoholish',
+          cover: 'categories/nonAlcoholic.svg'
+        }
+        cat.push(nonAlcoholic)
 
-      const softDrinks: Category = {
-        id: '4',
-        title: 'Soft Drinks',
-        cover: 'categories/softDrinks.svg'
-      }
-      cat.push(softDrinks)
+        const spirits: Category = {
+          id: '3',
+          title: 'Spirituosen',
+          cover: 'categories/alcoholic.svg'
+        }
+        cat.push(spirits)
 
-      const water: Category = {
-        id: '5',
-        title: 'Wasser',
-        cover: 'categories/water.svg'
-      }
-      cat.push(water)
+        const softDrinks: Category = {
+          id: '4',
+          title: 'Soft Drinks',
+          cover: 'categories/softDrinks.svg'
+        }
+        cat.push(softDrinks)
 
-      const wine: Category = {
-        id: '6',
-        title: 'Wein',
-        cover: 'categories/wine.svg'
-      }
-      cat.push(wine)
+        const water: Category = {
+          id: '5',
+          title: 'Wasser',
+          cover: 'categories/water.svg'
+        }
+        cat.push(water)
 
-      const beer: Category = {
-        id: '7',
-        title: 'Bier',
-        cover: 'categories/beer.svg'
-      }
-      cat.push(beer)
+        const wine: Category = {
+          id: '6',
+          title: 'Wein',
+          cover: 'categories/wine.svg'
+        }
+        cat.push(wine)
 
-      const sparklingWine: Category = {
-        id: '8',
-        title: 'Sekt',
-        cover: 'categories/sparklingWine.svg'
-      }
-      cat.push(sparklingWine)
-      resolve(cat)
+        const beer: Category = {
+          id: '7',
+          title: 'Bier',
+          cover: 'categories/beer.svg'
+        }
+        cat.push(beer)
+
+        const sparklingWine: Category = {
+          id: '8',
+          title: 'Sekt',
+          cover: 'categories/sparklingWine.svg'
+        }
+        cat.push(sparklingWine)
+
+        resolve(cat)
+      }, 1500)
     })
   }
 
