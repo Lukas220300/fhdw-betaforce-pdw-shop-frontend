@@ -41,24 +41,12 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/toast',
-    'nuxt-buefy',
-    // https://github.com/nuxt-community/proxy-module
-    '@nuxtjs/proxy',
+    'nuxt-buefy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    proxy: true
-  },
-
-  // Proxy module configuration: https://github.com/nuxt-community/proxy-module
-  proxy: {
-    '/api/': {
-      target: 'https://pdw-shop-backend.herokuapp.com/',
-      router: {
-        'localhost:3000': 'http://pdw-shop-backend.lndo.site:8080/'
-      }
-    }
+    baseURL: process.env.NODE_ENV !== 'production' ? 'http://pdw-shop-backend.lndo.site:8080/' : 'https://pdw-shop-backend.herokuapp.com/'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
