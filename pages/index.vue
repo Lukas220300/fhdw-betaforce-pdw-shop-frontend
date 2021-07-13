@@ -1,10 +1,11 @@
 <template>
   <div class="c-home">
-    <StageSlider :slides="slides" />
+    <StageSlider :slides="slides"/>
     <h2 class="title is-2">Kategorien</h2>
     <div>
       <b-skeleton v-if="categoriesIsLoading" height="20rem"></b-skeleton>
-      <b-carousel-list :data="categories" :items-to-show="numberOfCategories" :repeat="true" :arrow-hover="false" class="c-category-slider__container">
+      <b-carousel-list :data="categories" :items-to-show="numberOfCategories" :repeat="true" :arrow-hover="false"
+                       class="c-category-slider__container">
         <template #item="list">
           <nuxt-link :to="'/categories/' + list.title">
             <div class="c-category-slider card">
@@ -15,7 +16,7 @@
               </div>
               <div class="card-content">
                 <p class="title">
-                  {{list.title}}
+                  {{ list.title }}
                 </p>
               </div>
             </div>
@@ -33,7 +34,7 @@
             </div>
             <div class="card-content">
               <p class="title">
-                {{category.title}}
+                {{ category.title }}
               </p>
             </div>
           </div>
@@ -51,13 +52,13 @@
 import {defineComponent, ref, useContext} from "@nuxtjs/composition-api";
 import StageSlider from "@/components/StageSlider.vue";
 import {Category} from "~/composable/api/interfaces/category";
-import { useApi } from "~/composable/api";
+import {useApi} from "~/composable/api";
 
 export default defineComponent({
-  components: { StageSlider },
+  components: {StageSlider},
   setup() {
     // definitions
-    const { $axios } = useContext()
+    const {$axios} = useContext()
     const categoriesIsLoading = ref(true)
     const categories = ref<Category[]>()
 
@@ -81,7 +82,7 @@ export default defineComponent({
       categoriesIsLoading,
     }
   },
-  data(){
+  data() {
     return {
       numberOfCategories: 4,
     }
@@ -93,9 +94,9 @@ export default defineComponent({
 
       let number = 4
 
-      if(screenWidth > 1215) {
+      if (screenWidth > 1215) {
         number = 4
-      } else if (screenWidth <= 1215 && screenWidth > 840 ) {
+      } else if (screenWidth <= 1215 && screenWidth > 840) {
         number = 3
       } else if (screenWidth <= 840 && screenWidth > 536) {
         number = 2
@@ -128,18 +129,22 @@ export default defineComponent({
     text-transform: uppercase;
   }
 }
+
 .c-category-list {
   display: none;
   margin-bottom: 1rem;
   padding: 1rem;
 }
+
 .c-home {
   .carousel-slide {
     padding: 1rem;
   }
+
   .carousel-list.c-category-slider__container.has-shadow {
     box-shadow: none;
   }
+
   .c-category-list {
     .card-content {
       .title {
@@ -148,6 +153,7 @@ export default defineComponent({
     }
   }
 }
+
 @media only screen and (max-width: 536px) {
   .c-category-slider {
     display: none;
