@@ -45,7 +45,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.AXIOS_BASE_URL || 'https://pdw-shop-backend.herokuapp.com/'
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
