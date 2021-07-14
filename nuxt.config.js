@@ -41,11 +41,13 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/toast',
-    'nuxt-buefy',
+    'nuxt-buefy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.NODE_ENV !== 'production' ? 'http://pdw-shop-backend.lndo.site:8080/' : 'https://pdw-shop-backend.herokuapp.com/'
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
