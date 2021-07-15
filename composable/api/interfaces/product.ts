@@ -1,10 +1,11 @@
 import {Category} from "~/composable/api/interfaces/category";
-import {Quantity} from "~/composable/api/interfaces/quantity";
+import {ProductVariant} from "~/composable/api/interfaces/productVariant";
+
 
 export interface Product {
   id: string
   category: Category
   cover: string
   title: string
-  quantities: Quantity[]
+  variants: ProductVariant[]
 }
