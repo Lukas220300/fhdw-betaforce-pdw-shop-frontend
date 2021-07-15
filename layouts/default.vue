@@ -14,7 +14,8 @@ import Footer from "../components/Footer";
 
 export default {
   name: "Default",
-  components: { NavBar, Footer }
+  components: { NavBar, Footer },
+  middleware: ['accessProtection']
 }
 </script>
 

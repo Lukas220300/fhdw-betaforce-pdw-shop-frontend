@@ -7,7 +7,8 @@
 
 <script>
 export default {
-  name: "Admin"
+  name: "Admin",
+  middleware: ['accessProtection']
 }
 </script>
 
