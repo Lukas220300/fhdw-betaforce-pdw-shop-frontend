@@ -8,4 +8,6 @@ export interface Product {
   cover: string
   title: string
   variants: ProductVariant[]
+  producer: string
+  allergens: string
 }
