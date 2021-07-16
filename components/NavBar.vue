@@ -46,8 +46,8 @@ export default {
 .c-navbar {
   &__logo {
     > svg {
-      width: 3.5rem;
-      height: 3.5rem;
+      width: 3.5rem !important;
+      height: 3.5rem !important;
     }
   }
 }
@@ -55,8 +55,8 @@ export default {
   .c-navbar {
     &__logo {
       > svg {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.5rem !important;
+        height: 1.5rem !important;
       }
     }
   }
