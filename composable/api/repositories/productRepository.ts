@@ -5,7 +5,7 @@ import {Product} from "~/composable/api/interfaces/product";
 export class ProductRepository extends AbstractRepository<Product> {
   baseUrl = '/api/products'
 
-  findOneById(id: number, _:AxiosRequestConfig): Promise<Product> {
+  findOneById(id: number, _?:AxiosRequestConfig): Promise<Product> {
     return new Promise<Product>((resolve => {
       const product: Product = {
         id: id+'',
