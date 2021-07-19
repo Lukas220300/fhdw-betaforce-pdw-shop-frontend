@@ -29,7 +29,7 @@
           <div class="c-category-list card">
             <div class="card-image">
               <figure class="image is-4by3">
-                <img :src="require('~/assets/img/' + category.cover)" alt="Placeholder image">
+                <img :src="require('~/assets/img/' + category.cover)" alt="Category Cover">
               </figure>
             </div>
             <div class="card-content">
