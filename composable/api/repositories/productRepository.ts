@@ -13,7 +13,7 @@ export class ProductRepository extends AbstractRepository<Product> {
           id: '5',
           title: 'Wasser',
         },
-        cover: '',
+        cover: 'https://res.cloudinary.com/deloma/image/upload/q_85/v1/images/product/74099737-40c2-4dc0-bfd2-8a6e8230abf6.jpg',
         title: 'Merkur classic',
         variants: [
           {

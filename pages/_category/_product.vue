@@ -1,19 +1,23 @@
 <template>
   <div class="c-productDetail columns">
+
     <div class="column is-4">
       <b-skeleton v-if="loading" height="35rem"></b-skeleton>
+      <div v-else>
+        <img :src="product.cover">
+      </div>
     </div>
     <div class="column is-8">
       <div class="c-productDetail__skeleton">
         <b-skeleton v-if="loading" height="4rem"></b-skeleton>
         <div v-else>
           <h1 class="title">{{ product.title }}</h1>
-          <h2 class="subtitle">{{ product.category.title }}</h2>
+          <h2 class="subtitle">{{ product.category.title }} // {{product.producer}}</h2>
         </div>
       </div>
       <div class="c-productDetail__skeleton">
         <b-skeleton v-if="loading" height="30rem"></b-skeleton>
-        <div v-else>
+        <div v-else class="c-VariantTable__container">
           <table class="table is-striped">
             <thead>
             <tr>
@@ -33,7 +37,7 @@
               <td>
                 <b-field>
                   <b-field grouped>
-                    <b-numberinput v-model="variant.model"/>
+                    <b-numberinput v-model="variant.model" class="c-productDetail__addToCardInput"/>
                     <p class="control">
                       <button class="button c-addToCartButton" @click="addToCart(product, variant)"><Icon name="add-to-cart" /></button>
                     </p>
@@ -59,8 +63,7 @@
 
 <script>
 import {ref, useContext, useRouter} from "@nuxtjs/composition-api";
-
-const {useApi} = require("@/composable/api");
+import { useApi } from "@/composable/api";
 
 export default {
   name: "ProductDetail",
@@ -87,20 +90,26 @@ export default {
       loading.value = false
     })
 
-    const addToCart = (product, variant) => {
-      console.log('Add to Cart: ')
-      console.log(product)
-      console.log(variant)
-    }
+
 
     return {
       loading,
       categoryTitle,
       productId,
       product,
-      addToCart
     }
   },
+  methods: {
+    addToCart(product, variant) {
+      console.log('Add to Cart: ')
+      console.log(product)
+      console.log(variant)
+      this.$buefy.toast.open({
+        message: 'Something happened correctly!',
+        type: 'is-success'
+      })
+    }
+  }
 }
 </script>
 
@@ -115,6 +124,16 @@ export default {
     & > svg {
       width: 1rem;
       height: 1rem;
+    }
+  }
+  &__addToCardInput {
+    & input {
+      width: 2.5rem;
+    }
+  }
+  .c-VariantTable {
+    &__container {
+      overflow-x: scroll;
     }
   }
 }
