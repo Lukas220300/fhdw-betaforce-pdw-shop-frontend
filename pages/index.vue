@@ -7,7 +7,7 @@
       <b-carousel-list :data="categories" :items-to-show="numberOfCategories" :repeat="true" :arrow-hover="false"
                        class="c-category-slider__container">
         <template #item="list">
-          <nuxt-link :to="'/categories/' + list.title">
+          <nuxt-link :to="'/categories/' + list.id">
             <div class="c-category-slider card">
               <div class="card-image">
                 <figure class="image is-4by3">
@@ -25,7 +25,7 @@
         </template>
       </b-carousel-list>
       <div class="c-category-list">
-        <nuxt-link v-for="category in categories" :key="category.id" :to="'/categories/' + category.title">
+        <nuxt-link v-for="category in categories" :key="category.id" :to="'/categories/' + category.id">
           <div class="c-category-list card">
             <div class="card-image">
               <figure class="image is-4by3">
