@@ -7,7 +7,7 @@
     <div v-else class="c-CategoryOverview">
       <h1 class="title is-1">Kategorie auswahl</h1>
 
-      <div class="c-CategoryOverview__list" v-if="categoriesLoading">
+      <div v-if="categoriesLoading" class="c-CategoryOverview__list">
         <div v-for="index in 8" :key="index" class="card">
           <div class="card-image">
             <b-skeleton height="18rem"></b-skeleton>

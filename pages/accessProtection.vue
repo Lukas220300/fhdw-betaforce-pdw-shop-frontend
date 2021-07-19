@@ -3,7 +3,7 @@
     <Icon name="logo"/>
     <div class="field">
       <p class="control has-icons-left">
-        <input class="input" type="password" placeholder="Password" v-model="password" @change="checkPassword">
+        <input v-model="password" class="input" type="password" placeholder="Password"  @change="checkPassword">
         <span class="icon is-small is-left">
           <Icon name="lock" />
         </span>
@@ -17,7 +17,7 @@
 import {ref, useContext} from "@nuxtjs/composition-api";
 
 export default {
-  name: "accessProtection",
+  name: "AccessProtection",
   layout: 'access',
   setup() {
     const password = ref('')
