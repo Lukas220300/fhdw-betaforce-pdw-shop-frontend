@@ -2,7 +2,11 @@
   <div>
 
     <div v-if="categoryId">
-      Kategory detail page
+      <h1 class="title is-1">Produktauswahl</h1>
+      {{ categoryProducts }}
+      <nuxt-link v-for="product in categoryProducts" :key="product.id" :to="'/'+categoryId+'/'+product.id"
+                 class="button">{{ product.name }}
+      </nuxt-link>
     </div>
     <div v-else class="c-CategoryOverview">
       <h1 class="title is-1">Kategorie auswahl</h1>
@@ -15,7 +19,7 @@
           <div class="card-content">
             <div class="media">
               <div class="media-content">
-                <b-skeleton  height="2rem"></b-skeleton>
+                <b-skeleton height="2rem"></b-skeleton>
               </div>
             </div>
           </div>
@@ -57,9 +61,13 @@ export default {
     const categoriesLoading = ref(true)
     const categoryLoading = ref(true)
     const categories = ref()
+    const categoryProducts = ref([])
 
     if (categoryId.value) {
-      // load Category
+      useApi($axios).product.findByCategoryId(categoryId.value).then((products) => {
+        categoryProducts.value = products
+        console.log(categoryProducts.value)
+      })
     } else {
       useApi($axios).category.findAll().then((categoryArray) => {
         categories.value = categoryArray
@@ -72,6 +80,7 @@ export default {
       categoriesLoading,
       categoryLoading,
       categories,
+      categoryProducts,
     }
   }
 }
@@ -83,6 +92,7 @@ export default {
     margin: auto;
     max-width: 1300px;
   }
+
   .card {
     width: 25rem;
     display: inline-block;
@@ -97,6 +107,7 @@ export default {
     }
   }
 }
+
 @media only screen and (max-width: 895px) {
   .c-CategoryOverview {
     &__list {
@@ -104,6 +115,7 @@ export default {
     }
   }
 }
+
 @media only screen and (max-width: 463px) {
   .c-CategoryOverview {
     &__list {

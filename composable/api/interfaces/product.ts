@@ -6,7 +6,7 @@ export interface Product {
   id: string
   category: Category
   cover: string
-  title: string
+  name: string
   variants: ProductVariant[]
   producer: string
   allergens: string
