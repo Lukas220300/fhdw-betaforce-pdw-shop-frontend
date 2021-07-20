@@ -11,7 +11,7 @@
       <div class="c-productDetail__skeleton">
         <b-skeleton v-if="loading" height="4rem"></b-skeleton>
         <div v-else>
-          <h1 class="title">{{ product.title }}</h1>
+          <h1 class="title">{{ product.name }}</h1>
           <h2 class="subtitle">{{ product.category.title }} // {{product.producer}}</h2>
         </div>
       </div>
