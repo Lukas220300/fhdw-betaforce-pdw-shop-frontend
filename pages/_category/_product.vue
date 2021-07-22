@@ -82,7 +82,7 @@ export default {
       }
     }
 
-    useApi($axios).product.findOneById(1).then((apiProduct) => {
+    useApi($axios).product.findOneById(productId).then((apiProduct) => {
       product.value = apiProduct
       product.value.variants.forEach((variant) => {
         variant.model = 0
