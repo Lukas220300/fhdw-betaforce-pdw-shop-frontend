@@ -5,6 +5,7 @@
       <Nuxt />
     </div>
     <Footer />
+    <script src="https://kit.fontawesome.com/80698334fc.js" crossorigin="anonymous"></script>
   </div>
 </template>
 
