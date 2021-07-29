@@ -3,6 +3,7 @@ import {AxiosRequestConfig} from 'axios'
 
 interface RepositoryInterface<T> {
   findAll(): Promise<T[]>
+  findOneById(id: number): Promise<T>
 }
 
 export default abstract class AbstractRepository<T> implements RepositoryInterface<T>{
@@ -16,4 +17,9 @@ export default abstract class AbstractRepository<T> implements RepositoryInterfa
   findAll(config?: AxiosRequestConfig): Promise<T[]> {
     return this.httpClient.$get(this.baseUrl,config)
   }
+
+  findOneById(id: number, config?: AxiosRequestConfig): Promise<T> {
+    return this.httpClient.$get(this.baseUrl+'/'+id,config)
+  }
+
 }

@@ -5,6 +5,7 @@
       <Nuxt />
     </div>
     <Footer />
+    <script src="https://kit.fontawesome.com/80698334fc.js" crossorigin="anonymous"></script>
   </div>
 </template>
 
@@ -14,7 +15,8 @@ import Footer from "../components/Footer";
 
 export default {
   name: "Default",
-  components: { NavBar, Footer }
+  components: { NavBar, Footer },
+  // middleware: ['accessProtection']
 }
 </script>
 

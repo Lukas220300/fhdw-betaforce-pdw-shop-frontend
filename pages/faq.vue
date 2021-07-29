@@ -8,7 +8,7 @@
       :open="isOpen == index"
       class="card"
       animation="slide"
-      >
+    >
       <template #trigger="props">
         <div
           class="card-header"
@@ -41,20 +41,32 @@ export default {
   setup() {
     const collapses = [
       {
-        question: 'Lorem ipsum dolor sit amet',
-        answer: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        question: 'Welche Zahlmöglichkeiten gibt es?',
+        answer: 'Sie haben verschiedene Zahlmöglichkeiten bei uns. Sie können bequem via PayPal, Apple-Pay und Kreditkarte zahlen.'
       },
       {
-        question: 'Lorem ipsum dolor sit amet',
-        answer: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        question: 'Wie alt muss ich sein, um eine Bestellung aufzugeben?',
+        answer: 'Sie müssen mindestens 16 Jahre alt sein.'
       },
       {
-        question: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr',
-        answer: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        question: 'Wie groß ist ihr Lieferradius?',
+        answer: 'Wir beliefern im Umkreis von 20km um Bielefeld herum.'
       },
       {
-        question: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor',
-        answer: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        question: 'Ist die Lieferung kostenlos?',
+        answer: 'Die Lieferung im Stadtkreis Bielefeld ist kostenlos, außerhalb fällt eine Gebühr von ca. 3 € an.'
+      },
+      {
+        question: 'Sind die Getränke bei der Lieferung gekühlt?',
+        answer: 'Die Getränke stehen in klimatisierten Lagerhallen, sodass die Getränke bei kurzen Fahrten in unseren Lieferwagen nicht warm werden.'
+      },
+      {
+        question: 'Wie lange dauert durchschnittlich eine Getränkelieferung?',
+        answer: 'Wir bemühen uns die Getränke innerhalb von 1-1,5 Std. zuzustellen. Jedoch können wir bei hohem Bestellaufkommen in den Stoßzeiten diese Lieferzeit nicht gewährleisten.'
+      },
+      {
+        question: 'Gibt es einen Mindestbestellwert?',
+        answer: 'Der Mindestbestellwert bei uns beträgt 20€.'
       },
     ]
 

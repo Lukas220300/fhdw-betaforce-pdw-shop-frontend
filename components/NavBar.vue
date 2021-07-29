@@ -21,12 +21,9 @@
       <template #end>
         <b-navbar-item tag="div">
           <div class="buttons">
-            <a class="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a class="button is-light">
-              Log in
-            </a>
+            <nuxt-link to="/auth/login" class="button is-primary">
+              <strong>Login</strong>
+            </nuxt-link>
           </div>
         </b-navbar-item>
       </template>
@@ -46,8 +43,8 @@ export default {
 .c-navbar {
   &__logo {
     > svg {
-      width: 3.5rem;
-      height: 3.5rem;
+      width: 3.5rem !important;
+      height: 3.5rem !important;
     }
   }
 }
@@ -55,8 +52,8 @@ export default {
   .c-navbar {
     &__logo {
       > svg {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.5rem !important;
+        height: 1.5rem !important;
       }
     }
   }
