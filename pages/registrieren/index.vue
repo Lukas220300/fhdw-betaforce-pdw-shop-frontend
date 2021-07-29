@@ -286,7 +286,7 @@ export default {
     const signUp = () => {
       if (validateInput()) {
         console.log("Register")
-        $axios.$post('/api/auth/register', signUpData).then((response) => {
+        $axios.$post('/api/auth/register', signUpData.value).then((response) => {
           console.log(response)
         })
         .catch((error) => {
