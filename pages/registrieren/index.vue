@@ -175,7 +175,7 @@
 </template>
 
 <script>
-import {ref} from "@nuxtjs/composition-api";
+import {ref, useContext} from "@nuxtjs/composition-api";
 import {
   validateDefaultText,
   validateEmail,
@@ -281,9 +281,23 @@ export default {
       return validation
     }
 
+    const {params, $axios} = useContext()
+
     const signUp = () => {
       if (validateInput()) {
         console.log("Register")
+        $axios.$post('/api/auth/register', signUpData).then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response)
+          } else if (error.request) {
+            console.log(error.request)
+          } else {
+            console.log(error.message)
+          }
+        })
       } else {
         console.log("wrong")
       }
