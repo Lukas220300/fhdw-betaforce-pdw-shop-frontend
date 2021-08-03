@@ -170,15 +170,6 @@
         </div>
       </div>
     </div>
-
-    <div class="c-FormMessage columns" v-if="serverError">
-      <div class="column is-offset-one-quarter-mobile is-three-quarters-mobile is-offset-three-fifths-desktop is-two-fifths-desktop">
-        <b-message title="Registrierungsfehler" type="is-danger" aria-close-label="Close message" auto-close>
-          {{ serverErrorMessage }}
-        </b-message>
-      </div>
-    </div>
-
   </div>
 </template>
 
@@ -289,32 +280,29 @@ export default {
       return validation
     }
 
-    const serverError = ref(false)
-    const serverErrorMessage = ref("Bei der Registrierung ist ein technischer Fehler unterlaufen. Probieren Sie es bitte später noch einmal!")
-
     return {
       signUpData,
       validationData,
-      serverError,
-      serverErrorMessage,
       validateInput,
     }
   },
   methods: {
     signUp() {
-      this.serverError = false
       if (this.validateInput()) {
         this.$axios.$post('/api/auth/register', this.signUpData).then((response) => {
           this.$router.push("/registrieren/danke")
         })
         .catch((error) => {
           if (error.response) {
-            this.serverError = true
-            this.serverErrorMessage = error.response.data.message
-          } else if (error.request) {
-            this.serverError = true
+            this.$buefy.toast.open({
+              message: error.response.data.message,
+              type: 'is-danger'
+            })
           } else {
-            this.serverError = true
+            this.$buefy.toast.open({
+              message: `Bei der Registrierung ist ein technischer Fehler unterlaufen. Probieren Sie es bitte später noch einmal!`,
+              type: 'is-danger'
+            })
           }
         })
       } else {
@@ -343,12 +331,6 @@ export default {
   }
   .privacy-danger {
     color: #f14668;
-  }
-
-  .c-FormMessage {
-    position: fixed;
-    top: 5rem;
-    right: 3rem;
   }
 }
 </style>
