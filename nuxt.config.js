@@ -41,7 +41,8 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/toast',
-    'nuxt-buefy'
+    'nuxt-buefy',
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -71,5 +72,23 @@ export default {
         }
       }
     ]
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+        },
+        user: {
+          property: false,
+        },
+        endpoints: {
+          login: { url: '/api/auth/login', method: 'post' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: '/api/auth/user', method: 'get' }
+        }
+      }
+    }
   }
 }
