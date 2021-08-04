@@ -19,13 +19,32 @@
             mobile="fullwidth"
             >
             <div v-if="products.length > 0" class="p-5 c-ShoppingCardCenterContent">
-                <p>{{ products }}
-                {{ total }}</p>
-                <b-field> <!-- TODO: Add v-if="$auth.loggedIn" -->
-                    <p class="control">
-                        <b-button type="is-primary" label="Jetzt bestellen" @click="checkout"/>
-                    </p>
-                </b-field>
+              <div v-for="product in products" :key="product.name" class="box">
+                <article class="media">
+                  <div class="media-left">
+                    <figure class="image is-64x64">
+                      <img :src="product.cover" alt="product image" />
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <div class="content pl-2">
+                      <p>{{ product.name }}</p>
+                      <p>{{ product.price }} € pro Stück</p>
+                      <b-field grouped>
+                        <b-numberinput v-model="product.quantity" @input="(val) => quantityInputChange(val, product.variantId)" class="c-quantityInput" min="0" :max="product.stock" controls-position="compact" />
+                      </b-field>
+                    </div>
+                  </div>
+                  <div class="media-right">
+                    <button class="delete" v-on:click.stop.prevent="removeFromCard(product.variantId)"></button>
+                  </div>
+                </article>
+              </div>
+              <b-field :label="'Gesamtpreis: ' + total + ' €'" class="c-ShoppingCardCenterCta"> <!-- TODO: Add v-if="$auth.loggedIn" -->
+                <p class="control">
+                    <b-button type="is-primary" label="Jetzt bestellen" @click="checkout"/>
+                </p>
+              </b-field>
             </div>
             <div v-else class="p-5 c-ShoppingCardCenterContent">
                 <h2 class="subtitle">Sie haben noch keine Produkte in den Warenkorb gelegt!</h2>
@@ -80,6 +99,17 @@ export default {
   methods: {
     checkout () {
         this.$store.dispatch('ShoppingCard/checkout')
+    },
+    quantityInputChange(newVal, variantId) {
+      this.$store.commit('ShoppingCard/updateProductQuantity', {
+        quantity: newVal,
+        variantId: variantId
+      })
+    },
+    removeFromCard(variantId) {
+      this.$store.commit('ShoppingCard/removeProductFromCard', {
+        variantId: variantId
+      })
     }
   }
 }
@@ -88,20 +118,34 @@ export default {
 <style lang="scss">
 @media only screen and (min-width: 769px) {
   .b-sidebar .sidebar-content {
-    width: 55%;
+    width: 60%;
   }
 }
 
 @media only screen and (min-width: 1023px) {
   .b-sidebar .sidebar-content {
-    width: 40%;
+    width: 50%;
   }
-  .c-ShoppingCardCenterContent {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+}
+
+.c-ShoppingCardCenterContent {
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+.c-ShoppingCardCenterCta {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.c-quantityInput {
+  & input {
+    width: 2.5rem;
   }
+}
+
+.box {
+  width: 100%;
 }
 </style>

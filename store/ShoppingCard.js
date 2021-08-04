@@ -10,8 +10,11 @@ export default {
             return state.items.map(({variant, quantity, product}) => {
                 return {
                     name: product.name,
+                    cover: product.cover,
                     price: variant.price,
-                    quantity
+                    stock: variant.stock,
+                    quantity,
+                    variantId: variant.id
                 }
             })
         },
@@ -34,6 +37,22 @@ export default {
                 quantity: quantity,
                 product: product
             })
+        },
+        updateProductQuantity(state, { quantity, variantId }) {
+            const cardItem = state.items.find(item => item.variant.id === variantId)
+            if (null == cardItem) {
+                console.log('card item not found!')
+                return
+            }
+            cardItem.quantity = quantity
+        },
+        removeProductFromCard(state, { variantId }) {
+            const cardItemIndex = state.items.findIndex(item => item.variant.id === variantId)
+            if (-1 == cardItemIndex) {
+                console.log('card item to remove not found')
+                return
+            }
+            state.items.splice(cardItemIndex, 1)
         },
         setCardItems(state, { items }) {
             state.items = items
