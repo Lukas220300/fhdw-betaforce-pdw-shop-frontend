@@ -21,6 +21,7 @@
       <template #end>
         <b-navbar-item tag="div">
           <div class="buttons">
+            <shopping-card />
             <nuxt-link to="/auth/login" class="button is-primary">
               <strong>Login</strong>
             </nuxt-link>
@@ -33,9 +34,13 @@
 
 <script>
 import Icon from "./Icon";
+import ShoppingCard from "./ShoppingCard.vue";
 export default {
   name: "NavBar",
-  components: {Icon}
+  components: {
+    Icon,
+    ShoppingCard
+  }
 }
 </script>
 

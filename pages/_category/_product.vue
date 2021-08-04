@@ -37,7 +37,7 @@
               <td>
                 <b-field>
                   <b-field grouped>
-                    <b-numberinput v-model="variant.model" class="c-productDetail__addToCardInput"/>
+                    <b-numberinput v-model="variant.model" class="c-productDetail__addToCardInput" min="0" :max="variant.stock" />
                     <p class="control">
                       <button class="button c-addToCartButton" @click="addToCart(product, variant)"><Icon name="add-to-cart" /></button>
                     </p>
@@ -101,11 +101,12 @@ export default {
   },
   methods: {
     addToCart(product, variant) {
-      console.log('Add to Cart: ')
-      console.log(product)
-      console.log(variant)
+      if (variant.model <= 0) {
+        return
+      }
+      this.$store.commit('ShoppingCard/pushProductToCard', { variant: variant, quantity: variant.model, product: product })
       this.$buefy.toast.open({
-        message: 'Something happened correctly!',
+        message: 'Zum Warenkorb hinzugefügt!',
         type: 'is-success'
       })
     }
