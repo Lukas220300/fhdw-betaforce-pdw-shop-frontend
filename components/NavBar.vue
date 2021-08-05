@@ -21,6 +21,7 @@
       <template #end>
         <b-navbar-item tag="div">
           <div class="buttons">
+            <shopping-card />
             <search-field />
             <nuxt-link to="/auth/login" class="button is-primary" v-if="!$auth.loggedIn">
               <strong>Login</strong>
@@ -38,11 +39,13 @@
 <script>
 import Icon from "./Icon";
 import SearchField from "./SearchField.vue";
+import ShoppingCard from "./ShoppingCard.vue";
 export default {
   name: "NavBar",
   components: {
     Icon,
-    SearchField
+    SearchField,
+    ShoppingCard
   }
 }
 </script>
