@@ -40,9 +40,10 @@
                   </div>
                 </article>
               </div>
-              <b-field :label="'Gesamtpreis: ' + total + ' €'" class="c-ShoppingCardCenterCta"> <!-- TODO: Add v-if="$auth.loggedIn" -->
+              <b-field :label="'Gesamtpreis: ' + total + ' €'" class="c-ShoppingCardCenterCta">
                 <p class="control">
-                    <b-button type="is-primary" label="Jetzt bestellen" @click="checkout"/>
+                    <b-button v-if="$auth.loggedIn" type="is-primary" label="Jetzt bestellen" @click="checkout"/>
+                    <nuxt-link v-else to="/auth/Login" v-on:click.native="open = false" class="button is-primary">Bitte loggen Sie sich ein, um eine Bestellung aufgeben zu können</nuxt-link>
                 </p>
               </b-field>
             </div>
