@@ -21,9 +21,12 @@
       <template #end>
         <b-navbar-item tag="div">
           <div class="buttons">
-            <nuxt-link to="/auth/login" class="button is-primary">
+            <nuxt-link to="/auth/login" class="button is-primary" v-if="!$auth.loggedIn">
               <strong>Login</strong>
             </nuxt-link>
+            <button v-else class="button is-primary" @click="$auth.logout()">
+              <strong>Logout</strong>
+            </button>
           </div>
         </b-navbar-item>
       </template>
