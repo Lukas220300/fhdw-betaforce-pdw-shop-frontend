@@ -36,13 +36,9 @@
 
 <script>
 import Icon from "./Icon";
-import {useContext} from "@nuxtjs/composition-api";
 export default {
   name: "NavBar",
   components: {Icon},
-  setup(){
-    console.log(useContext())
-  },
 }
 </script>
 
