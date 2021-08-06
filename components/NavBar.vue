@@ -21,7 +21,10 @@
       <template #end>
         <b-navbar-item tag="div">
           <div class="buttons">
-            <nuxt-link to="/auth/login" class="button is-primary">
+            <button v-if="$auth.loggedIn" @click="$auth.logout()" class="button is-primary">
+              <strong>Logout</strong>
+            </button>
+            <nuxt-link v-else to="/auth/login" class="button is-primary">
               <strong>Login</strong>
             </nuxt-link>
           </div>
@@ -33,9 +36,13 @@
 
 <script>
 import Icon from "./Icon";
+import {useContext} from "@nuxtjs/composition-api";
 export default {
   name: "NavBar",
-  components: {Icon}
+  components: {Icon},
+  setup(){
+    console.log(useContext())
+  },
 }
 </script>
 
