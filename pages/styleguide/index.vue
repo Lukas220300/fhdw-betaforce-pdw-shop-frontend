@@ -117,6 +117,10 @@
         <Icon name="logo-only-icon" />
         logo-only-icon
       </div>
+      <div class="icon-container">
+        <Icon name="search" />
+        search
+      </div>
     </div>
 
     <h1 class="title is-1 styleguide-header">Teaser</h1>
