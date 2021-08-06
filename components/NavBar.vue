@@ -22,7 +22,7 @@
         <b-navbar-item tag="div">
           <div class="c-navbar__search">
             <div class="search">
-              <input type="text" placeholder="Suche"/>
+              <input type="text" id="searchInput" v-model="searchTerm" @change="change" placeholder="Suche"/>
               <div class="symbol">
                 <svg class="lens">
                   <use xlink:href="#lens"/>
@@ -59,11 +59,28 @@
 </template>
 
 <script>
+import {ref} from "@nuxtjs/composition-api";
 import Icon from "./Icon";
 
 export default {
   name: "NavBar",
   components: {Icon},
+  setup(){
+    const searchTerm = ref('')
+
+    const change = () => {
+      const activeElement = document.activeElement
+      if(activeElement.id === 'searchInput') {
+        console.log('search for: ' + searchTerm.value)
+      }
+      searchTerm.value = ''
+    }
+
+    return {
+      searchTerm,
+      change
+    }
+  },
 }
 </script>
 
