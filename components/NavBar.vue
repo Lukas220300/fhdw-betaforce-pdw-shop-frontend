@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import {ref} from "@nuxtjs/composition-api";
+import {ref, useContext} from "@nuxtjs/composition-api";
 import Icon from "./Icon";
 
 export default {
@@ -67,11 +67,18 @@ export default {
   components: {Icon},
   setup() {
     const searchTerm = ref('')
+    const {app} = useContext()
 
     const change = () => {
       const activeElement = document.activeElement
       if (activeElement.id === 'searchInput') {
-        console.log('search for: ' + searchTerm.value)
+        app.router.push({
+          path: 'suche',
+          query: {
+            searchTerm: searchTerm.value
+          },
+        })
+        activeElement.blur()
       }
       searchTerm.value = ''
     }
