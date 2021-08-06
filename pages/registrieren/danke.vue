@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <lottie-player src="/done-lotti.json" background="transparent" speed="1" style="width: 300px; height: 300px; margin: auto;" loop
                    autoplay></lottie-player>
+    <nuxt-link to="/" class="button is-primary">Zurück zur Startseite</nuxt-link>
   </div>
 </template>
 

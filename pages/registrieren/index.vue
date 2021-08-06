@@ -1,12 +1,15 @@
 <template>
   <div class="c-signUp">
     <h1 class="title is-1">Registrierung</h1>
+    <p class="box">
+      Die mit <strong>*</strong> gekennzeichneten Felder sind Pflichtfelder.
+    </p>
     <div class="c-FormContainer">
       <div class="card">
         <div class="card-content">
 
           <div class="field">
-            <label class="label">Vorname</label>
+            <label class="label">Vorname *</label>
             <div class="control has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.firstName == 1, 'is-danger':(validationData.firstName != 1 && validationData.firstName != 0)}"
@@ -19,7 +22,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Nachname</label>
+            <label class="label">Nachname *</label>
             <div class="control has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.lastName == 1, 'is-danger':(validationData.lastName != 1 && validationData.lastName != 0)}"
@@ -32,7 +35,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Email</label>
+            <label class="label">Email *</label>
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.email == 1, 'is-danger':(validationData.email != 1 && validationData.email != 0)}"
@@ -48,7 +51,7 @@
             </div>
           </div>
 
-          <b-field label="Geburtstag">
+          <b-field label="Geburtstag *">
             <b-datepicker
               v-model="signUpData.birthday"
               placeholder="01.01.2000"
@@ -59,7 +62,7 @@
           </b-field>
 
           <div class="field">
-            <label class="label">Straße + Hausnummer</label>
+            <label class="label">Straße + Hausnummer *</label>
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.street == 1, 'is-danger':(validationData.street != 1 && validationData.street != 0)}"
@@ -75,7 +78,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Postleitzahl</label>
+            <label class="label">Postleitzahl *</label>
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.zip == 1, 'is-danger':(validationData.zip != 1 && validationData.zip != 0)}"
@@ -91,7 +94,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Stadt</label>
+            <label class="label">Stadt *</label>
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.city == 1, 'is-danger':(validationData.city != 1 && validationData.city != 0)}"
@@ -118,7 +121,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Password</label>
+            <label class="label">Password *</label>
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.password == 1, 'is-danger':(validationData.password != 1 && validationData.password != 0)}"
@@ -134,7 +137,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Password wiederholen</label>
+            <label class="label">Password wiederholen *</label>
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.passwordRepeat == 1, 'is-danger':(validationData.passwordRepeat != 1 && validationData.passwordRepeat != 0)}"
@@ -156,14 +159,14 @@
                 <input type="checkbox" name="privacyStatement" v-model="signUpData.privacyStatement">
                 Ich stimme den
                 <nuxt-link to="/privacy">Datenschutzbedingungen</nuxt-link>
-                zu.
+                zu. *
               </label>
             </div>
           </div>
 
           <div class="field">
             <div class="control">
-              <button @click="signUp" class="button is-link">Registrieren</button>
+              <button @click="signUp($axios, validateInput)" class="button is-link">Registrieren</button>
             </div>
           </div>
 
@@ -175,7 +178,6 @@
 </template>
 
 <script>
-import {ref} from "@nuxtjs/composition-api";
 import {
   validateDefaultText,
   validateEmail,
@@ -187,8 +189,8 @@ import {
 
 export default {
   name: "Index",
-  setup() {
-    const signUpData = ref({
+  data() {
+    const signUpData = {
       firstName: '',
       lastName: '',
       street: '',
@@ -199,10 +201,10 @@ export default {
       password: '',
       passwordRepeat: '',
       privacyStatement: false,
-    })
+    }
 
     // 0 -> undefined // 1 -> correct // 2 -> not correct
-    const validationData = ref({
+    const validationData = {
       firstName: 0,
       lastName: 0,
       street: 0,
@@ -213,88 +215,102 @@ export default {
       password: 0,
       passwordRepeat: 0,
       privacyStatement: 0,
-    })
-
-    const validateInput = () => {
-      let validation = true
-      if (!validateDefaultText(signUpData.value.firstName)) {
-        validation = false
-        validationData.value.firstName = 2
-      } else {
-        validationData.value.firstName = 1
-      }
-      if (!validateDefaultText(signUpData.value.lastName)) {
-        validation = false
-        validationData.value.lastName = 2
-      } else {
-        validationData.value.lastName = 1
-      }
-      if (!validateEmail(signUpData.value.email)) {
-        validation = false
-        validationData.value.email = 2
-      } else {
-        validationData.value.email = 1
-      }
-      if (!validateDate(signUpData.value.birthday)) {
-        validation = false
-        validationData.value.birthday = 2
-      } else {
-        validationData.value.birthday = 1
-      }
-      if (!validateDefaultText(signUpData.value.street)) {
-        validation = false
-        validationData.value.street = 2
-      } else {
-        validationData.value.street = 1
-      }
-      if (!validateNumber(signUpData.value.zip)) {
-        validation = false
-        validationData.value.zip = 2
-      } else {
-        validationData.value.zip = 1
-      }
-      if (!validateDefaultText(signUpData.value.city)) {
-        validation = false
-        validationData.value.city = 2
-      } else {
-        validationData.value.city = 1
-      }
-      if (!validatePassword(signUpData.value.password)) {
-        validation = false
-        validationData.value.password = 2
-      } else {
-        validationData.value.password = 1
-      }
-      if (!validateDefaultText(signUpData.value.passwordRepeat) || signUpData.value.passwordRepeat !== signUpData.value.password) {
-        validation = false
-        validationData.value.passwordRepeat = 2
-      } else {
-        validationData.value.passwordRepeat = 1
-      }
-      if (!validateCheckBox(signUpData.value.privacyStatement)) {
-        validation = false
-        validationData.value.privacyStatement = 2
-      } else {
-        validationData.value.privacyStatement = 1
-      }
-
-      return validation
-    }
-
-    const signUp = () => {
-      if (validateInput()) {
-        console.log("Register")
-      } else {
-        console.log("wrong")
-      }
     }
 
     return {
       signUpData,
-      validationData,
-      signUp,
+      validationData
     }
   },
+  methods: {
+    validateInput () {
+      let validation = true
+      if (!validateDefaultText(this.signUpData.firstName)) {
+        validation = false
+        this.validationData.firstName = 2
+      } else {
+        this.validationData.firstName = 1
+      }
+      if (!validateDefaultText(this.signUpData.lastName)) {
+        validation = false
+        this.validationData.lastName = 2
+      } else {
+        this.validationData.lastName = 1
+      }
+      if (!validateEmail(this.signUpData.email)) {
+        validation = false
+        this.validationData.email = 2
+      } else {
+        this.validationData.email = 1
+      }
+      if (!validateDate(this.signUpData.birthday)) {
+        validation = false
+        this.validationData.birthday = 2
+      } else {
+        this.validationData.birthday = 1
+      }
+      if (!validateDefaultText(this.signUpData.street)) {
+        validation = false
+        this.validationData.street = 2
+      } else {
+        this.validationData.street = 1
+      }
+      if (!validateNumber(this.signUpData.zip)) {
+        validation = false
+        this.validationData.zip = 2
+      } else {
+        this.validationData.zip = 1
+      }
+      if (!validateDefaultText(this.signUpData.city)) {
+        validation = false
+        this.validationData.city = 2
+      } else {
+        this.validationData.city = 1
+      }
+      if (!validatePassword(this.signUpData.password)) {
+        validation = false
+        this.validationData.password = 2
+      } else {
+        this.validationData.password = 1
+      }
+      if (!validateDefaultText(this.signUpData.passwordRepeat) || this.signUpData.passwordRepeat !== this.signUpData.password) {
+        validation = false
+        this.validationData.passwordRepeat = 2
+      } else {
+        this.validationData.passwordRepeat = 1
+      }
+      if (!validateCheckBox(this.signUpData.privacyStatement)) {
+        validation = false
+        this.validationData.privacyStatement = 2
+      } else {
+        this.validationData.privacyStatement = 1
+      }
+
+      return validation
+    },
+    signUp (axios, validateInput) {
+      if (validateInput()) {
+        console.log("Register")
+        axios
+          .post('/api/auth/register', this.signUpData)
+          .then(_ => {
+            this.$router.push('/registrieren/danke')
+          })
+          .catch(error => {
+            console.error(error)
+            this.$buefy.toast.open({
+              message: 'Entwas ist schief gelaufen. Probiere es später noch einmal.',
+              type: 'is-danger'
+            })
+          })
+      } else {
+        this.$buefy.toast.open({
+          message: 'Bitte fülle alle Pflichtfelder aus.',
+          type: 'is-danger'
+        })
+      }
+    }
+  }
 }
 </script>
 
