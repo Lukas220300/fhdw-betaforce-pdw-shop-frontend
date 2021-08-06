@@ -65,12 +65,12 @@ import Icon from "./Icon";
 export default {
   name: "NavBar",
   components: {Icon},
-  setup(){
+  setup() {
     const searchTerm = ref('')
 
     const change = () => {
       const activeElement = document.activeElement
-      if(activeElement.id === 'searchInput') {
+      if (activeElement.id === 'searchInput') {
         console.log('search for: ' + searchTerm.value)
       }
       searchTerm.value = ''
