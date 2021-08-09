@@ -37,7 +37,7 @@
               <td>
                 <b-field>
                   <b-field grouped>
-                    <b-numberinput v-model="variant.model" class="c-productDetail__addToCardInput"/>
+                    <b-numberinput v-model="variant.model" class="c-productDetail__addToCardInput" min="0" :max="variant.stock"/>
                     <p class="control">
                       <button class="button c-addToCartButton" @click="addToCart(product, variant)"><Icon name="add-to-cart" /></button>
                     </p>
