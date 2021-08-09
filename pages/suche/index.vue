@@ -15,7 +15,18 @@
     </div>
     <div class="c-search__resultList">
       <div v-if="!loading && searchResults.length > 0">
-        result list
+        <div v-for="result in searchResults" :key="result.id" class="box">
+          <nuxt-link :to="'/' + result.category.id + '/' + result.id">
+            <div class="columns c-searchResult">
+              <div class="column is-2 c-searchResult__image">
+                <img :src="result.cover" class="">
+              </div>
+              <div class="column c-searchResult__text">
+                <h2 class="title is-2">{{ result.name }}</h2>
+              </div>
+            </div>
+          </nuxt-link>
+        </div>
       </div>
       <div v-else-if="!loading && searchResults.length == 0 && !searchTermInSetup" class="c-search__resultListNoResults">
         <h2 class="title is-2">Wie können wir dir weiter helfen ?</h2>
@@ -92,7 +103,7 @@ export default {
       $axios
         .get('/api/productSearch?searchTerm=' + searchTerm)
         .then(results => {
-          searchResults.value = results
+          searchResults.value = results.data
         })
         .catch(error => {
           console.error(error)
@@ -144,6 +155,13 @@ export default {
   }
   &__resultListNoResults {
     padding: 1rem;
+  }
+  .c-searchResult {
+    &__image {
+      > img {
+        width: 8rem;
+      }
+    }
   }
 }
 </style>
