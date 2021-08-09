@@ -76,6 +76,7 @@ import {ref, useContext} from "@nuxtjs/composition-api";
 export default {
   name: "Index",
   setup() {
+    // have to refactor from composition api to normal api
     const loading = ref(false)
     const searchResults = ref([])
     const { app, route, $axios } = useContext()
@@ -129,6 +130,7 @@ export default {
       change,
     }
   },
+  // beforeRouteUpdate(to, from, next) {}
 }
 </script>
 

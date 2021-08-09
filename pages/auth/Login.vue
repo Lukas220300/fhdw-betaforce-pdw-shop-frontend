@@ -12,12 +12,12 @@
           <div>
             <div class="field">
               <p class="control has-icons-left has-icons-right">
-                <input class="input" type="email" v-model="loginData.username" placeholder="Email"
-                       v-bind:class="{'is-success':validationData.username == 1, 'is-danger':(validationData.username != 1 && validationData.username != 0)}">
+                <input class="input" type="email" v-model="loginData.email" placeholder="Email"
+                       v-bind:class="{'is-success':validationData.email == 1, 'is-danger':(validationData.email != 1 && validationData.email != 0)}">
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
-                <span v-if="validationData.username == 1" class="icon is-small is-right">
+                <span v-if="validationData.email == 1" class="icon is-small is-right">
                   <i class="fas fa-check"></i>
                 </span>
               </p>
@@ -68,12 +68,12 @@ export default {
   name: "Login",
   setup() {
     const loginData = ref({
-      username: '',
+      email: '',
       password: '',
     })
 
     const validationData = ref({
-      username: 0,
+      email: 0,
       password: 0,
       denied: false,
     })
@@ -82,18 +82,18 @@ export default {
     const {$auth} = useContext()
 
     const accessDenied = () => {
-      validationData.value.username = 2
+      validationData.value.email = 2
       validationData.value.password = 2
       validationData.value.denied = true
     }
 
     const validateLoginForm = () => {
       let validation = true
-      if (!validateEmail(loginData.value.username)) {
+      if (!validateEmail(loginData.value.email)) {
         validation = false
-        validationData.value.username = 2
+        validationData.value.email = 2
       } else {
-        validationData.value.username = 1
+        validationData.value.email = 1
       }
       if (!validateDefaultText(loginData.value.password)) {
         validation = false
