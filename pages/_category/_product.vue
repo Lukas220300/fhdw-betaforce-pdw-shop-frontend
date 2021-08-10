@@ -37,7 +37,7 @@
               <td>
                 <b-field>
                   <b-field grouped>
-                    <b-numberinput v-model="variant.model" class="c-productDetail__addToCardInput"/>
+                    <b-numberinput v-model="variant.model" class="c-productDetail__addToCardInput" min="0" :max="variant.stock"/>
                     <p class="control">
                       <button class="button c-addToCartButton" @click="addToCart(product, variant)"><Icon name="add-to-cart" /></button>
                     </p>
@@ -102,12 +102,26 @@ export default {
   methods: {
     addToCart(product, variant) {
       console.log('Add to Cart: ')
-      console.log(product)
-      console.log(variant)
-      this.$buefy.toast.open({
-        message: 'Something happened correctly!',
-        type: 'is-success'
-      })
+      if (variant.model > 0) {
+        const entry = {
+          product,
+          variant,
+          amount: variant.model
+        }
+
+        this.$store.commit('shoppingCart/addEntry', entry)
+
+        this.$buefy.toast.open({
+          message: 'Produkt wurde hinzugefüt.',
+          type: 'is-success'
+        })
+      } else {
+        this.$buefy.toast.open({
+          message: 'Die Anzahl muss mindestens 1 betragen.',
+          type: 'is-warning'
+        })
+      }
+
     }
   }
 }

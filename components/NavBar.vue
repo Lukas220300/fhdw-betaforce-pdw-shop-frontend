@@ -53,6 +53,14 @@
             </nuxt-link>
           </div>
         </b-navbar-item>
+        <b-navbar-item tag="div" class="c-ShoppingCard__container">
+          <div class="c-ShoppingCard">
+            <nuxt-link to="/warenkorb" class="button is-secondary c-ShoppingCard__Icon">
+              <Icon name="shopping-cart" />
+            </nuxt-link>
+            <span v-if="numberOfEntries" class="tag is-success">{{numberOfEntries}}</span>
+          </div>
+        </b-navbar-item>
       </template>
     </b-navbar>
   </div>
@@ -73,7 +81,7 @@ export default {
       const activeElement = document.activeElement
       if (activeElement.id === 'searchInput') {
         app.router.push({
-          path: 'suche',
+          path: '/suche',
           query: {
             searchTerm: searchTerm.value
           },
@@ -88,6 +96,11 @@ export default {
       change
     }
   },
+  computed: {
+    numberOfEntries () {
+      return this.$store.state.shoppingCart.entries.length
+    }
+  }
 }
 </script>
 
@@ -225,6 +238,20 @@ export default {
       align-items: center;
     }
   }
+
+  .c-ShoppingCard {
+    .tag {
+      position: absolute;
+      right: -0.5rem;
+      top: 2.6rem;
+    }
+    &__Icon {
+      > svg {
+        width: 1.2rem;
+      }
+    }
+  }
+
 }
 
 @media only screen and (max-width: 1023px) {
@@ -233,6 +260,13 @@ export default {
       > svg {
         width: 1.5rem !important;
         height: 1.5rem !important;
+      }
+    }
+    .c-ShoppingCard {
+      .tag {
+        left: 3.2rem;
+        top: 2.3rem;
+        width: 2rem;
       }
     }
   }
