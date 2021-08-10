@@ -58,7 +58,7 @@
             <nuxt-link to="/warenkorb" class="button is-secondary c-ShoppingCard__Icon">
               <Icon name="shopping-cart" class=""/>
             </nuxt-link>
-            <span v-if="false" class="tag is-success">20</span>
+            <span v-if="numberOfEntries" class="tag is-success">{{numberOfEntries}}</span>
           </div>
         </b-navbar-item>
       </template>
@@ -81,7 +81,7 @@ export default {
       const activeElement = document.activeElement
       if (activeElement.id === 'searchInput') {
         app.router.push({
-          path: 'suche',
+          path: '/suche',
           query: {
             searchTerm: searchTerm.value
           },
@@ -96,6 +96,11 @@ export default {
       change
     }
   },
+  computed: {
+    numberOfEntries () {
+      return this.$store.state.shoppingCart.entries.length
+    }
+  }
 }
 </script>
 
