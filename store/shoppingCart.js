@@ -18,10 +18,22 @@ export const mutations = {
       state.entries.push(newEntry)
     }
   },
+  increaseEntry(state, entry) {
+    const index = state.entries.indexOf(entry)
+    if(index > -1) {
+      state.entries[index].amount++
+    }
+  },
+  decreaseEntry(state, entry) {
+    const index = state.entries.indexOf(entry)
+    if(index > -1) {
+      state.entries[index].amount--
+    }
+  },
   removeEntry(state, entry) {
     const index = state.entries.indexOf(entry)
     if (index > -1) {
-
+      state.entries.splice(index,1)
     }
   }
 }

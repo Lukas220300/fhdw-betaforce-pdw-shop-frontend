@@ -64,7 +64,6 @@
 <script>
 import {ref, useContext, useRouter} from "@nuxtjs/composition-api";
 import { useApi } from "@/composable/api";
-import {CartEntry} from "@/composable/api/interfaces/cartEntry";
 
 export default {
   name: "ProductDetail",

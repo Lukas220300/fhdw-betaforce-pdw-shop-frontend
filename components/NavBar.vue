@@ -56,7 +56,7 @@
         <b-navbar-item tag="div" class="c-ShoppingCard__container">
           <div class="c-ShoppingCard">
             <nuxt-link to="/warenkorb" class="button is-secondary c-ShoppingCard__Icon">
-              <Icon name="shopping-cart" class=""/>
+              <Icon name="shopping-cart" />
             </nuxt-link>
             <span v-if="numberOfEntries" class="tag is-success">{{numberOfEntries}}</span>
           </div>
