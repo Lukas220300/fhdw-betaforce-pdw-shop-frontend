@@ -8,7 +8,8 @@
 <script>
 export default {
   name: "Admin",
-  middleware: ['accessProtection']
+  // middleware: ['accessProtection', 'admin']
+  middleware: ['admin']
 }
 </script>
 
