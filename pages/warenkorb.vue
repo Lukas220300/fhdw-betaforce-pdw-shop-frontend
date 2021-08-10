@@ -2,7 +2,7 @@
   <div class="c-shoppingCart">
     <h1 class="title is-1">Einkaufswagen</h1>
     <div v-if="entries.length" class="c-shoppingCart__tableContainer">
-        <table class="table is-striped">
+      <table class="table is-striped">
           <thead>
           <tr>
             <th>Nr.</th>
@@ -49,6 +49,25 @@
           </tr>
           </tbody>
         </table>
+      <div class="c-shoppingCart__submitButton">
+        <div class="tableContainerPrice">
+          <table>
+            <tr>
+              <td class="td-one">Gesammtpreis</td>
+              <td class="td-two">{{ totalPrice }} €</td>
+            </tr>
+            <tr>
+              <td class="td-one">Versandkosten</td>
+              <td class="td-two">3.00 €</td>
+            </tr>
+            <tr style="border-top: 1px solid black">
+              <td class="td-one">Summe</td>
+              <td class="td-two">{{ totalPrice + 3.00 }} €</td>
+            </tr>
+          </table>
+        </div>
+        <nuxt-link to="/" class="button is-success c-shoppingCart__submitButton">Zur Kasse</nuxt-link>
+      </div>
     </div>
     <div v-else>
       <h2 class="title is-2"> Du hast noch keine Artikel in deinem Einkaufswagen.</h2>
@@ -79,6 +98,14 @@ export default {
     entries(){
       return this.$store.state.shoppingCart.entries
     },
+    totalPrice(){
+      let totalPrice = 0
+      this.$store.state.shoppingCart.entries.forEach((entry) => {
+        const entryPrice = entry.amount * entry.variant.price
+        totalPrice += entryPrice
+      })
+      return Math.round(totalPrice*100)/100
+    }
   }
 }
 </script>
@@ -91,6 +118,12 @@ export default {
   &__tableContainer {
     overflow-x: scroll;
   }
+  &__submitButton {
+    float: right;
+  }
+  &__priceSummary {
+    float: right;
+  }
   .c-shoppingCartEntry {
     &__item {
       display: inline-block;
@@ -98,6 +131,15 @@ export default {
     &__image {
       width: 2rem;
     }
+  }
+  .td-one {
+    padding-right: 1rem;
+  }
+  .td-two {
+    float: right;
+  }
+  .tableContainerPrice {
+    margin-bottom: 1rem;
   }
   .c-addToCartButton {
     & > svg {
