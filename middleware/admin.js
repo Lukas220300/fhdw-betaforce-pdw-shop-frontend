@@ -1,7 +1,5 @@
 export default function ({store, redirect}) {
   const authority = 'ROLE_ADMIN'
-  console.log(store.$auth.loggedIn)
-  console.log(redirect)
 
   if(!store.$auth.loggedIn) {
     return redirect('/login')
@@ -11,7 +9,6 @@ export default function ({store, redirect}) {
 
   let hasRoleAdmin = false
   user.authorities.forEach((auth) => {
-    console.log(auth)
     if(auth.authority === authority) {
       hasRoleAdmin = true
     }
