@@ -61,6 +61,9 @@ export default {
   build: {},
 
   auth: {
+    redirect: {
+      home: false,
+    },
     strategies: {
       local: {
         token: {
