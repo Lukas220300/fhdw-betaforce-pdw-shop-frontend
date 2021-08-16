@@ -50,12 +50,13 @@
     </div>
     <div v-else-if="activeStep === 1" class="c-stepView card">
       Bezahlung
+      <script src="https://www.paypal.com/sdk/js?client-id=Adht6-CEstTc9ut_-mCZKeGpU_sHMNlxhRpIn3lPXqXb_XrTBfmUHv_LgA2dOCtpKKdEHBZECrHpcs3z&components=buttons"></script>
       <div class="todo">
         Bezahlung
       </div>
     </div>
     <div v-else-if="activeStep === 2" class="c-stepView card">
-      Bestätigung
+
     </div>
 
     <div class="card c-navigation">
