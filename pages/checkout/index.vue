@@ -49,19 +49,61 @@
       </div>
     </div>
     <div v-else-if="activeStep === 1" class="c-stepView card">
-      Bezahlung
-      <script src="https://www.paypal.com/sdk/js?client-id=Adht6-CEstTc9ut_-mCZKeGpU_sHMNlxhRpIn3lPXqXb_XrTBfmUHv_LgA2dOCtpKKdEHBZECrHpcs3z&components=buttons"></script>
-      <div class="todo">
-        Bezahlung
-      </div>
+      <button class="button is-primary" @click="pay">Bezahlen</button>
     </div>
     <div v-else-if="activeStep === 2" class="c-stepView card">
-
+      <table class="table is-striped">
+        <thead>
+        <tr>
+          <th>Nr.</th>
+          <th>Bezeichnung</th>
+          <th>Einheit</th>
+          <th>Stückpreis</th>
+          <th>Menge</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(entry, index) in entries" :key="index">
+          <th>{{ index+1 }}</th>
+          <th>{{ entry.product.name }}</th>
+          <td>{{ entry.variant.unit.numberOfContainer }} X {{ entry.variant.unit.amount }}</td>
+          <td style="text-align: right;">{{ entry.variant.price }} €</td>
+          <td>
+            <b-field>
+              <b-field grouped>
+                <div class="b-numberinput field c-shoppingCart__addToCardInput is-grouped">
+                  <p class="control minus">
+                    <button type="button" @click="decrease(entry)" class="button is-primary">
+                        <span class="icon">
+                          <i class="mdi mdi-minus mdi-24px"></i>
+                        </span>
+                    </button>
+                  </p>
+                  <div class="control is-clearfix">
+                    <input :id="'input-'+entry.product.id+'-'+entry.variant.id" type="number" :value="entry.amount" autocomplete="on" step="1" min="0" class="input">
+                  </div>
+                  <p class="control plus">
+                    <button type="button" @click="increase(entry)" class="button is-primary">
+                        <span class="icon">
+                          <i class="mdi mdi-plus mdi-24px"></i>
+                        </span>
+                    </button>
+                  </p>
+                </div>
+                <p class="control">
+                  <button class="button c-addToCartButton" @click="removeEntry(entry)"><Icon name="trash"/></button>
+                </p>
+              </b-field>
+            </b-field>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="card c-navigation">
       <button v-bind:disabled="activeStep < 1" @click="setStepActive(activeStep - 1)" class="button is-second c-backButton">Zurück</button>
-      <button v-bind:disabled="activeStep === numberOfSteps-1 || ageBlocked" @click="setStepActive(activeStep + 1)" class="button is-primary c-nextButton">Weiter</button>
+      <button v-bind:disabled="activeStep === numberOfSteps-1 || ageBlocked || (activeStep === 1 && paymentBlocked)" @click="setStepActive(activeStep + 1)" class="button is-primary c-nextButton">Weiter</button>
       <button v-if="activeStep === numberOfSteps-1" v-bind:disabled="ageBlocked" class="button is-primary c-finishButton">Bestellen!</button>
     </div>
 
@@ -117,12 +159,17 @@ export default {
     const ageCheckInput = ref('')
     const ageCheckValidation = ref(0)
     const numberOfSteps = 3
+    const paymentBlocked = ref(true)
 
 
     const setStepActive = (index) => {
       const newIndex = index % numberOfSteps
       activeStep.value = newIndex
       percentage.value = newIndex*25 + 25
+    }
+
+    const pay = () => {
+      paymentBlocked.value = false
     }
 
     const checkAgeMethod = () => {
@@ -167,6 +214,9 @@ export default {
       ageCheckValidation,
       setStepActive,
       checkAgeMethod,
+      paymentBlocked,
+      pay,
+      entries,
     }
   },
 }
