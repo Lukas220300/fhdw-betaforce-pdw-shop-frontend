@@ -51,54 +51,53 @@
     <div v-else-if="activeStep === 1" class="c-stepView card">
       <button class="button is-primary" @click="pay">Bezahlen</button>
     </div>
-    <div v-else-if="activeStep === 2" class="c-stepView card">
-      <table class="table is-striped">
-        <thead>
-        <tr>
-          <th>Nr.</th>
-          <th>Bezeichnung</th>
-          <th>Einheit</th>
-          <th>Stückpreis</th>
-          <th>Menge</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(entry, index) in entries" :key="index">
-          <th>{{ index+1 }}</th>
-          <th>{{ entry.product.name }}</th>
-          <td>{{ entry.variant.unit.numberOfContainer }} X {{ entry.variant.unit.amount }}</td>
-          <td style="text-align: right;">{{ entry.variant.price }} €</td>
-          <td>
-            <b-field>
-              <b-field grouped>
-                <div class="b-numberinput field c-shoppingCart__addToCardInput is-grouped">
-                  <p class="control minus">
-                    <button type="button" @click="decrease(entry)" class="button is-primary">
-                        <span class="icon">
-                          <i class="mdi mdi-minus mdi-24px"></i>
-                        </span>
-                    </button>
-                  </p>
-                  <div class="control is-clearfix">
-                    <input :id="'input-'+entry.product.id+'-'+entry.variant.id" type="number" :value="entry.amount" autocomplete="on" step="1" min="0" class="input">
-                  </div>
-                  <p class="control plus">
-                    <button type="button" @click="increase(entry)" class="button is-primary">
-                        <span class="icon">
-                          <i class="mdi mdi-plus mdi-24px"></i>
-                        </span>
-                    </button>
-                  </p>
-                </div>
-                <p class="control">
-                  <button class="button c-addToCartButton" @click="removeEntry(entry)"><Icon name="trash"/></button>
-                </p>
-              </b-field>
-            </b-field>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <div v-else-if="activeStep === 2" class="c-stepView card ">
+      <div class="c-stepView__tableContainer">
+        <table class="table is-striped">
+          <thead>
+          <tr>
+            <th>Nr.</th>
+            <th>Bezeichnung</th>
+            <th>Einheit</th>
+            <th>Stückpreis</th>
+            <th>Menge in Stück</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(entry, index) in entries" :key="index">
+            <th>{{ index+1 }}</th>
+            <th>{{ entry.product.name }}</th>
+            <td>{{ entry.variant.unit.numberOfContainer }} X {{ entry.variant.unit.amount }}</td>
+            <td style="text-align: right;">{{ entry.variant.price }} €</td>
+            <td style="text-align: right;">{{entry.amount}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tableContainerPrice">
+        <table>
+          <tr>
+            <td class="td-one">Gesammtpreis</td>
+            <td class="td-two">{{ totalPrice }} €</td>
+          </tr>
+          <tr>
+            <td class="td-one">Versandkosten</td>
+            <td class="td-two">3.00 €</td>
+          </tr>
+          <tr style="border-top: 1px solid black; font-weight: bold;">
+            <td class="td-one">Summe</td>
+            <td class="td-two">{{ totalPrice + 3.00 }} €</td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <h3 class="title is-3">Lieferadresse</h3>
+        {{ $auth.user.firstName }} {{ $auth.user.lastName }} <br>
+        {{ $auth.user.street }} <br>
+        {{ $auth.user.zip }} {{ $auth.user.city }} <br>
+        Deutschland <br>
+      </div>
+      <p style="margin: 2rem 0; font-weight: bold">Mit Klicken auf "Bestellen!", bestätigen Sie dass Sie unsere <nuxt-link to="/agb">AGB</nuxt-link> gelesen haben und mit diesen einverstanden sind.</p>
     </div>
 
     <div class="card c-navigation">
@@ -136,7 +135,13 @@ export default {
     if(entries.value.length < 1) {
       console.log('keine produkte da') // todo go back
     }
-
+    const totalPrice = ref(0.0)
+    let tempTotalPrice = 0
+    entries.value.forEach((entry) => {
+      const entryPrice = entry.amount * entry.variant.price
+      tempTotalPrice += entryPrice
+    })
+    totalPrice.value = Math.round(tempTotalPrice*100)/100
     const percentage = ref(25)
     const activeStep = ref(0)
     const minAge = getMinAge(entries.value)
@@ -217,6 +222,7 @@ export default {
       paymentBlocked,
       pay,
       entries,
+      totalPrice,
     }
   },
 }
@@ -232,6 +238,9 @@ export default {
   }
   .progress {
     margin-bottom: 4rem;
+  }
+  .table {
+    width: 100%;
   }
   .c-steps {
     margin-top: 2rem;
@@ -273,6 +282,19 @@ export default {
       .check-button {
         margin-top: 1rem;
       }
+    }
+    &__tableContainer {
+      overflow-x: scroll;
+      margin-bottom: 1rem;
+    }
+    .td-one {
+      padding-right: 1rem;
+    }
+    .td-two {
+      float: right;
+    }
+    .tableContainerPrice {
+      margin-bottom: 1rem;
     }
   }
   .c-navigation {
