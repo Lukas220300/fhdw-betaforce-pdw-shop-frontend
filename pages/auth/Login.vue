@@ -24,7 +24,7 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input" type="password" v-model="loginData.password" placeholder="Password"
+                <input class="input" type="password" v-model="loginData.password" placeholder="Password" @change="login"
                        v-bind:class="{'is-success':validationData.password == 1, 'is-danger':(validationData.password != 1 && validationData.password != 0)}">
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>

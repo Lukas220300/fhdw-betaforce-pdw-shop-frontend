@@ -35,5 +35,8 @@ export const mutations = {
     if (index > -1) {
       state.entries.splice(index,1)
     }
-  }
+  },
+  clear(state) {
+    state.entries = []
+  },
 }

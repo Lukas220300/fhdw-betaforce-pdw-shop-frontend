@@ -103,7 +103,7 @@
     <div class="card c-navigation">
       <button v-bind:disabled="activeStep < 1" @click="setStepActive(activeStep - 1)" class="button is-second c-backButton">Zurück</button>
       <button v-bind:disabled="activeStep === numberOfSteps-1 || ageBlocked || (activeStep === 1 && paymentBlocked)" @click="setStepActive(activeStep + 1)" class="button is-primary c-nextButton">Weiter</button>
-      <button v-if="activeStep === numberOfSteps-1" v-bind:disabled="ageBlocked" class="button is-primary c-finishButton">Bestellen!</button>
+      <button v-if="activeStep === numberOfSteps-1" v-bind:disabled="ageBlocked" class="button is-primary c-finishButton" @click="order">Bestellen!</button>
     </div>
 
   </div>
@@ -130,10 +130,10 @@ export default {
       return new Date(new Date() - new Date(birthday)).getFullYear() - 1970
     }
 
-    const {store, $auth} = useContext()
+    const {store, $auth, $axios, app} = useContext()
     const entries = ref(store.state.shoppingCart.entries)
     if(entries.value.length < 1) {
-      console.log('keine produkte da') // todo go back
+      app.router.push('/')
     }
     const totalPrice = ref(0.0)
     let tempTotalPrice = 0
@@ -209,6 +209,24 @@ export default {
       ageBlocked.value = true
     }
 
+    const order = () => {
+      const orderItemList = []
+      entries.value.forEach((element) => {
+        orderItemList.push({
+          quantity: element.quantity,
+          productVariantId: element.variant.id
+        })
+      })
+      $axios.$post('/api/order', orderItemList).then(() => {
+        store.commit('shoppingCart/clear')
+        app.router.push('/checkout/success')
+
+      })
+        .catch(() => {
+          app.router.push('/checkout/failed')
+        })
+    }
+
     return {
       percentage,
       activeStep,
@@ -223,6 +241,7 @@ export default {
       pay,
       entries,
       totalPrice,
+      order,
     }
   },
 }
@@ -317,4 +336,32 @@ export default {
     }
   }
 }
+
+@media only screen and (max-width: 1023px) {
+
+  .c-checkout {
+    .c-steps {
+      .c-step {
+        &--1 {
+          left: 0%;
+          margin-left: 1rem;
+        }
+        &--2 {
+          left: 25%;
+          margin-left: -1.5rem;
+        }
+        &--3 {
+          left: 50%;
+          margin-left: -2.1rem;
+        }
+        &--4 {
+          left: 75%;
+          margin-left: -2rem;
+        }
+      }
+    }
+  }
+
+}
+
 </style>
