@@ -18,9 +18,9 @@
 
     <div v-if="activeStep === 0" class="c-stepView c-stepView--delivery card">
       <h3 class="title is-3">Lieferadresse</h3>
-      Lukas Schönbeck <br>
-      Auf dem Schlaage 3 <br>
-      32139 Spenge <br>
+      {{ $auth.user.firstName }} {{ $auth.user.lastName }} <br>
+      {{ $auth.user.street }} <br>
+      {{ $auth.user.zip }} {{ $auth.user.city }} <br>
       Deutschland <br>
       <div class="spacer"></div>
       <h3 class="title is-3">Rechnungsadresse</h3>
@@ -50,6 +50,9 @@
     </div>
     <div v-else-if="activeStep === 1" class="c-stepView card">
       Bezahlung
+      <div class="todo">
+        Bezahlung
+      </div>
     </div>
     <div v-else-if="activeStep === 2" class="c-stepView card">
       Bestätigung
@@ -65,15 +68,51 @@
 </template>
 
 <script>
-import {ref} from "@nuxtjs/composition-api";
+import {ref, useContext} from "@nuxtjs/composition-api";
 
 export default {
   name: "Index",
   setup(){
+
+    const getMinAge = (entries) => {
+      let minAge = 0
+      entries.forEach(entry => {
+        const productMinAge = entry.product.minAge
+        if(productMinAge > minAge) {
+          minAge = productMinAge
+        }
+      })
+      return minAge
+    }
+    const calcAge = (birthday) => {
+      return new Date(new Date() - new Date(birthday)).getFullYear() - 1970
+    }
+
+    const {store, $auth} = useContext()
+    const entries = ref(store.state.shoppingCart.entries)
+    if(entries.value.length < 1) {
+      console.log('keine produkte da') // todo go back
+    }
+
     const percentage = ref(25)
     const activeStep = ref(0)
-    const ageBlocked = ref(false) // wenn alter überprüft werden muss --> zum blockieren des Checkout prozesses
-    const checkAge = ref(false) // wenn alter überprüft werden muss -> zum anzeigen des Feldes
+    const minAge = getMinAge(entries.value)
+    const isBlockedByAge = (minAge, user) => {
+      if(minAge > 0 && !user.hasVerifiedAge) {
+        return true
+      } else if (minAge > 0 && user.hasVerifiedAge) {
+        if(calcAge(user.birthday) >= minAge) {
+          return false
+        }
+        return true
+      } else if (minAge === 0) {
+        return false
+      } else {
+        return true
+      }
+    }
+    const ageBlocked = ref(isBlockedByAge(minAge, $auth.user))
+    const checkAge = ref(minAge !== 0 && !$auth.user.hasVerifiedAge)
     const ageCheckInput = ref('')
     const ageCheckValidation = ref(0)
     const numberOfSteps = 3
@@ -103,7 +142,12 @@ export default {
 
         if((sum % 10) === checkNumber) {
           ageCheckValidation.value = 1
-          ageBlocked.value = false
+          // todo verifiedAge
+          const blockedByAge = minAge > calcAge($auth.user.birthday)
+          ageBlocked.value = blockedByAge
+          if(blockedByAge) {
+            console.log('Du bimst zu jung für dem shit') // todo go to warenkorb
+          }
           return;
         }
       }
