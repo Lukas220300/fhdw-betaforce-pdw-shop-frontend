@@ -1,4 +1,5 @@
 export default function ({store, redirect}) {
+  /*
   const authority = 'ROLE_ADMIN'
 
   if(!store.$auth.loggedIn) {
@@ -17,4 +18,5 @@ export default function ({store, redirect}) {
   if(!hasRoleAdmin) {
     return redirect('/')
   }
+  */
 }

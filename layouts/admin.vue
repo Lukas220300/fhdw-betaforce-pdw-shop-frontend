@@ -20,7 +20,9 @@
           <nuxt-link to="/admin" class="navbar-item">
             Home
           </nuxt-link>
-
+          <nuxt-link to="/admin/order" class="navbar-item">
+            Bestellungen
+          </nuxt-link>
           <nuxt-link to="/admin/products" class="navbar-item">
             Produkte
           </nuxt-link>
