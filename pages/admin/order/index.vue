@@ -93,7 +93,7 @@
           Deutschland <br>
           <br>
           <h4 class="title is-4">Artickel</h4>
-          <div v-for="item in tempOrder.orderItemList" class="box">
+          <div v-for="item in tempOrder.orderItemList" :key="item.id" class="box">
             {{item}}
           </div>
         </section>
