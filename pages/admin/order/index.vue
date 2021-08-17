@@ -53,7 +53,7 @@
           </td>
           <td v-if="showCreatedAt">{{ order.createdAt }}</td>
           <td>
-            <button class="button">...</button>
+            <button class="button" @click="showInfoModal(order)">...</button>
           </td>
         </tr>
         </tbody>
@@ -77,7 +77,31 @@
         </section>
       </div>
     </div>
-
+    <!-- Info Modal-->
+    <div class="modal" v-bind:class="{'is-active':showInfoModalFlag}">
+      <div class="modal-background" @click="closeInfoModal"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Bestellinfo</p>
+          <button class="delete" aria-label="close" @click="closeInfoModal"></button>
+        </header>
+        <section v-if="tempOrder.user" class="modal-card-body">
+          <h4 class="title is-4">Liferadresse</h4>
+          {{ tempOrder.user.firstName }} {{ tempOrder.user.lastName }} <br>
+          {{ tempOrder.user.street }} <br>
+          {{ tempOrder.user.zip }} {{ tempOrder.user.city }} <br>
+          Deutschland <br>
+          <br>
+          <h4 class="title is-4">Artickel</h4>
+          <div v-for="item in tempOrder.orderItemList" class="box">
+            {{item}}
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" @click="closeInfoModal">Close</button>
+        </footer>
+      </div>
+    </div>
 
     <!-- Modals end-->
 
@@ -118,6 +142,7 @@ export default {
     // modals
     const tempOrder = ref({})
     const showStatusModalFlag = ref(false)
+    const showInfoModalFlag = ref(false)
 
     const showStatusModal = (order) => {
       tempOrder.value = order
@@ -133,6 +158,14 @@ export default {
         closeStatusModal()
       })
     }
+    const showInfoModal = (order) => {
+      tempOrder.value = order
+      showInfoModalFlag.value = true
+    }
+    const closeInfoModal = () => {
+      showInfoModalFlag.value = false
+      tempOrder.value = {}
+    }
 
     loadOrders()
 
@@ -147,6 +180,9 @@ export default {
       showStatusModal,
       closeStatusModal,
       changeOrderStatus,
+      showInfoModalFlag,
+      showInfoModal,
+      closeInfoModal,
     }
   },
 }
