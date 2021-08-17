@@ -23,16 +23,18 @@
         </tr>
         </tbody>
       </table>
+      <button class="button" @click="openNewModal" style="width: 100%"> + Neu anlegen</button>
     </div>
 
     <div class="modal" v-bind:class="{'is-active':openEditModal}">
       <div @click="closeModal" class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Kategorie bearbeiten</p>
+          <p v-if="!newMode" class="modal-card-title">Kategorie bearbeiten</p>
+          <p v-else class="modal-card-title">Neue Kategory anlegen</p>
           <button class="delete" @click="closeModal" aria-label="close"></button>
         </header>
-        <section v-if="tempCategory.title" class="modal-card-body">
+        <section v-if="tempCategory.title || newMode" class="modal-card-body">
           <div class="field">
             <p class="control">
               <input class="input" v-model="tempCategory.title" type="text" placeholder="Title">
@@ -45,8 +47,8 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success" @click="saveCategory">Save changes</button>
-          <button class="button" @click="closeModal">Cancel</button>
+          <button class="button is-success" @click="saveCategory">Speichern</button>
+          <button class="button" @click="closeModal">Abbrechen</button>
         </footer>
       </div>
     </div>
@@ -83,11 +85,16 @@ export default {
     const closeModal = () => {
       openEditModal.value = false
       tempCategory.value = {}
+      newMode.value = false
     }
 
     const saveCategory = () => {
       if(newMode.value) {
-        // new mdoe
+        console.log(tempCategory)
+        $axios.$post('/api/categories', tempCategory.value).then((res) => {
+          closeModal()
+          loadCategories()
+        })
       } else {
         const patchObject = {}
         let somethingChange = false;
@@ -101,8 +108,20 @@ export default {
         }
         if(somethingChange) {
           $axios.$patch('/api/categories/'+tempCategory.value.id, patchObject)
+          closeModal()
+          loadCategories()
+        } else {
+          closeModal()
         }
       }
+    }
+
+    const openNewModal = () => {
+      newMode.value = true
+      changeCategory({
+        title: '',
+        cover: '',
+      })
     }
 
     loadCategories()
@@ -114,6 +133,8 @@ export default {
       tempCategory,
       openEditModal,
       saveCategory,
+      openNewModal,
+      newMode,
     }
   },
 }
