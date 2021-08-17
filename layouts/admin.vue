@@ -29,6 +29,9 @@
           <nuxt-link to="/admin/categories" class="navbar-item">
             Kategorien
           </nuxt-link>
+          <nuxt-link to="/admin/unit" class="navbar-item">
+            Einheiten
+          </nuxt-link>
 
 
         </div>
