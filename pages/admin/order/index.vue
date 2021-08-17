@@ -22,7 +22,7 @@
     </div>
 
     <div class="table-container">
-      <table class="table">
+      <table class="table is-striped">
         <thead>
         <tr>
           <th v-if="showId"><abbr title="Bestellnummer">Id</abbr></th>
