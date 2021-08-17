@@ -25,18 +25,27 @@
       </table>
     </div>
 
-    <div id="editCategoryModal" class="modal">
+    <div class="modal" v-bind:class="{'is-active':openEditModal}">
       <div @click="closeModal" class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Modal title</p>
+          <p class="modal-card-title">Kategorie bearbeiten</p>
           <button class="delete" @click="closeModal" aria-label="close"></button>
         </header>
-        <section class="modal-card-body">
-          <!-- Content ... -->
+        <section v-if="tempCategory.title" class="modal-card-body">
+          <div class="field">
+            <p class="control">
+              <input class="input" v-model="tempCategory.title" type="text" placeholder="Title">
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <input class="input" v-model="tempCategory.cover" type="text" placeholder="Covername">
+            </p>
+          </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
+          <button class="button is-success" @click="saveCategory">Save changes</button>
           <button class="button" @click="closeModal">Cancel</button>
         </footer>
       </div>
@@ -55,6 +64,9 @@ export default {
   setup(){
     const {$axios} = useContext()
     const categories = ref([])
+    const tempCategory = ref({})
+    const openEditModal = ref(false)
+    const newMode = ref(false)
 
 
     const loadCategories = () => {
@@ -64,14 +76,33 @@ export default {
     }
 
     const changeCategory = (category) => {
-      console.log(category)
-      const modal = document.getElementById('editCategoryModal')
-      modal.classList.add('is-active')
+      tempCategory.value = category
+      openEditModal.value = true
     }
 
     const closeModal = () => {
-      const modal = document.getElementById('editCategoryModal')
-      modal.classList.remove('is-active')
+      openEditModal.value = false
+      tempCategory.value = {}
+    }
+
+    const saveCategory = () => {
+      if(newMode.value) {
+        // new mdoe
+      } else {
+        const patchObject = {}
+        let somethingChange = false;
+        if(tempCategory.value.title !== '') {
+          somethingChange = true
+          patchObject.title = tempCategory.value.title
+        }
+        if(tempCategory.value.cover !== '') {
+          somethingChange = true
+          patchObject.cover = tempCategory.value.cover
+        }
+        if(somethingChange) {
+          $axios.$patch('/api/categories/'+tempCategory.value.id, patchObject)
+        }
+      }
     }
 
     loadCategories()
@@ -80,6 +111,9 @@ export default {
       categories,
       changeCategory,
       closeModal,
+      tempCategory,
+      openEditModal,
+      saveCategory,
     }
   },
 }
