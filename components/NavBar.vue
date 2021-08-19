@@ -45,9 +45,10 @@
         </b-navbar-item>
         <b-navbar-item tag="div">
           <div class="buttons">
-            <button v-if="$auth.loggedIn" @click="$auth.logout()" class="button is-primary">
-              <strong>Logout</strong>
-            </button>
+            <nuxt-link to="/ich" v-if="$auth.loggedIn" class="button is-primary c-Icon">
+              <Icon name="user-icon" class="c-UserIcon" />
+              Ich
+            </nuxt-link>
             <nuxt-link v-else to="/auth/login" class="button is-primary">
               <strong>Login</strong>
             </nuxt-link>
@@ -55,7 +56,7 @@
         </b-navbar-item>
         <b-navbar-item tag="div" class="c-ShoppingCard__container">
           <div class="c-ShoppingCard">
-            <nuxt-link to="/warenkorb" class="button is-secondary c-ShoppingCard__Icon">
+            <nuxt-link to="/warenkorb" class="button is-secondary c-Icon">
               <Icon name="shopping-cart" />
             </nuxt-link>
             <span v-if="numberOfEntries" class="tag is-success">{{numberOfEntries}}</span>
@@ -245,11 +246,14 @@ export default {
       right: -0.5rem;
       top: 2.6rem;
     }
-    &__Icon {
-      > svg {
-        width: 1.2rem;
-      }
+  }
+  .c-Icon {
+    > svg {
+      width: 1.2rem;
     }
+  }
+  .c-UserIcon {
+    margin-right: 0.5rem;
   }
 
 }
