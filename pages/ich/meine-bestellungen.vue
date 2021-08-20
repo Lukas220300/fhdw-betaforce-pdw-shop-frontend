@@ -34,6 +34,7 @@ import {ref, useContext} from "@nuxtjs/composition-api";
 const {useApi} = require("@/composable/api");
 // @todo hier sind auch statusse
 export default {
+  name: "MeineBestellungen",
   setup() {
     const {$axios} = useContext()
     const orders = ref()
@@ -55,7 +56,6 @@ export default {
       formatToDate,
     }
   },
-  name: "MeineBestellungen"
 }
 </script>
 
