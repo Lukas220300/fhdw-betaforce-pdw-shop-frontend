@@ -40,6 +40,9 @@ export default {
 
     useApi($axios).order.findByMe().then((response) => {
       orders.value = response
+      orders.value.sort((a,b) => {
+        return b.createdAt-a.createdAt
+      })
     })
 
     const formatToDate = (timeStamp) => {
