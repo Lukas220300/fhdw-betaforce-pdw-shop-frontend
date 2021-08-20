@@ -4,6 +4,7 @@ import {CategoryRepository} from "~/composable/api/repositories/categoryReposito
 import {UnitRepository} from "~/composable/api/repositories/unitRepository";
 import {ProductRepository} from "~/composable/api/repositories/productRepository";
 import {ProductVariantRepository} from "~/composable/api/repositories/productVariantRepository";
+import {OrderRepository} from "~/composable/api/repositories/orderRepository";
 
 let repositories: {
   user: UserRepository,
@@ -11,6 +12,7 @@ let repositories: {
   unit: UnitRepository,
   product: ProductRepository,
   productVariant: ProductVariantRepository,
+  order: OrderRepository,
 } | null = null
 
 const createRepositories = ($axios: NuxtAxiosInstance) => ({
@@ -19,6 +21,7 @@ const createRepositories = ($axios: NuxtAxiosInstance) => ({
   unit: new UnitRepository($axios),
   product: new ProductRepository($axios),
   productVariant: new ProductVariantRepository($axios),
+  order: new OrderRepository($axios)
 })
 
 export const useApi = ($axios: NuxtAxiosInstance) => {

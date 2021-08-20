@@ -70,7 +70,7 @@
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
 import Icon from "./Icon";
-
+// @todo ich button und warenkorb button bei handy auf folle breite
 export default {
   name: "NavBar",
   components: {Icon},
