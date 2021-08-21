@@ -35,6 +35,12 @@ export default {
 
     useApi($axios).order.findOneById(bestellnummer).then((response) => {
       order.value = response
+      order.value.orderItemList.forEach((item) => {
+        const productVariantId = item.productVariant.id
+        useApi($axios).productVariant.getProductToVariant(productVariantId).then((result) => {
+          console.log(result)
+        })
+      })
     })
 
     return {
