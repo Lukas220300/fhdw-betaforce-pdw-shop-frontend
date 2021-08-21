@@ -250,6 +250,7 @@ export default {
   .c-Icon {
     > svg {
       width: 1.2rem;
+      height: 1.2rem;
     }
   }
   .c-UserIcon {
