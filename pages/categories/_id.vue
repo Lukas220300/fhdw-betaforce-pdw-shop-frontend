@@ -1,12 +1,29 @@
 <template>
-  <div>
+  <div class="c-category">
 
-    <div v-if="categoryId">
+    <div v-if="categoryId" class="c-products">
       <h1 class="title is-1">Produktauswahl</h1>
-      {{ categoryProducts }}
-      <nuxt-link v-for="product in categoryProducts" :key="product.id" :to="'/'+categoryId+'/'+product.id"
-                 class="button">{{ product.name }}
-      </nuxt-link>
+      <div v-if="categoryProducts.length">
+        <nuxt-link v-for="product in categoryProducts" :key="product.id" :to="'/'+categoryId+'/'+product.id">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img :src="product.cover" alt="Placeholder image" style="object-fit: cover;">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title">
+                {{product.name}}
+              </p>
+            </div>
+          </div>
+        </nuxt-link>
+      </div>
+      <div v-else>
+        <h3 class="title is-3">Ups. Leider gibt es in dieser Kategorie keine Produkte</h3>
+        <nuxt-link to="/categories" class="button is-primary">Zurück</nuxt-link>
+      </div>
+
     </div>
     <div v-else class="c-CategoryOverview">
       <h1 class="title is-1">Kategorie auswahl</h1>
@@ -97,6 +114,16 @@ export default {
     width: 25rem;
     display: inline-block;
     margin: 1rem;
+  }
+}
+
+.c-category {
+  .c-products {
+    .card {
+      width: 18rem;
+      display: inline-block;
+      margin: 1rem;
+    }
   }
 }
 
