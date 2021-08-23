@@ -145,6 +145,8 @@
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
 
+const {useApi} = require("@/composable/api");
+
 export default {
   name: "Index",
   setup() {
@@ -152,7 +154,7 @@ export default {
     const getMinAge = (entries) => {
       let minAge = 0
       entries.forEach(entry => {
-        const productMinAge = entry.product.minAge
+        const productMinAge = entry.product.min_age
         if (productMinAge > minAge) {
           minAge = productMinAge
         }
@@ -233,13 +235,14 @@ export default {
 
         if ((sum % 10) === checkNumber) {
           ageCheckValidation.value = 1
-          $axios.put('/api/user', {
+          useApi($axios).user.update($auth.user.id, {
             hasVerifiedAge: true
-          }).then(() => {
-            const updatedUser = {...$auth.user}
-            updatedUser.hasVerifiedAge = true;
-            $auth.setUser(updatedUser)
           })
+            .then(() => {
+              const updatedUser = {...$auth.user}
+              updatedUser.hasVerifiedAge = true;
+              $auth.setUser(updatedUser)
+            })
           const blockedByAge = minAge > calcAge($auth.user.birthday)
           ageBlocked.value = blockedByAge
           if (blockedByAge) {
