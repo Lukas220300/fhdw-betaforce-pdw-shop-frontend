@@ -82,11 +82,18 @@ export default {
       }
     }
 
-    useApi($axios).product.findOneById(productId).then((apiProduct) => {
+    useApi($axios).product.findOneById(productId).then(async (apiProduct) => {
+      const categoryApi = (await $axios.get(apiProduct._links.category.href)).data
+      apiProduct.category = categoryApi
+      const variantsApi =  (await $axios.get(apiProduct._links.variants.href)).data
+      apiProduct.variants = variantsApi._embedded.product_variants
+
+      for(const variantIndex in apiProduct.variants) {
+        const unitApi = await $axios.$get(apiProduct.variants[variantIndex]._links.unit.href)
+        apiProduct.variants[variantIndex].unit = unitApi
+        apiProduct.variants[variantIndex].model = 0
+      }
       product.value = apiProduct
-      product.value.variants.forEach((variant) => {
-        variant.model = 0
-      })
       loading.value = false
     })
 
