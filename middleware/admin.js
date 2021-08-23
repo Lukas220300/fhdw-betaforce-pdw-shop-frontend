@@ -3,7 +3,7 @@ export default function ({store, redirect}) {
   const role = 'ROLE_ADMIN'
 
   if(!store.$auth.loggedIn) {
-    return redirect('/login')
+    return redirect('/auth/login')
   }
 
   const user = store.$auth.user
