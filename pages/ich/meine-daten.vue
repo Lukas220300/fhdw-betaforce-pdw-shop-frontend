@@ -180,6 +180,7 @@ import {
   validateDate,
   validateNumber,
 } from "./../../scripts/inputValidation/inputValidation"
+const {useApi} = require("@/composable/api");
 
 export default {
   name: "MeineDaten",
@@ -310,7 +311,9 @@ export default {
         if(somethingChange) {
           console.warn('change User with this patch Object')
           console.log(patchObject)
-
+          useApi(axios).user.update(this.$auth.user.id, patchObject).then((result) => {
+            console.log(result)
+          })
         }
         /* axios
           .post('/api/auth/register', this.signUpData)

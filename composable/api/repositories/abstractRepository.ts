@@ -22,4 +22,8 @@ export default abstract class AbstractRepository<T> implements RepositoryInterfa
     return this.httpClient.$get(this.baseUrl+'/'+id,config)
   }
 
+  update(id:number, updateObject: Object, config?: AxiosRequestConfig): Promise<T> {
+    return this.httpClient.patch(this.baseUrl + '/' + id, updateObject, config)
+  }
+
 }
