@@ -44,14 +44,14 @@
         <tbody>
         <tr v-for="order in orders" :key="order.id">
           <th v-if="showId">{{ order.id }}</th>
-          <td v-if="showUser">{{ order.user }}</td>
+          <td v-if="showUser">{{ order.user.first_name }} {{ order.user.last_name }}</td>
           <td v-if="showStatus">
             <button class="button"
                     v-bind:class="{'is-success':order.status === 'DELIVERED', 'is-info':order.status === 'PAYED', 'is-link':order.status === 'ORDERED'}"
                     @click="showStatusModal(order)">{{ order.status }}
             </button>
           </td>
-          <td v-if="showCreatedAt">{{ order.createdAt }}</td>
+          <td v-if="showCreatedAt">{{ order.created_at }}</td>
           <td>
             <button class="button" @click="showInfoModal(order)">...</button>
           </td>
@@ -94,7 +94,9 @@
           <br>
           <h4 class="title is-4">Artickel</h4>
           <div v-for="item in tempOrder.orderItemList" :key="item.id" class="box">
-            {{item}}
+            <strong>{{item.productVariant.product.name}} (Produktnummer: {{item.productVariant.product.id}}.{{item.productVariant.unit.id}})</strong> <br>
+            {{ item.productVariant.unit.number_of_container }} X {{ item.productVariant.unit.amount }} {{ item.productVariant.unit.title }} <br>
+            Menge: {{item.quantity}}
           </div>
         </section>
         <footer class="modal-card-foot">
@@ -110,6 +112,7 @@
 
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
+const {useApi} = require("@/composable/api");
 
 export default {
   name: "Index",
@@ -123,16 +126,40 @@ export default {
     const showCreatedAt = ref(true)
 
     const loadOrders = () => {
-      $axios.get('/api/orders').then((result) => {
-        const sortedOrders = result.data
+      useApi($axios).order.findAll().then(async (result) => {
+        const sortedOrders = result._embedded.orders
+
+        for(const orderIndex in sortedOrders) {
+
+          const userApi = await $axios.$get(sortedOrders[orderIndex]._links.user.href)
+          const orderItemList = (await $axios.get(sortedOrders[orderIndex]._links.order_item_list.href)).data
+
+          sortedOrders[orderIndex].user = userApi
+          sortedOrders[orderIndex].orderItemList = orderItemList._embedded.order_items
+
+
+          for(const itemIndex in sortedOrders[orderIndex].orderItemList) {
+            const productVariantApi = (await $axios.get(sortedOrders[orderIndex].orderItemList[itemIndex]._links.product_variant.href)).data
+            sortedOrders[orderIndex].orderItemList[itemIndex].productVariant = productVariantApi
+            const productApi = await $axios.$get(sortedOrders[orderIndex].orderItemList[itemIndex].productVariant._links.product.href)
+            sortedOrders[orderIndex].orderItemList[itemIndex].productVariant.product = productApi
+            const unitApi = await $axios.$get(sortedOrders[orderIndex].orderItemList[itemIndex].productVariant._links.unit.href)
+            sortedOrders[orderIndex].orderItemList[itemIndex].productVariant.unit = unitApi
+          }
+
+
+
+        }
+
+
         orders.value = sortedOrders.sort((a,b) => {
           if(a.id === b.id) {
             return 0
           } else if (a.id < b.id){
-            return -1
+            return 1
           }
           else {
-            return 1
+            return -1
           }
         })
       })
