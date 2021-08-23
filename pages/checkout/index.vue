@@ -257,15 +257,16 @@ export default {
       const orderItemList = []
       entries.value.forEach((element) => {
         orderItemList.push({
-          quantity: element.quantity,
+          quantity: element.amount,
           productVariantId: element.variant.id
         })
       })
-      $axios.$post('/api/order', orderItemList).then(() => {
-        store.commit('shoppingCart/clear')
-        app.router.push('/checkout/success')
+      $axios.$post('/api/order', orderItemList)
+        .then(() => {
+          store.commit('shoppingCart/clear')
+          app.router.push('/checkout/success')
 
-      })
+        })
         .catch(() => {
           app.router.push('/checkout/failed')
         })
