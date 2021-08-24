@@ -3,13 +3,16 @@
     <h1 class="title is-1">Mein Daten</h1>
     <div class="box">
       <div class="c-info">
-        <div class="c-info__item c-info__item--green" /> Daten wurden nicht geändert
+        <div class="c-info__item c-info__item--green"/>
+        Daten wurden nicht geändert
       </div>
       <div class="c-info">
-        <div class="c-info__item c-info__item--yellow" /> Daten wurden geändert
+        <div class="c-info__item c-info__item--yellow"/>
+        Daten wurden geändert
       </div>
       <div class="c-info">
-        <div class="c-info__item c-info__item--red" /> Eingabe ist nicht korrekt
+        <div class="c-info__item c-info__item--red"/>
+        Eingabe ist nicht korrekt
       </div>
     </div>
     <div class="c-FormContainer">
@@ -21,7 +24,8 @@
             <div class="control has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.firstName == 1, 'is-warning':validationData.firstName == 3, 'is-danger':(validationData.firstName == 2 && validationData.firstName != 0)}"
-                     type="text" name="firstname" v-model="signUpData.firstName" placeholder="Max" @change="validateInput">
+                     type="text" name="firstname" v-model="signUpData.firstName" placeholder="Max"
+                     @change="validateInput">
               <span v-if="validationData.firstName" class="icon is-small is-right">
                 <i v-if="validationData.firstName == 1" class="fas fa-check"></i>
                 <i v-else class="fas fa-exclamation-triangle"></i>
@@ -34,7 +38,8 @@
             <div class="control has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.lastName == 1, 'is-warning':validationData.lastName == 3, 'is-danger':(validationData.lastName == 2 && validationData.lastName != 0)}"
-                     type="text" name="lastname" v-model="signUpData.lastName" placeholder="Mustermann" @change="validateInput">
+                     type="text" name="lastname" v-model="signUpData.lastName" placeholder="Mustermann"
+                     @change="validateInput">
               <span v-if="validationData.lastName" class="icon is-small is-right">
                 <i v-if="validationData.lastName == 1" class="fas fa-check"></i>
                 <i v-else class="fas fa-exclamation-triangle"></i>
@@ -74,7 +79,8 @@
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.street == 1, 'is-warning':validationData.street == 3, 'is-danger':(validationData.street == 2 && validationData.street != 0)}"
-                     type="text" name="street" v-model="signUpData.street" placeholder="Mustertraße 1" @change="validateInput">
+                     type="text" name="street" v-model="signUpData.street" placeholder="Mustertraße 1"
+                     @change="validateInput">
               <span class="icon is-small is-left">
                 <i class="fas fa-road"></i>
               </span>
@@ -106,7 +112,8 @@
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.city == 1, 'is-warning':validationData.city == 3, 'is-danger':(validationData.city == 2 && validationData.city != 0)}"
-                     type="text" v-model="signUpData.city" name="city" placeholder="Musterstadt" @change="validateInput">
+                     type="text" v-model="signUpData.city" name="city" placeholder="Musterstadt"
+                     @change="validateInput">
               <span class="icon is-small is-left">
                 <i class="fas fa-city"></i>
               </span>
@@ -128,12 +135,13 @@
             </div>
           </div>
 
-          <!-- <div class="field">
+          <div class="field">
             <label class="label">Password</label>
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.password == 1, 'is-warning':validationData.password == 3, 'is-danger':(validationData.password == 2 && validationData.password != 0)}"
-                     type="password" dirname="password" v-model="signUpData.password" name="password" @change="validateInput"
+                     type="password" dirname="password" v-model="signUpData.password" name="password"
+                     @change="validateInput"
                      placeholder="Password">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
@@ -159,14 +167,13 @@
                 <i v-else class="fas fa-exclamation-triangle"></i>
               </span>
             </div>
-          </div> -->
+          </div>
 
           <div class="field">
             <div class="control">
               <button @click="changeData($axios, validateInput)" class="button is-link">Ändern</button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -180,11 +187,12 @@ import {
   validateDate,
   validateNumber,
 } from "./../../scripts/inputValidation/inputValidation"
+
 const {useApi} = require("@/composable/api");
 
 export default {
   name: "MeineDaten",
-  middleware:['loggedIn'],
+  middleware: ['loggedIn'],
   data() {
     const signUpData = {
       firstName: this.$auth.user.firstName,
@@ -246,7 +254,7 @@ export default {
       } else {
         this.validationData.email = 1
       }
-       if (!validateDate(this.signUpData.birthday)) {
+      if (!validateDate(this.signUpData.birthday)) {
         validation = false
         this.validationData.birthday = 2
       } else if (this.signUpData.birthday !== this.backupData.birthday) {
@@ -279,22 +287,24 @@ export default {
         this.validationData.city = 1
       }
 
-      /* if (!validatePassword(this.signUpData.password)) {
-        validation = false
-        this.validationData.password = 2
-      } else if (this.signUpData.password !== this.backupData.password) {
-        this.validationData.password = 3
-      } else {
-        this.validationData.password = 1
+      if (validateDefaultText(this.signUpData.password) && validateDefaultText(this.signUpData.passwordRepeat)) {
+        if (!validatePassword(this.signUpData.password)) {
+          validation = false
+          this.validationData.password = 2
+        } else if (this.signUpData.password !== this.backupData.password) {
+          this.validationData.password = 3
+        } else {
+          this.validationData.password = 1
+        }
+        if (!validateDefaultText(this.signUpData.passwordRepeat) || this.signUpData.passwordRepeat !== this.signUpData.password) {
+          validation = false
+          this.validationData.passwordRepeat = 2
+        } else if (this.signUpData.passwordRepeat !== this.backupData.passwordRepeat) {
+          this.validationData.passwordRepeat = 3
+        } else {
+          this.validationData.passwordRepeat = 1
+        }
       }
-      if (!validateDefaultText(this.signUpData.passwordRepeat) || this.signUpData.passwordRepeat !== this.signUpData.password) {
-        validation = false
-        this.validationData.passwordRepeat = 2
-      } else if (this.signUpData.passwordRepeat !== this.backupData.passwordRepeat) {
-        this.validationData.passwordRepeat = 3
-      } else {
-        this.validationData.passwordRepeat = 1
-      } */
 
       return validation
     },
@@ -302,31 +312,48 @@ export default {
       if (validateInput()) {
         const patchObject = {}
         let somethingChange = false
+        let passwordChange = 0
         for (const property in this.signUpData) {
-          if(this.validationData[property] === 3) {
+          if (property === 'password' || property === 'passwordRepeat') {
+            passwordChange = passwordChange + 1
+          }
+          if (this.validationData[property] === 3) {
             patchObject[property] = this.signUpData[property]
             somethingChange = true
           }
         }
-        if(somethingChange) {
-          console.warn('change User with this patch Object')
-          console.log(patchObject)
-          useApi(axios).user.update(this.$auth.user.id, patchObject).then((result) => {
-            console.log(result)
+        if (passwordChange === 2) {
+          this.$axios.$patch('/api/users', {
+            password: this.signUpData.password,
+            passwordRepeat: this.signUpData.passwordRepeat
+          }).then(() => {
+            if(!somethingChange) {
+              this.$buefy.toast.open({
+                message: 'Deine Password wurde geändert.',
+                type: 'is-success'
+              })
+              this.$router.push('/ich')
+            }
           })
         }
-        /* axios
-          .post('/api/auth/register', this.signUpData)
-          .then(_ => {
-            this.$router.push('/registrieren/danke')
-          })
-          .catch(error => {
-            console.error(error)
+        if (somethingChange) {
+          console.warn('change User with this patch Object')
+          console.log(patchObject)
+          useApi(axios).user.update(this.$auth.user.id, patchObject).then((user) => {
+            this.$auth.setUser(user.data)
             this.$buefy.toast.open({
-              message: 'Entwas ist schief gelaufen. Probiere es später noch einmal.',
+              message: 'Deine Daten wurde geändert.',
+              type: 'is-success'
+            })
+            this.$router.push('/ich')
+          }).catch((error) => {
+            this.$buefy.toast.open({
+              message: 'Etwas ist schief gelaufen. Bitte probiere es später noch mal.',
               type: 'is-danger'
             })
-          }) */
+            console.error(error)
+          })
+        }
       } else {
         this.$buefy.toast.open({
           message: 'Einige Änderungen sind valide. Bitte passe sie an.',
@@ -345,16 +372,19 @@ export default {
       border-color: #48c78e;
     }
   }
+
   .datePicker-danger {
     .input {
       border-color: #f14668;
     }
   }
+
   .datePicker-warning {
     .input {
       border-color: #ffe08a;
     }
   }
+
   .c-info {
     &__item {
       width: 1rem;
@@ -362,12 +392,15 @@ export default {
       border-radius: 50%;
       display: inline-block;
       margin-right: 0.7rem;
+
       &--green {
         background-color: #48c78e;
       }
+
       &--yellow {
         background-color: #ffe08a;
       }
+
       &--red {
         background-color: #f14668;
       }
