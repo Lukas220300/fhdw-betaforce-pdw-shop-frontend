@@ -78,11 +78,11 @@ export default {
     useApi($axios).order.findOneById(bestellnummer).then(async (response) => {
       const orderApi = {...response}
 
-      const orderItemList = await $axios.$get(orderApi._links.order_item_list.href)
-      orderApi.orderItemList = orderItemList._embedded.order_items
+      const orderItemList = await $axios.$get(orderApi._links.orderItemList.href)
+      orderApi.orderItemList = orderItemList._embedded.orderItems
 
       for (const item in orderApi.orderItemList) {
-        const productVariantApi = await $axios.$get(orderApi.orderItemList[item]._links.product_variant.href)
+        const productVariantApi = await $axios.$get(orderApi.orderItemList[item]._links.productVariant.href)
         orderApi.orderItemList[item].productVariant = productVariantApi
 
         const productApi = (await $axios.get(orderApi.orderItemList[item].productVariant._links.product.href)).data

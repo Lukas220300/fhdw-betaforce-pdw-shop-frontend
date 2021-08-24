@@ -86,7 +86,7 @@ export default {
       const categoryApi = (await $axios.get(apiProduct._links.category.href)).data
       apiProduct.category = categoryApi
       const variantsApi =  (await $axios.get(apiProduct._links.variants.href)).data
-      apiProduct.variants = variantsApi._embedded.product_variants
+      apiProduct.variants = variantsApi._embedded.productVariants
 
       for(const variantIndex in apiProduct.variants) {
         const unitApi = await $axios.$get(apiProduct.variants[variantIndex]._links.unit.href)
