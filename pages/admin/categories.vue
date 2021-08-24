@@ -25,7 +25,7 @@
       </table>
     </div>
 
-    <div id="editCategoryModal" class="modal">
+    <div id="editCategoryModal" class="modal" v-bind:class="{'is-active':showModal}">
       <div @click="closeModal" class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -33,10 +33,25 @@
           <button class="delete" @click="closeModal" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-          <!-- Content ... -->
+          <div class="field">
+            <label class="label">Titel</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Title" v-model="tempCategory.title">
+            </div>
+            <p class="help is-danger">This email is invalid</p>
+          </div>
+
+          <div class="field">
+            <label class="label">Cover</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Cover" v-model="tempCategory.cover">
+            </div>
+            <p class="help is-danger">This email is invalid</p>
+          </div>
+
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
+          <button class="button is-success" @click="save(loadCategories, validateInput)">Save changes</button>
           <button class="button" @click="closeModal">Cancel</button>
         </footer>
       </div>
@@ -48,6 +63,7 @@
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
 import {useApi} from "@/composable/api";
+import {validateDefaultText} from "@/scripts/inputValidation/inputValidation";
 
 export default {
   name: "Categories",
@@ -63,25 +79,77 @@ export default {
       })
     }
 
-    const changeCategory = (category) => {
-      console.log(category)
-      const modal = document.getElementById('editCategoryModal')
-      modal.classList.add('is-active')
-    }
-
-    const closeModal = () => {
-      const modal = document.getElementById('editCategoryModal')
-      modal.classList.remove('is-active')
-    }
-
     loadCategories()
 
     return {
       categories,
-      changeCategory,
-      closeModal,
+      loadCategories,
     }
   },
+  data() {
+    const tempCategory = {}
+    const validateCategory = {}
+    const showModal = false
+    const newMode = false
+
+    return {
+      tempCategory,
+      showModal,
+      validateCategory,
+      newMode,
+    }
+  },
+  methods: {
+    closeModal()  {
+      this.showModal = false
+      this.tempCategory = {}
+      this.validateCategory = {}
+    },
+    changeCategory(category) {
+      this.tempCategory = category
+      this.validateCategory = {
+        title: 0,
+        cover: 0,
+      }
+      this.showModal = true
+    },
+    validateInput() {
+      let validation = true
+      if(validateDefaultText(this.tempCategory.title)) {
+        this.validateCategory.title = 1
+      } else {
+        validation = false
+        this.validateCategory.title = 2
+      }
+      if(validateDefaultText(this.tempCategory.cover)) {
+        this.validateCategory.cover = 1
+      } else {
+        validation = false
+        this.validateCategory.cover = 2
+      }
+
+      return validation
+    },
+    save(loadCategories, validate){
+      if(validate()) {
+        if(this.newMode) {
+          // neues
+        } else {
+          this.$axios.patch('/categories/'+this.tempCategory.id, {title: this.tempCategory.title, cover: this.tempCategory.cover})
+          .then(_ => {
+            this.closeModal()
+            this.$buefy.toast.open({
+              message: 'Kategorie wurde geändert',
+              type: 'is-success'
+            })
+            loadCategories()
+          })
+        }
+      } else {
+        // eingaben überprüfen
+      }
+    }
+  }
 }
 </script>
 
