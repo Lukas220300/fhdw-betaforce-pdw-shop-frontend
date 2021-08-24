@@ -8,14 +8,14 @@
           <Icon name="logo-only-icon"/>
         </nuxt-link>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger" @click="toggleMenu()" v-bind:class="{'is-active':menuOpen}" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
       </div>
 
-      <div id="navbarBasicExample" class="navbar-menu">
+      <div id="navbarBasicExample" class="navbar-menu" v-bind:class="{'is-active': menuOpen}">
         <div class="navbar-start">
           <nuxt-link to="/admin" class="navbar-item">
             Home
@@ -29,24 +29,6 @@
           <nuxt-link to="/admin/categories" class="navbar-item">
             Kategorien
           </nuxt-link>
-          <nuxt-link to="/admin/unit" class="navbar-item">
-            Einheiten
-          </nuxt-link>
-
-
-        </div>
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">
-                Log in
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </nav>
@@ -58,10 +40,23 @@
 </template>
 
 <script>
+import {ref} from "@nuxtjs/composition-api";
+
 export default {
   name: "Admin",
   // middleware: ['accessProtection', 'admin']
-  middleware: ['admin']
+  middleware: ['admin'],
+  setup(){
+    const menuOpen = ref(false)
+    const toggleMenu = () => {
+      menuOpen.value = !menuOpen.value
+    }
+
+    return {
+      menuOpen,
+      toggleMenu,
+    }
+  },
 }
 </script>
 

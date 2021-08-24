@@ -145,6 +145,8 @@
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
 
+const {useApi} = require("@/composable/api");
+
 export default {
   name: "Index",
   setup() {
@@ -233,13 +235,14 @@ export default {
 
         if ((sum % 10) === checkNumber) {
           ageCheckValidation.value = 1
-          $axios.put('/api/user', {
+          useApi($axios).user.update($auth.user.id, {
             hasVerifiedAge: true
-          }).then(() => {
-            const updatedUser = {...$auth.user}
-            updatedUser.hasVerifiedAge = true;
-            $auth.setUser(updatedUser)
           })
+            .then(() => {
+              const updatedUser = {...$auth.user}
+              updatedUser.hasVerifiedAge = true;
+              $auth.setUser(updatedUser)
+            })
           const blockedByAge = minAge > calcAge($auth.user.birthday)
           ageBlocked.value = blockedByAge
           if (blockedByAge) {
@@ -257,15 +260,16 @@ export default {
       const orderItemList = []
       entries.value.forEach((element) => {
         orderItemList.push({
-          quantity: element.quantity,
+          quantity: element.amount,
           productVariantId: element.variant.id
         })
       })
-      $axios.$post('/api/order', orderItemList).then(() => {
-        store.commit('shoppingCart/clear')
-        app.router.push('/checkout/success')
+      $axios.$post('/api/order', orderItemList)
+        .then(() => {
+          store.commit('shoppingCart/clear')
+          app.router.push('/checkout/success')
 
-      })
+        })
         .catch(() => {
           app.router.push('/checkout/failed')
         })

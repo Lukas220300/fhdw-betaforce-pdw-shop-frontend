@@ -1,16 +1,20 @@
 export default function ({store, redirect}) {
-  /*
-  const authority = 'ROLE_ADMIN'
+
+  const role = 'ROLE_ADMIN'
 
   if(!store.$auth.loggedIn) {
-    return redirect('/login')
+    return redirect('/auth/login')
   }
 
-  const user = store.$auth.user
+  let user = store.$auth.user
 
   let hasRoleAdmin = false
-  user.authorities.forEach((auth) => {
-    if(auth.authority === authority) {
+  if(!user.roles) {
+    location.reload()
+    user = store.$auth.user
+  }
+  user.roles.forEach((auth) => {
+    if(auth.name === role) {
       hasRoleAdmin = true
     }
   })
@@ -18,5 +22,5 @@ export default function ({store, redirect}) {
   if(!hasRoleAdmin) {
     return redirect('/')
   }
-  */
+
 }
