@@ -20,7 +20,7 @@
         Bestelldatum
       </label>
     </div>
-
+{{loading}}
     <div class="table-container">
       <table class="table is-striped">
         <thead>
@@ -42,6 +42,48 @@
         </tr>
         </tfoot>
         <tbody>
+          <tr v-if="loading">
+            <th><b-skeleton /></th>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+          </tr>
+          <tr v-if="loading">
+            <th><b-skeleton /></th>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+          </tr>
+          <tr v-if="loading">
+            <th><b-skeleton /></th>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+          </tr>
+          <tr v-if="loading">
+            <th><b-skeleton /></th>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+          </tr>
+          <tr v-if="loading">
+            <th><b-skeleton /></th>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+          </tr>
+          <tr v-if="loading">
+            <th><b-skeleton /></th>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+            <td><b-skeleton /></td>
+          </tr>
         <tr v-for="order in orders" :key="order.id">
           <th v-if="showId">{{ order.id }}</th>
           <td v-if="showUser">{{ order.user.firstName }} {{ order.user.lastName }}</td>
@@ -124,6 +166,7 @@ export default {
     const showStatus = ref(true)
     const showUser = ref(true)
     const showCreatedAt = ref(true)
+    const loading = ref(true)
 
     const loadOrders = () => {
       useApi($axios).order.findAll().then(async (result) => {
@@ -152,6 +195,7 @@ export default {
             return -1
           }
         })
+        loading.value = false
       })
     }
 
@@ -199,6 +243,7 @@ export default {
       showInfoModalFlag,
       showInfoModal,
       closeInfoModal,
+      loading,
     }
   },
 }
