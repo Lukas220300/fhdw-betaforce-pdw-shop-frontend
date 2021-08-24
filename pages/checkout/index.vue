@@ -154,7 +154,7 @@ export default {
     const getMinAge = (entries) => {
       let minAge = 0
       entries.forEach(entry => {
-        const productMinAge = entry.product.min_age
+        const productMinAge = entry.product.minAge
         if (productMinAge > minAge) {
           minAge = productMinAge
         }
