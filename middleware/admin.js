@@ -6,9 +6,13 @@ export default function ({store, redirect}) {
     return redirect('/auth/login')
   }
 
-  const user = store.$auth.user
+  let user = store.$auth.user
 
   let hasRoleAdmin = false
+  if(!user.roles) {
+    location.reload()
+    user = store.$auth.user
+  }
   user.roles.forEach((auth) => {
     if(auth.name === role) {
       hasRoleAdmin = true
