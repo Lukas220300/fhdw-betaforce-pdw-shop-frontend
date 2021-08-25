@@ -1,5 +1,6 @@
 <template>
   <div class="c-admin-categories">
+    <h1 class="title is-1">Kategorien</h1>
     <div class="table-container">
       <table class="table is-striped">
         <thead>
@@ -30,7 +31,14 @@
       <div @click="closeModal" class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Modal title</p>
+          <p class="modal-card-title">
+            <span v-if="newMode">
+              Neue Kategorie anlegen
+            </span>
+            <span v-else>
+              Kategorie bearbeiten
+            </span>
+          </p>
           <button class="delete" @click="closeModal" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
@@ -113,6 +121,7 @@ export default {
       this.showModal = false
       this.tempCategory = {}
       this.validateCategory = {}
+      this.newMode = false
     },
     changeCategory(category) {
       this.tempCategory = category
@@ -136,7 +145,6 @@ export default {
         validation = false
         this.validateCategory.cover = 2
       }
-
       return validation
     },
     save(loadCategories, validate) {
