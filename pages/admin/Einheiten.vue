@@ -85,9 +85,7 @@
 
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
-
 const {validateNumber} = require("@/scripts/inputValidation/inputValidation");
-
 const {validateDefaultText} = require("@/scripts/inputValidation/inputValidation");
 const {useApi} = require("@/composable/api");
 
