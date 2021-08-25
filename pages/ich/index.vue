@@ -7,7 +7,7 @@
     <div class="c-options">
       <nuxt-link to="/ich/meine-bestellungen" class="button is-fullwidth is-primary is-light">Meine Bestellungen</nuxt-link>
       <nuxt-link to="/ich/meine-daten" class="button is-fullwidth is-primary is-light">Meine Daten</nuxt-link>
-      <nuxt-link to="/admin" v-if="true" class="button is-fullwidth is-info is-light">Shop Backend</nuxt-link>
+      <nuxt-link to="/admin" v-if="isBackendAllowedUser($auth.user)" class="button is-fullwidth is-info is-light">Shop Backend</nuxt-link>
       <hr />
       <button @click="$auth.logout()" class="button is-danger is-fullwidth">Logout</button>
     </div>
@@ -20,6 +20,28 @@
 export default {
   name: "Index",
   middleware: ['loggedIn'],
+  setup(){
+    const isBackendAllowedUser = (user) => {
+      if(!user.roles) {
+        location.reload()
+      } else {
+        console.log(user.roles)
+        let hasRights = false
+        user.roles.forEach((role) => {
+          if (role.name === 'ROLE_ADMIN') {
+            hasRights = true
+          }
+        })
+        return hasRights
+      }
+      return false
+    }
+
+
+    return {
+      isBackendAllowedUser
+    }
+  }
 }
 </script>
 
