@@ -82,8 +82,7 @@ export default {
 
     if (categoryId.value) {
       useApi($axios).product.findByCategoryId(categoryId.value).then((products) => {
-        categoryProducts.value = products
-        console.log(categoryProducts.value)
+        categoryProducts.value = products._embedded.products
       })
     } else {
       useApi($axios).category.findAll().then((categoryArray) => {

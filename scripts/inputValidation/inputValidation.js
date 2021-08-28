@@ -48,6 +48,19 @@ const validateCheckBox = (input, expected = true) => {
   return input === expected
 }
 
+const validateObjectSelect = (objects, selectedObjectId) => {
+  if(selectedObjectId < 0) {
+    return false
+  }
+  let objectFound = false
+  objects.forEach((object) => {
+    if (object.id === selectedObjectId) {
+      objectFound = true
+    }
+  })
+  return objectFound
+}
+
 export {
   validateDefaultText,
   validateEmail,
@@ -56,4 +69,5 @@ export {
   validatePassword,
   validateCheckBox,
   validateSelect,
+  validateObjectSelect,
 }
