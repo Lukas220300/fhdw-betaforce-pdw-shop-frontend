@@ -1,6 +1,6 @@
 <template>
-  <div class="c-admin-products-neu">
-    <h1 class="title is-1">Neues Produkt anlegen</h1>
+  <div class="c-admin-products-edit">
+    <h1 class="title is-1">Produkt bearbeiten</h1>
 
     <div class="field">
       <label class="label">Produktname</label>
@@ -80,12 +80,8 @@
       </div>
       <p v-if="validationProduct.variants === 2" class="help is-danger">Bitte erstelle mindestens eine Variante</p>
     </div>
-    <br>
-    <br>
-    <button class="button is-primary is-fullwidth" @click="saveProduct">Produkt hinzufügen</button>
 
-    {{ tempProduct }} <br>
-
+    <button class="button is-primary is-fullwidth" @click="saveProduct">Produkt bearbeiten</button>
 
     <div id="editCategoryModal" class="modal" v-bind:class="{'is-active':showVariantModal}">
       <div @click="closeModal" class="modal-background"></div>
@@ -146,16 +142,17 @@
 </template>
 
 <script>
-import {ref, useContext} from "@nuxtjs/composition-api";
+import {useContext, ref} from "@nuxtjs/composition-api";
+import {useApi} from "@/composable/api";
 import {validateObjectSelect, validateNumber, validateDefaultText} from "@/scripts/inputValidation/inputValidation";
 
-const {useApi} = require("@/composable/api");
-
 export default {
-  name: "Neu",
-  layout: 'admin',
-  setup() {
-    const {$axios} = useContext()
+  name: "Id",
+  layout: "admin",
+  setup(){
+    const {params, $axios} = useContext()
+    const productId = params.value.id
+
     const categories = ref()
     useApi($axios).category.findAll().then((result) => {
       categories.value = result
@@ -170,6 +167,8 @@ export default {
       category: -1,
       variants: [],
     })
+    const backUpProduct = ref({})
+    const backupNumberOfVariants = ref(0)
 
     const validationProduct = ref({
       name: 0,
@@ -189,6 +188,133 @@ export default {
         }
       })
       return unit
+    }
+
+    useApi($axios).product.findOneById(productId).then(async (product) => {
+      const apiProduct = {...product}
+
+      const apiCategory = (await $axios.get(apiProduct._links.category.href)).data
+      apiProduct.category = apiCategory.id
+
+      const apiVariants = (await $axios.get(apiProduct._links.variants.href)).data
+      apiProduct.variants = apiVariants._embedded.productVariants
+
+      for (const variantIndex in apiProduct.variants) {
+        const apiVariantUnit = (await $axios.get(apiProduct.variants[variantIndex]._links.unit.href)).data
+        apiProduct.variants[variantIndex].unit = apiVariantUnit.id
+      }
+
+      tempProduct.value = apiProduct
+      backUpProduct.value = {...apiProduct}
+      backupNumberOfVariants.value = apiProduct.variants.length
+    })
+
+
+    const showVariantModal = ref(false)
+    const variantNewMode = ref(false)
+    const units = ref()
+    useApi($axios).unit.findAll().then((apiUnits) => {
+      units.value = apiUnits._embedded.units
+    })
+
+    const tempVariant = ref({
+      price: 0,
+      stock: 0,
+      unit: -1,
+    })
+    const backupVariant = ref({
+      price: 0,
+      stock: 0,
+      unit: -1,
+    })
+
+    const validationVariant = ref({
+      price: 0,
+      stock: 0,
+      unit: 0,
+    })
+
+    const closeModal = () => {
+      showVariantModal.value = false
+      variantNewMode.value = false
+    }
+
+    const openNewVariantModal = () => {
+      tempVariant.value = {
+        price: 0,
+        stock: 0,
+        unit: -1,
+      }
+      validationVariant.value = {
+        price: 0,
+        stock: 0,
+        unit: 0,
+      }
+      variantNewMode.value = true
+      showVariantModal.value = true
+    }
+
+    const editVariant = (variant) => {
+      tempVariant.value = variant
+      backupVariant.value = {...variant}
+      validationVariant.value = {
+        price: 0,
+        stock: 0,
+        unit: 0,
+      }
+      showVariantModal.value = true
+    }
+
+    const validateVariant = () => {
+      let validate = true
+      if (validateNumber(tempVariant.value.price)) {
+        validationVariant.value.price = 1
+      } else {
+        validationVariant.value.price = 2
+        validate = false
+      }
+      if (validateNumber(tempVariant.value.stock)) {
+        validationVariant.value.stock = 1
+      } else {
+        validationVariant.value.stock = 2
+        validate = false
+      }
+      if (validateObjectSelect(units.value, tempVariant.value.unit)) {
+        validationVariant.value.unit = 1
+      } else {
+        validationVariant.value.unit = 2
+        validate = false
+      }
+      return validate
+    }
+
+    const saveUnit = () => {
+      if (validateVariant()) {
+        if (variantNewMode.value) {
+          tempProduct.value.variants.push({...tempVariant.value})
+        } else {
+          let somethingChange = false
+          const changeObject = {}
+          for(const property in tempVariant.value) {
+            if(property !== '_links') {
+              if(tempVariant.value[property] !== backupVariant.value[property]) {
+                somethingChange = true
+                if(property === 'unit') {
+                  changeObject[property] = {
+                    id: tempVariant.value[property]
+                  }
+                } else {
+                  changeObject[property] = tempVariant.value[property]
+                }
+              }
+            }
+          }
+          if(somethingChange) {
+            useApi($axios).productVariant.update(tempVariant.value.id, changeObject).then(_ => {})
+          }
+        }
+        closeModal()
+      }
     }
 
     const validateProduct = () => {
@@ -243,126 +369,69 @@ export default {
     const saveProduct = () => {
       if(validateProduct()) {
 
-        const newProduct = {}
-        for(const property in tempProduct.value) {
-          newProduct[property] = tempProduct.value[property]
-        }
-        newProduct.category = {
-          id: newProduct.category
-        }
+        console.log('save')
 
-        for (const variantIndex in newProduct.variants) {
-          newProduct.variants[variantIndex].unit = {
-            id: newProduct.variants[variantIndex].unit
+        let somethingChange = false
+        const changeObject = {}
+        for(const property in tempProduct.value) {
+          if(property !== '_links') {
+            if(property === 'variants') {
+              if(tempProduct.value[property].length > backupNumberOfVariants.value) {
+                console.log(tempProduct.value[property])
+                console.log(backUpProduct.value[property])
+                let index = 0
+                for (const variantIndex in tempProduct.value[property]) {
+                  if(index + 1 > backupNumberOfVariants.value) {
+
+                  }
+                  index = index + 1
+                }
+
+              }
+
+            } else if(tempProduct.value[property] !== backUpProduct.value[property]) {
+              if(property === 'category') {
+                changeObject[property] = {
+                  id: tempProduct.value[property]
+                }
+              } else {
+                changeObject[property] = tempProduct.value[property]
+              }
+                somethingChange = true
+              }
           }
         }
 
-        useApi($axios).product.addNew(newProduct).then(response => {
-          console.log(response)
-        })
-
-      }
-    }
-
-    const showVariantModal = ref(false)
-    const variantNewMode = ref(false)
-    const units = ref()
-    useApi($axios).unit.findAll().then((apiUnits) => {
-      units.value = apiUnits._embedded.units
-    })
-
-    const tempVariant = ref({
-      price: 0,
-      stock: 0,
-      unit: -1,
-    })
-
-    const validationVariant = ref({
-      price: 0,
-      stock: 0,
-      unit: 0,
-    })
-
-    const closeModal = () => {
-      showVariantModal.value = false
-      variantNewMode.value = false
-    }
-
-    const openNewVariantModal = () => {
-      tempVariant.value = {
-        price: 0,
-        stock: 0,
-        unit: -1,
-      }
-      validationVariant.value = {
-        price: 0,
-        stock: 0,
-        unit: 0,
-      }
-      variantNewMode.value = true
-      showVariantModal.value = true
-    }
-
-    const editVariant = (variant) => {
-      tempVariant.value = variant
-      validationVariant.value = {
-        price: 0,
-        stock: 0,
-        unit: 0,
-      }
-      showVariantModal.value = true
-    }
-
-    const validateVariant = () => {
-      let validate = true
-      if (validateNumber(tempVariant.value.price)) {
-        validationVariant.value.price = 1
-      } else {
-        validationVariant.value.price = 2
-        validate = false
-      }
-      if (validateNumber(tempVariant.value.stock)) {
-        validationVariant.value.stock = 1
-      } else {
-        validationVariant.value.stock = 2
-        validate = false
-      }
-      if (validateObjectSelect(units.value, tempVariant.value.unit)) {
-        validationVariant.value.unit = 1
-      } else {
-        validationVariant.value.unit = 2
-        validate = false
-      }
-      return validate
-    }
-
-    const saveUnit = () => {
-      if (validateVariant()) {
-        if (variantNewMode.value) {
-          tempProduct.value.variants.push({...tempVariant.value})
+        if(somethingChange) {
+          useApi($axios).product.update(tempProduct.value.id, changeObject).then((response) => {
+            console.log(response)
+          })
         }
-        closeModal()
+
+
+
+
       }
     }
-
 
     return {
       tempProduct,
-      validationProduct,
       categories,
+      validationProduct,
+      getUnitById,
       showVariantModal,
-      tempVariant,
-      validationVariant,
       variantNewMode,
       units,
+      tempVariant,
+      validationVariant,
       closeModal,
       openNewVariantModal,
-      saveUnit,
-      getUnitById,
       editVariant,
+      validateVariant,
+      saveUnit,
+      validateProduct,
       saveProduct,
     }
   },
 }
 </script>
-
