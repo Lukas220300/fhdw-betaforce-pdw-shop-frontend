@@ -22,6 +22,13 @@ const validateNumber = (input) => {
   return !isNaN(parsedNumber)
 }
 
+const validateSelect = (selectedValue, defaultValue, values) => {
+  if(selectedValue === defaultValue) {
+    return false
+  }
+  return values.includes(selectedValue)
+}
+
 const validatePassword = (input) => {
   if(!validateDefaultText(input)) {
     return false
@@ -61,5 +68,6 @@ export {
   validateNumber,
   validatePassword,
   validateCheckBox,
+  validateSelect,
   validateObjectSelect,
 }
