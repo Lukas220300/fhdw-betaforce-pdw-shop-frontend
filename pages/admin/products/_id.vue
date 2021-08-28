@@ -149,7 +149,7 @@ import {validateObjectSelect, validateNumber, validateDefaultText} from "@/scrip
 export default {
   name: "Id",
   layout: "admin",
-  setup(){
+  setup() {
     const {params, $axios} = useContext()
     const productId = params.value.id
 
@@ -295,11 +295,11 @@ export default {
         } else {
           let somethingChange = false
           const changeObject = {}
-          for(const property in tempVariant.value) {
-            if(property !== '_links') {
-              if(tempVariant.value[property] !== backupVariant.value[property]) {
+          for (const property in tempVariant.value) {
+            if (property !== '_links') {
+              if (tempVariant.value[property] !== backupVariant.value[property]) {
                 somethingChange = true
-                if(property === 'unit') {
+                if (property === 'unit') {
                   changeObject[property] = {
                     id: tempVariant.value[property]
                   }
@@ -309,8 +309,9 @@ export default {
               }
             }
           }
-          if(somethingChange) {
-            useApi($axios).productVariant.update(tempVariant.value.id, changeObject).then(_ => {})
+          if (somethingChange) {
+            useApi($axios).productVariant.update(tempVariant.value.id, changeObject).then(_ => {
+            })
           }
         }
         closeModal()
@@ -344,7 +345,7 @@ export default {
         validationProduct.value.allergens = 2
         validation = false
       }
-      if (["0","12","16","18","21",0,12,16,18,21].includes(tempProduct.value.minAge)) {
+      if (["0", "12", "16", "18", "21", 0, 12, 16, 18, 21].includes(tempProduct.value.minAge)) {
         validationProduct.value.minAge = 1
       } else {
         validationProduct.value.minAge = 2
@@ -367,21 +368,21 @@ export default {
     }
 
     const saveProduct = () => {
-      if(validateProduct()) {
+      if (validateProduct()) {
 
         console.log('save')
 
         let somethingChange = false
         const changeObject = {}
-        for(const property in tempProduct.value) {
-          if(property !== '_links') {
-            if(property === 'variants') {
-              if(tempProduct.value[property].length > backupNumberOfVariants.value) {
+        for (const property in tempProduct.value) {
+          if (property !== '_links') {
+            if (property === 'variants') {
+              if (tempProduct.value[property].length > backupNumberOfVariants.value) {
                 console.log(tempProduct.value[property])
                 console.log(backUpProduct.value[property])
                 let index = 0
                 for (const variantIndex in tempProduct.value[property]) {
-                  if(index + 1 > backupNumberOfVariants.value) {
+                  if (index + 1 > backupNumberOfVariants.value) {
 
                   }
                   index = index + 1
@@ -389,26 +390,24 @@ export default {
 
               }
 
-            } else if(tempProduct.value[property] !== backUpProduct.value[property]) {
-              if(property === 'category') {
+            } else if (tempProduct.value[property] !== backUpProduct.value[property]) {
+              if (property === 'category') {
                 changeObject[property] = {
                   id: tempProduct.value[property]
                 }
               } else {
                 changeObject[property] = tempProduct.value[property]
               }
-                somethingChange = true
-              }
+              somethingChange = true
+            }
           }
         }
 
-        if(somethingChange) {
+        if (somethingChange) {
           useApi($axios).product.update(tempProduct.value.id, changeObject).then((response) => {
             console.log(response)
           })
         }
-
-
 
 
       }

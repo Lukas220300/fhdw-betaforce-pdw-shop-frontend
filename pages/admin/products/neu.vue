@@ -218,7 +218,7 @@ export default {
         validationProduct.value.allergens = 2
         validation = false
       }
-      if (["0","12","16","18","21",0,12,16,18,21].includes(tempProduct.value.minAge)) {
+      if (["0", "12", "16", "18", "21", 0, 12, 16, 18, 21].includes(tempProduct.value.minAge)) {
         validationProduct.value.minAge = 1
       } else {
         validationProduct.value.minAge = 2
@@ -241,10 +241,10 @@ export default {
     }
 
     const saveProduct = () => {
-      if(validateProduct()) {
+      if (validateProduct()) {
 
         const newProduct = {}
-        for(const property in tempProduct.value) {
+        for (const property in tempProduct.value) {
           newProduct[property] = tempProduct.value[property]
         }
         newProduct.category = {
