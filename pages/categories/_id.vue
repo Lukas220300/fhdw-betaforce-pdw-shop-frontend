@@ -113,6 +113,13 @@ export default {
     width: 25rem;
     display: inline-block;
     margin: 1rem;
+    .card-image {
+      .image {
+        > img {
+          object-fit: cover;
+        }
+      }
+    }
   }
 }
 

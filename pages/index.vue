@@ -115,8 +115,6 @@ export default defineComponent({
 
 <style lang="scss">
 .c-category-slider {
-  //margin-left: 0.5rem;
-  //margin-right: 0.5rem;
   height: 100%;
   padding: 1rem;
 
@@ -127,6 +125,13 @@ export default defineComponent({
     bottom: 1rem;
     z-index: 1;
     text-transform: uppercase;
+  }
+  .card-image {
+    .image {
+      > img {
+        object-fit: cover;
+      }
+    }
   }
 }
 

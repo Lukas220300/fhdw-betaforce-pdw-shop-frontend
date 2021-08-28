@@ -2,8 +2,11 @@
   <div class="c-contact">
     <h1 class="title is-1">Kontaktanfrage</h1>
     <div class="box">
-      Hier hast du die Möglichkeit uns einer Kontaktanfrage zu senden. Wir werden uns dann schnellstmöglich bei dir
-      melden. <br>
+      Sie haben Fragen, auf die Sie in unserem Shop keine Antworten bekommen haben? <br>
+      Kein Problem!<br>
+      Kontaktieren Sie uns gerne über das unten stehende Kontaktformular.<br>
+      Wir bearbeiten Ihr Anliegen so schnell wie möglich.<br>
+      „stay hydrated“ mit der Getränkelieferung von SIP.shop !<br><br>
       Mit * makierte Felder sind Pflichtfelder.
     </div>
 
@@ -82,7 +85,6 @@
           <button class="button is-link" @click="send($axios, validateInput)">Kontaktanfrage abschicken</button>
         </div>
       </div>
-      {{ inputData }}
     </div>
 
   </div>
