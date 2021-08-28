@@ -36,6 +36,7 @@ const {useApi} = require("@/composable/api");
 
 export default {
   name: "Index",
+  layout: 'admin',
   setup(){
     const {$axios} = useContext()
     const products = ref()
