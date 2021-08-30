@@ -159,7 +159,18 @@ export default {
     },
     send(axios, validateInput) {
       if(validateInput()) {
-        console.log(this.inputData)
+        axios.$post('/api/contact', {
+          email: this.inputData.email,
+          name: this.inputData.name,
+          subject: this.inputData.topic,
+          text: this.inputData.message,
+        }).then(_ => {
+          this.$buefy.toast.open({
+            message: 'Kontaktanfrage wurde erfolgreich ausgefüllt',
+            type: 'is-success'
+          })
+          this.$router.push('/')
+        })
       } else {
         this.$buefy.toast.open({
           message: 'Bitte fülle alle Pflichtfelder aus.',
