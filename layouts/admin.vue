@@ -32,6 +32,9 @@
           <nuxt-link to="/admin/einheiten" class="navbar-item">
             Einheiten
           </nuxt-link>
+          <nuxt-link v-if="isBackendAllowedUser($auth.user)" to="/admin/benutzer" class="navbar-item">
+            Benutzer
+          </nuxt-link>
         </div>
       </div>
     </nav>
@@ -48,16 +51,33 @@ import {ref} from "@nuxtjs/composition-api";
 export default {
   name: "Admin",
   // middleware: ['accessProtection', 'admin']
-  middleware: ['admin'],
+  middleware: ['employee'],
   setup(){
     const menuOpen = ref(false)
     const toggleMenu = () => {
       menuOpen.value = !menuOpen.value
     }
 
+    const isBackendAllowedUser = (user) => {
+      const roleToCheck = 'ROLE_ADMIN'
+      if(!user.roles) {
+        location.reload()
+      } else {
+        let hasRights = false
+        user.roles.forEach((role) => {
+          if (role.name === roleToCheck) {
+            hasRights = true
+          }
+        })
+        return hasRights
+      }
+      return false
+    }
+
     return {
       menuOpen,
       toggleMenu,
+      isBackendAllowedUser,
     }
   },
 }
