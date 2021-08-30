@@ -66,12 +66,14 @@
     <div class="field">
       <label class="label">Produktvarianten</label>
       <div class="control">
-        <div v-for="(variant, index) in tempProduct.variants" :key="index" class="box">
+        <div v-for="(variant, index) in tempProduct.variants" :key="index" class="box" :set="unit = getUnitById(units, variant.unit)">
           Preis: {{ variant.price }} € <br>
           Lagermenge: {{ variant.stock }} Stück <br>
-          Einheit: {{ getUnitById(units, variant.unit).numberOfContainer }} X {{
-            getUnitById(units, variant.unit).amount
-          }} {{ getUnitById(units, variant.unit).title }} <br>
+          <span v-if="unit">
+            Einheit: {{ getUnitById(units, variant.unit).numberOfContainer }} X {{
+              getUnitById(units, variant.unit).amount
+            }} {{ getUnitById(units, variant.unit).title }} <br>
+          </span>
           <br>
           <button class="button" @click="editVariant(variant)">Bearbeiten</button>
         </div>
@@ -83,9 +85,6 @@
     <br>
     <br>
     <button class="button is-primary is-fullwidth" @click="saveProduct">Produkt hinzufügen</button>
-
-    {{ tempProduct }} <br>
-
 
     <div id="editCategoryModal" class="modal" v-bind:class="{'is-active':showVariantModal}">
       <div @click="closeModal" class="modal-background"></div>
@@ -141,7 +140,6 @@
       </div>
     </div>
 
-
   </div>
 </template>
 
@@ -155,7 +153,7 @@ export default {
   name: "Neu",
   layout: 'admin',
   setup() {
-    const {$axios} = useContext()
+    const {$axios, app} = useContext()
     const categories = ref()
     useApi($axios).category.findAll().then((result) => {
       categories.value = result
@@ -240,7 +238,7 @@ export default {
       return validation
     }
 
-    const saveProduct = () => {
+    const saveProduct = async () => {
       if (validateProduct()) {
 
         const newProduct = {}
@@ -257,10 +255,15 @@ export default {
           }
         }
 
-        useApi($axios).product.addNew(newProduct).then(response => {
-          console.log(response)
-        })
+        const persistentProduct = (await useApi($axios).product.addNew(newProduct)).data
+        for (const variantIndex in newProduct.variants) {
+          newProduct.variants[variantIndex].product = {
+            id: persistentProduct.id
+          }
+          await useApi($axios).productVariant.addNew(newProduct.variants[variantIndex])
+        }
 
+        app.router.push('/admin/products')
       }
     }
 

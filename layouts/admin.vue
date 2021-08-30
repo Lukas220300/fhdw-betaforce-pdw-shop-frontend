@@ -63,3 +63,8 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.container {
+  margin-bottom: 3rem;
+}
+</style>

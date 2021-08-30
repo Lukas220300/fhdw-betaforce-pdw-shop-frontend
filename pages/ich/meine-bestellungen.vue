@@ -1,7 +1,7 @@
 <template>
   <div class="c-myOrders">
     <h1 class="title is-1">Meine Bestellungen</h1>
-    <div class="">
+    <div>
       <nuxt-link v-for="order in orders" :to="'/ich/bestellung/'+order.id" :key="order.id">
         <div class="card">
           <div class="card-image">
@@ -24,7 +24,6 @@
         </div>
       </nuxt-link>
     </div>
-
   </div>
 </template>
 

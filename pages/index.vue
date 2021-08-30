@@ -116,7 +116,6 @@ export default defineComponent({
 <style lang="scss">
 .c-category-slider {
   height: 100%;
-  padding: 1rem;
 
   &__title {
     font-weight: bold;

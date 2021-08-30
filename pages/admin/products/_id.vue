@@ -150,7 +150,7 @@ export default {
   name: "Id",
   layout: "admin",
   setup() {
-    const {params, $axios} = useContext()
+    const {params, $axios, app} = useContext()
     const productId = params.value.id
 
     const categories = ref()
@@ -369,27 +369,30 @@ export default {
 
     const saveProduct = () => {
       if (validateProduct()) {
-
-        console.log('save')
-
         let somethingChange = false
         const changeObject = {}
         for (const property in tempProduct.value) {
           if (property !== '_links') {
             if (property === 'variants') {
               if (tempProduct.value[property].length > backupNumberOfVariants.value) {
-                console.log(tempProduct.value[property])
-                console.log(backUpProduct.value[property])
                 let index = 0
                 for (const variantIndex in tempProduct.value[property]) {
                   if (index + 1 > backupNumberOfVariants.value) {
-
+                    const newVariant = {
+                      price: tempProduct.value[property][variantIndex].price,
+                      stock: tempProduct.value[property][variantIndex].stock,
+                      unit: {
+                        id: tempProduct.value[property][variantIndex].unit,
+                      },
+                      product: {
+                        id: tempProduct.value.id
+                      },
+                    }
+                    useApi($axios).productVariant.addNew(newVariant)
                   }
                   index = index + 1
                 }
-
               }
-
             } else if (tempProduct.value[property] !== backUpProduct.value[property]) {
               if (property === 'category') {
                 changeObject[property] = {
@@ -402,14 +405,13 @@ export default {
             }
           }
         }
-
         if (somethingChange) {
-          useApi($axios).product.update(tempProduct.value.id, changeObject).then((response) => {
-            console.log(response)
+          useApi($axios).product.update(tempProduct.value.id, changeObject).then(_ => {
+            app.router.push('/admin/products')
           })
+        } else {
+          app.router.push('/admin/products')
         }
-
-
       }
     }
 
