@@ -50,8 +50,8 @@ import {ref} from "@nuxtjs/composition-api";
 
 export default {
   name: "Admin",
-  // middleware: ['accessProtection', 'employee']
-  middleware: ['employee'],
+  middleware: ['accessProtection', 'employee'],
+  // middleware: ['employee'],
   setup(){
     const menuOpen = ref(false)
     const toggleMenu = () => {

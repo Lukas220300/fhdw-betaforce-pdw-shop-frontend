@@ -290,7 +290,6 @@ export default {
     },
     signUp (axios, validateInput) {
       if (validateInput()) {
-        console.log("Register")
         axios
           .post('/api/auth/register', this.signUpData)
           .then(_ => {

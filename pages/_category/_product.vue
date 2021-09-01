@@ -108,7 +108,6 @@ export default {
   },
   methods: {
     addToCart(product, variant) {
-      console.log('Add to Cart: ')
       if (variant.model > 0) {
         const entry = {
           product,

@@ -24,7 +24,6 @@ export default {
       if(!user.roles) {
         location.reload()
       } else {
-        console.log(user.roles)
         let hasRights = false
         user.roles.forEach((role) => {
           if (role.name === 'ROLE_EMPLOYEE' || role.name === 'ROLE_ADMIN') {
@@ -35,7 +34,6 @@ export default {
       }
       return false
     }
-
 
     return {
       isBackendAllowedUser

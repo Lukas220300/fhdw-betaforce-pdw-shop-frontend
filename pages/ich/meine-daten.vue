@@ -337,8 +337,6 @@ export default {
           })
         }
         if (somethingChange) {
-          console.warn('change User with this patch Object')
-          console.log(patchObject)
           useApi(axios).user.update(this.$auth.user.id, patchObject).then((user) => {
             this.$auth.setUser(user.data)
             this.$buefy.toast.open({

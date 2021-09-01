@@ -65,7 +65,6 @@ export default defineComponent({
     // api fetches
     useApi($axios).category.findAll().then((categoryArray) => {
       categories.value = categoryArray
-      console.log(categoryArray)
       categoriesIsLoading.value = false
     })
 

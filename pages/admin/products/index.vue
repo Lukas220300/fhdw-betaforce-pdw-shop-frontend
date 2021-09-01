@@ -49,13 +49,9 @@ export default {
             return -1
           }
         })
-        console.log(response)
       })
     }
-
-
     loadProducts()
-
     return {
       loadProducts,
       products,
