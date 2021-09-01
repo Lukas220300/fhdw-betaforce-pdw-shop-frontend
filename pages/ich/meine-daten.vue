@@ -186,6 +186,7 @@ import {
   validateEmail,
   validateDate,
   validateNumber,
+  validatePassword,
 } from "./../../scripts/inputValidation/inputValidation"
 
 const {useApi} = require("@/composable/api");
