@@ -5,4 +5,5 @@ export interface ProductVariant {
   stock: string
   price: string
   unit: Unit
+  model?: number
 }

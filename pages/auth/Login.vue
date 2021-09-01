@@ -24,7 +24,7 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input" type="password" v-model="loginData.password" placeholder="Password"
+                <input class="input" type="password" v-model="loginData.password" placeholder="Password" @change="login"
                        v-bind:class="{'is-success':validationData.password == 1, 'is-danger':(validationData.password != 1 && validationData.password != 0)}">
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
@@ -79,7 +79,7 @@ export default {
     })
 
     const loginInProgress = ref(false)
-    const {$auth} = useContext()
+    const {$auth,app, route} = useContext()
 
     const accessDenied = () => {
       validationData.value.email = 2
@@ -109,8 +109,12 @@ export default {
       if (validateLoginForm()) {
         // @todo Unterscheidung zwischen network error und access denied
         try{
-          const response = await $auth.loginWith('local', {data: loginData.value})
-          console.log(response)
+          await $auth.loginWith('local', {data: loginData.value})
+          if(route.value.query.redirectUri) {
+            app.router.push(route.value.query.redirectUri)
+          } else {
+            app.router.push('/')
+          }
         } catch (error) {
           console.error(error)
           accessDenied()

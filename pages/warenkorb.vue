@@ -66,7 +66,8 @@
             </tr>
           </table>
         </div>
-        <nuxt-link to="/" class="button is-success c-shoppingCart__submitButton">Zur Kasse</nuxt-link>
+        <nuxt-link v-if="$auth.loggedIn" to="/checkout" class="button is-success c-shoppingCart__submitButton">Zur Kasse</nuxt-link>
+        <nuxt-link v-else :to="{path: '/auth/login', query: {redirectUri: '/checkout'}}" class="button is-success c-shoppingCart__submitButton">Zur Kasse</nuxt-link>
       </div>
     </div>
     <div v-else>

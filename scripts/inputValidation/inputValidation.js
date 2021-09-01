@@ -22,6 +22,13 @@ const validateNumber = (input) => {
   return !isNaN(parsedNumber)
 }
 
+const validateSelect = (selectedValue, defaultValue, values) => {
+  if(selectedValue === defaultValue) {
+    return false
+  }
+  return values.includes(selectedValue)
+}
+
 const validatePassword = (input) => {
   if(!validateDefaultText(input)) {
     return false
@@ -41,6 +48,19 @@ const validateCheckBox = (input, expected = true) => {
   return input === expected
 }
 
+const validateObjectSelect = (objects, selectedObjectId) => {
+  if(selectedObjectId < 0) {
+    return false
+  }
+  let objectFound = false
+  objects.forEach((object) => {
+    if (object.id === selectedObjectId) {
+      objectFound = true
+    }
+  })
+  return objectFound
+}
+
 export {
   validateDefaultText,
   validateEmail,
@@ -48,4 +68,6 @@ export {
   validateNumber,
   validatePassword,
   validateCheckBox,
+  validateSelect,
+  validateObjectSelect,
 }

@@ -41,10 +41,6 @@
         </nuxt-link>
       </div>
     </div>
-    <h2 class="title is-2">Login</h2>
-    <div>
-      <nuxt-link to="/auth/login" class="button is-info is-rounded is-large">Hier gehts zum Login</nuxt-link>
-    </div>
   </div>
 </template>
 
@@ -65,7 +61,6 @@ export default defineComponent({
     // api fetches
     useApi($axios).category.findAll().then((categoryArray) => {
       categories.value = categoryArray
-      console.log(categoryArray)
       categoriesIsLoading.value = false
     })
 
@@ -115,10 +110,7 @@ export default defineComponent({
 
 <style lang="scss">
 .c-category-slider {
-  //margin-left: 0.5rem;
-  //margin-right: 0.5rem;
   height: 100%;
-  padding: 1rem;
 
   &__title {
     font-weight: bold;
@@ -127,6 +119,13 @@ export default defineComponent({
     bottom: 1rem;
     z-index: 1;
     text-transform: uppercase;
+  }
+  .card-image {
+    .image {
+      > img {
+        object-fit: cover;
+      }
+    }
   }
 }
 
