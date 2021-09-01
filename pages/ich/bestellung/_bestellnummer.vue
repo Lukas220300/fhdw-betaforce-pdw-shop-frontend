@@ -53,13 +53,8 @@
 
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
-
 const {useApi} = require("@/composable/api");
-/*
-todo problematik
-/api gibt einen cors
-ohne /api gibt einen 500er fehler..
- */
+
 export default {
   name: "Bestellnummer",
   middleware: ['loggedIn'],

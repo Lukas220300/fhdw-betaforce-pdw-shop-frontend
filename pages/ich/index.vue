@@ -16,7 +16,6 @@
 </template>
 
 <script>
-// @todo validierung für admin bereich
 export default {
   name: "Index",
   middleware: ['loggedIn'],
@@ -28,7 +27,7 @@ export default {
         console.log(user.roles)
         let hasRights = false
         user.roles.forEach((role) => {
-          if (role.name === 'ROLE_ADMIN') {
+          if (role.name === 'ROLE_EMPLOYEE' || role.name === 'ROLE_ADMIN') {
             hasRights = true
           }
         })

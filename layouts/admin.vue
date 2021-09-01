@@ -33,7 +33,7 @@
             Einheiten
           </nuxt-link>
           <nuxt-link v-if="isBackendAllowedUser($auth.user)" to="/admin/benutzer" class="navbar-item">
-            Benutzer
+            Benutzerrechte
           </nuxt-link>
         </div>
       </div>
@@ -50,7 +50,7 @@ import {ref} from "@nuxtjs/composition-api";
 
 export default {
   name: "Admin",
-  // middleware: ['accessProtection', 'admin']
+  // middleware: ['accessProtection', 'employee']
   middleware: ['employee'],
   setup(){
     const menuOpen = ref(false)

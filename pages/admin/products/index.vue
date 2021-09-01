@@ -26,7 +26,6 @@
       </table>
       <nuxt-link to="/admin/products/neu" class="button is-fullwidth">+ Neu</nuxt-link>
     </div>
-
   </div>
 </template>
 
