@@ -70,7 +70,6 @@
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
 import Icon from "./Icon";
-// @todo ich button und warenkorb button bei handy auf folle breite
 export default {
   name: "NavBar",
   components: {Icon},
@@ -268,10 +267,20 @@ export default {
       }
     }
     .c-ShoppingCard {
+      a {
+        width: 100%;
+      }
       .tag {
-        left: 3.2rem;
+        right: 0.2rem;
         top: 2.3rem;
         width: 2rem;
+      }
+    }
+    .navbar-item {
+      .buttons {
+        a {
+          width: 100%;
+        }
       }
     }
   }
