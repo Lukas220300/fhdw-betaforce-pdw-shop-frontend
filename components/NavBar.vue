@@ -259,6 +259,9 @@ export default {
 }
 
 @media only screen and (max-width: 1023px) {
+  nav.navbar.c-navbar.container {
+    margin-bottom: 1rem;
+  }
   .c-navbar {
     &__logo {
       > svg {
