@@ -133,6 +133,13 @@ export default defineComponent({
   display: none;
   margin-bottom: 1rem;
   padding: 1rem;
+  .card-image {
+    .image {
+      > img {
+        object-fit: cover;
+      }
+    }
+  }
 }
 
 .c-home {
