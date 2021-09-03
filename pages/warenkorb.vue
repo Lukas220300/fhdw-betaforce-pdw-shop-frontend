@@ -1,6 +1,6 @@
 <template>
   <div class="c-shoppingCart">
-    <h1 class="title is-1">Einkaufswagen</h1>
+    <h1 class="title is-1">Warenkorb</h1>
     <div v-if="entries.length" class="c-shoppingCart--available">
       <div class="c-shoppingCart__tableContainer">
         <table class="table is-striped">
@@ -76,7 +76,7 @@
 
 
     <div v-else>
-      <h2 class="title is-2"> Du hast noch keine Artikel in deinem Einkaufswagen.</h2>
+      <h2 class="title is-2"> Du hast noch keine Artikel in deinem Warenkorb.</h2>
       <nuxt-link to="/categories" class="button is-primary">Jetzt Kategorien entdecken</nuxt-link>
     </div>
   </div>
