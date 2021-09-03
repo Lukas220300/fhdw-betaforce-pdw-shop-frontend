@@ -32,6 +32,9 @@ export default {
 </script>
 
 <style lang="scss">
+footer.c-Footer.footer.columns {
+  margin: 0;
+}
 .c-Footer {
   padding-left: 3rem;
   padding-right: 3rem;
