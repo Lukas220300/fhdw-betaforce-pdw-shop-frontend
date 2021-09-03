@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="c-access-protection">
     <Icon name="logo"/>
     <div class="field">
       <p class="control has-icons-left">
