@@ -10,6 +10,9 @@
       <nuxt-link to="/admin" v-if="isBackendAllowedUser($auth.user)" class="button is-fullwidth is-info is-light">Shop Backend</nuxt-link>
       <hr />
       <button @click="$auth.logout()" class="button is-danger is-fullwidth">Logout</button>
+      <div class="box">
+        Wenn du deinen Account löschen möchtest, dann schick uns bitte von der E-Mail-Adresse mit der du dich angemledet hast eine E-Mail an siphydrated@gmail.com mit deinem Anliegen.
+      </div>
     </div>
 
   </div>

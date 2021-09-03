@@ -9,7 +9,7 @@
     <div class="column">
       <div class="c-Footer__headline">Service</div>
       <div class="c-Footer__linkList">
-        <nuxt-link to="/contact">Kontakt</nuxt-link>
+        <nuxt-link to="/kontakt">Kontakt</nuxt-link>
         <nuxt-link to="/faq">FAQ</nuxt-link>
         <nuxt-link to="/allergene">Allergene</nuxt-link>
       </div>
@@ -18,7 +18,7 @@
       <div class="c-Footer__headline">Rechtliches</div>
       <div class="c-Footer__linkList">
         <nuxt-link to="/agb">AGB</nuxt-link>
-        <nuxt-link to="/privacy">Datenschutzbestimmung</nuxt-link>
+        <nuxt-link to="/datenschutz">Datenschutzbestimmung</nuxt-link>
         <nuxt-link to="/impressum">Impressum</nuxt-link>
       </div>
     </div>
@@ -32,6 +32,9 @@ export default {
 </script>
 
 <style lang="scss">
+footer.c-Footer.footer.columns {
+  margin: 0;
+}
 .c-Footer {
   padding-left: 3rem;
   padding-right: 3rem;

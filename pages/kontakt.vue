@@ -73,8 +73,7 @@
             <input type="checkbox"
                    v-bind:class="{'is-success':validationData.privacyStatement ==1, 'is-danger':validationData.privacyStatement == 2}"
                    v-model="inputData.privacyStatement">
-            <span>Ich stimme den <a
-              href="/privacy">Datenschutzbedingungen</a> zu. *</span>
+            <span>Ich stimme den <nuxt-link to="/datenschutz">Datenschutzbedingungen</nuxt-link> zu. *</span>
           </label>
         </div>
         <p v-if="validationData.privacyStatement == 2" class="help is-danger">Bitte akzeptiere die Bedinungen.</p>
@@ -158,7 +157,7 @@ export default {
       return validation
     },
     send(axios, validateInput) {
-      if(validateInput()) {
+      if (validateInput()) {
         axios.$post('/api/contact', {
           email: this.inputData.email,
           name: this.inputData.name,

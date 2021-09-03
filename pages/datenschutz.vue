@@ -193,7 +193,7 @@
     Webseitenaktivitäten zusammenzustellen und um weitere mit der Webseitennutzung und der Internetnutzung verbundene
     Dienstleistungen gegenüber dem Webseitenbetreiber zu erbringen. Die im Rahmen von Google Analytics von Ihrem Browser
     übermittelte IP-Adresse wird nicht mit anderen Daten von Google zusammengeführt. Nähere Informationen hierzu finden
-    Sie unter https://support.google.com/analytics/answer/2838718 (allgemeine Informationen zu Google Analytics und
+    Sie unter https://support.google.com/ analytics/answer/2838718 (allgemeine Informationen zu Google Analytics und
     Datenschutz). Des Weiteren haben sie hier https://tools.google.com/dlpage/gaoptout die Möglichkeit Google Universal
     Analytics zu deaktivieren. Diese Deaktivierung unterbindet die zukünftige Erfassung Ihrer Daten beim Besuch dieser
     Webseite mit dem aktuell verwendeten Browser auf diesem Gerät. Dieses Opt-Out müssen Sie auf allen Systemen
@@ -202,7 +202,7 @@
     deutschen Datenschutzbehörden mit Google verständigten. Informationen des Drittanbieters: Google Dublin, Google
     Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Ireland, Fax: +353 (1) 436 1001.<br>
     Nutzerbedingungen: http://www.google.com/analytics/terms/de.html, Übersicht zum Datenschutz:<br>
-    https://support.google.com/analytics/answer/2838718, sowie die Datenschutzerklärung:<br>
+    https://support.google.com/ analytics/answer/2838718, sowie die Datenschutzerklärung:<br>
     http://www.google.de/intl/de/policies/privacy<br>
     10. Google Tag-Manager<br>
     Diese Webseite nutz darüber hinaus Google Tag-Manager von Google Inc. (Google). Mit dem Google Tag Manager können

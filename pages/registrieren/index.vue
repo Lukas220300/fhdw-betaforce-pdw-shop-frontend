@@ -168,7 +168,7 @@
                      v-bind:class="{'privacy-success':validationData.privacyStatement == 1, 'privacy-danger':(validationData.privacyStatement != 1 && validationData.privacyStatement != 0)}">
                 <input type="checkbox" name="privacyStatement" v-model="signUpData.privacyStatement">
                 Ich stimme den
-                <nuxt-link to="/privacy">Datenschutzbedingungen</nuxt-link>
+                <nuxt-link to="/datenschutz">Datenschutzbedingungen</nuxt-link>
                 zu. *
               </label>
             </div>
