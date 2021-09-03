@@ -18,7 +18,7 @@
       <div class="c-Footer__headline">Rechtliches</div>
       <div class="c-Footer__linkList">
         <nuxt-link to="/agb">AGB</nuxt-link>
-        <nuxt-link to="/privacy">Datenschutzbestimmung</nuxt-link>
+        <nuxt-link to="/datenschutz">Datenschutzbestimmung</nuxt-link>
         <nuxt-link to="/impressum">Impressum</nuxt-link>
       </div>
     </div>
