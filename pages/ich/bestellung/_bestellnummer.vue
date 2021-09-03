@@ -2,7 +2,7 @@
   <div class="c-oderDetail">
     <div v-if="order">
       <div style="margin-bottom: 1rem;">
-        <h1 class="title is-2">Bestellung vom {{ order.createdAt }}</h1>
+        <h1 class="title is-2">Bestellung vom {{ formatToDate(order.createdAt) }}</h1>
         <h4 class="subtitle is-4">Bestellnummer {{ order.id }}</h4>
       </div>
       <div class="c-TableContainer">
@@ -68,6 +68,11 @@ export default {
       app.router.push('/ich/meine-bestellungen')
     }
 
+    const formatToDate = (timeStamp) => {
+      const date = new Date(timeStamp)
+      return date.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric' })
+    }
+
     const order = ref()
 
     useApi($axios).order.findOneById(bestellnummer).then(async (response) => {
@@ -92,6 +97,7 @@ export default {
 
     return {
       order,
+      formatToDate,
     }
   }
 }
