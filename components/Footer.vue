@@ -9,7 +9,7 @@
     <div class="column">
       <div class="c-Footer__headline">Service</div>
       <div class="c-Footer__linkList">
-        <nuxt-link to="/contact">Kontakt</nuxt-link>
+        <nuxt-link to="/kontakt">Kontakt</nuxt-link>
         <nuxt-link to="/faq">FAQ</nuxt-link>
         <nuxt-link to="/allergene">Allergene</nuxt-link>
       </div>
