@@ -109,16 +109,17 @@ export default {
   methods: {
     addToCart(product, variant) {
       if (variant.model > 0) {
+        // Create a deep copy to not changing the model attribute of another variant, which changes the entry outside of a mutation
         const entry = {
-          product,
-          variant,
+          product: JSON.parse(JSON.stringify(product)),
+          variant: JSON.parse(JSON.stringify(variant)),
           amount: variant.model
         }
 
         this.$store.commit('shoppingCart/addEntry', entry)
 
         this.$buefy.toast.open({
-          message: 'Produkt wurde hinzugefüt.',
+          message: 'Produkt wurde hinzugefügt.',
           type: 'is-success'
         })
       } else {
