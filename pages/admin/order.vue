@@ -146,9 +146,7 @@
         </footer>
       </div>
     </div>
-
     <!-- Modals end-->
-
   </div>
 </template>
 

@@ -1,69 +1,22 @@
-# fhdw-pdw-shop-frontend
+## fhdw-pdw-shop-frontend
 
-## Build Setup
+# SIP.SHOP
+## Setup Guide
+- Install node and npm `node v14.17.3 (npm v6.14.13)`
+  - You can use nvm (node version manager) to manage multiple versions of node `https://github.com/nvm-sh/nvm`
+  - To install the suitable version: `nvm install 14`
+  - To use the suitable version: `nvm use 14`
+  - `!!Caution!!:` You need to reset the node version in every new terminal session. To set it use: `nvm use 14`
+- Install dependencies with `npm i` (install) or `npm ci` (clean-install)
+- Copy `_.env` file to `.env`
+- Finally `RUN THAT SH*T!`
 
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
-
-## Special Directories
-
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+### Ways to run the hyper shop falcon 3000 edition
+- Start development server with hot reload as a special effect
+  - Run `npm run dev`
+  - Brows to `localhost:3000`
+- Build the project for production mode and launch the server
+  - `npm run build`
+  - `npm run start`
+- Generate static project
+  - npm run generate

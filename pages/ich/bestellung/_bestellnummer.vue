@@ -2,7 +2,7 @@
   <div class="c-oderDetail">
     <div v-if="order">
       <div style="margin-bottom: 1rem;">
-        <h1 class="title is-2">Bestellung vom {{ order.createdAt }}</h1>
+        <h1 class="title is-2">Bestellung vom {{ formatToDate(order.createdAt) }}</h1>
         <h4 class="subtitle is-4">Bestellnummer {{ order.id }}</h4>
       </div>
       <div class="c-TableContainer">
@@ -53,13 +53,8 @@
 
 <script>
 import {ref, useContext} from "@nuxtjs/composition-api";
-
 const {useApi} = require("@/composable/api");
-/*
-todo problematik
-/api gibt einen cors
-ohne /api gibt einen 500er fehler..
- */
+
 export default {
   name: "Bestellnummer",
   middleware: ['loggedIn'],
@@ -71,6 +66,11 @@ export default {
     }
     if (bestellnummer === -1) {
       app.router.push('/ich/meine-bestellungen')
+    }
+
+    const formatToDate = (timeStamp) => {
+      const date = new Date(timeStamp)
+      return date.toLocaleDateString('de-DE', { year: 'numeric', month: 'numeric', day: 'numeric' })
     }
 
     const order = ref()
@@ -97,6 +97,7 @@ export default {
 
     return {
       order,
+      formatToDate,
     }
   }
 }

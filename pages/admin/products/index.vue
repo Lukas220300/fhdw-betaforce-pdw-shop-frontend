@@ -26,7 +26,6 @@
       </table>
       <nuxt-link to="/admin/products/neu" class="button is-fullwidth">+ Neu</nuxt-link>
     </div>
-
   </div>
 </template>
 
@@ -50,13 +49,9 @@ export default {
             return -1
           }
         })
-        console.log(response)
       })
     }
-
-
     loadProducts()
-
     return {
       loadProducts,
       products,

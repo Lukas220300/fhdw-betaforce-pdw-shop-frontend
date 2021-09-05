@@ -120,8 +120,18 @@
             </div>
           </div>
 
+          <div v-if="showPasswordInfos" class="notification is-primary">
+            <button class="delete" @click="closePasswordInfosMethod"></button>
+            Passworteigenschaften: <br>
+            • Mind. 8 Zeichen<br>
+            • Mind. 1 Großbuchstabe<br>
+            • Mind. 1 Zahl<br>
+            • Mind. 1 Sonderzeichen<br>
+            • Mind. 1 Kleinbuchstabe <br>
+          </div>
+
           <div class="field">
-            <label class="label">Password *</label>
+            <label class="label">Password * <span class="tag is-info infoTag" title="Infos zum Password" @click="showPasswordInfosMethod"><Icon name="questen-mark"/></span></label>
             <div class="control has-icons-left has-icons-right">
               <input class="input"
                      v-bind:class="{'is-success':validationData.password == 1, 'is-danger':(validationData.password != 1 && validationData.password != 0)}"
@@ -158,7 +168,7 @@
                      v-bind:class="{'privacy-success':validationData.privacyStatement == 1, 'privacy-danger':(validationData.privacyStatement != 1 && validationData.privacyStatement != 0)}">
                 <input type="checkbox" name="privacyStatement" v-model="signUpData.privacyStatement">
                 Ich stimme den
-                <nuxt-link to="/privacy">Datenschutzbedingungen</nuxt-link>
+                <nuxt-link to="/datenschutz">Datenschutzbedingungen</nuxt-link>
                 zu. *
               </label>
             </div>
@@ -216,10 +226,10 @@ export default {
       passwordRepeat: 0,
       privacyStatement: 0,
     }
-
     return {
       signUpData,
-      validationData
+      validationData,
+      showPasswordInfos: false,
     }
   },
   methods: {
@@ -290,7 +300,6 @@ export default {
     },
     signUp (axios, validateInput) {
       if (validateInput()) {
-        console.log("Register")
         axios
           .post('/api/auth/register', this.signUpData)
           .then(_ => {
@@ -309,7 +318,13 @@ export default {
           type: 'is-danger'
         })
       }
-    }
+    },
+    showPasswordInfosMethod() {
+      this.showPasswordInfos = true
+    },
+    closePasswordInfosMethod() {
+      this.showPasswordInfos = false
+    },
   }
 }
 </script>
@@ -332,6 +347,17 @@ export default {
   }
   .privacy-danger {
     color: #f14668;
+  }
+  .infoTag {
+    padding: 0.25rem;
+    border-radius: 50%;
+    &:hover {
+      cursor: pointer;
+    }
+    > svg {
+      width: 1rem;
+      height: 1rem;
+    }
   }
 }
 </style>

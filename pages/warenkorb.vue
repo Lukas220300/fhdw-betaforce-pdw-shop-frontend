@@ -1,8 +1,9 @@
 <template>
   <div class="c-shoppingCart">
-    <h1 class="title is-1">Einkaufswagen</h1>
-    <div v-if="entries.length" class="c-shoppingCart__tableContainer">
-      <table class="table is-striped">
+    <h1 class="title is-1">Warenkorb</h1>
+    <div v-if="entries.length" class="c-shoppingCart--available">
+      <div class="c-shoppingCart__tableContainer">
+        <table class="table is-striped">
           <thead>
           <tr>
             <th>Nr.</th>
@@ -49,6 +50,7 @@
           </tr>
           </tbody>
         </table>
+      </div>
       <div class="c-shoppingCart__submitButton">
         <div class="tableContainerPrice">
           <table>
@@ -70,8 +72,11 @@
         <nuxt-link v-else :to="{path: '/auth/login', query: {redirectUri: '/checkout'}}" class="button is-success c-shoppingCart__submitButton">Zur Kasse</nuxt-link>
       </div>
     </div>
+
+
+
     <div v-else>
-      <h2 class="title is-2"> Du hast noch keine Artikel in deinem Einkaufswagen.</h2>
+      <h2 class="title is-2"> Du hast noch keine Artikel in deinem Warenkorb.</h2>
       <nuxt-link to="/categories" class="button is-primary">Jetzt Kategorien entdecken</nuxt-link>
     </div>
   </div>
@@ -125,6 +130,9 @@ export default {
   &__priceSummary {
     float: right;
   }
+  &--available {
+    margin-bottom: 12rem;
+  }
   .c-shoppingCartEntry {
     &__item {
       display: inline-block;
@@ -140,6 +148,7 @@ export default {
     float: right;
   }
   .tableContainerPrice {
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
   }
   .c-addToCartButton {

@@ -12,6 +12,6 @@ export default {
 
 <style lang="scss">
 .c-Access {
-  width: 40rem;
+  max-width: 40rem;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="c-access-protection">
     <Icon name="logo"/>
     <div class="field">
       <p class="control has-icons-left">
@@ -22,22 +22,15 @@ export default {
   setup() {
     const password = ref('')
     const {store, redirect} = useContext()
-
     const checkPassword = () => {
       if (password.value === 'sip.shop') {
         store.commit('access/grant')
         return redirect('/')
       }
     }
-
-    const log = (lala) => {
-      console.log(lala)
-    }
-
     return {
       password,
       checkPassword,
-      log,
     }
   }
 }

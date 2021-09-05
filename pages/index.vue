@@ -41,10 +41,6 @@
         </nuxt-link>
       </div>
     </div>
-    <h2 class="title is-2">Login</h2>
-    <div>
-      <nuxt-link to="/auth/login" class="button is-info is-rounded is-large">Hier gehts zum Login</nuxt-link>
-    </div>
   </div>
 </template>
 
@@ -65,7 +61,6 @@ export default defineComponent({
     // api fetches
     useApi($axios).category.findAll().then((categoryArray) => {
       categories.value = categoryArray
-      console.log(categoryArray)
       categoriesIsLoading.value = false
     })
 
@@ -138,6 +133,13 @@ export default defineComponent({
   display: none;
   margin-bottom: 1rem;
   padding: 1rem;
+  .card-image {
+    .image {
+      > img {
+        object-fit: cover;
+      }
+    }
+  }
 }
 
 .c-home {

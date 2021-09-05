@@ -1,6 +1,6 @@
 export default function ({store, redirect}) {
 
-  const role = 'ROLE_ADMIN'
+  const role = 'ROLE_EMPLOYEE'
 
   if(!store.$auth.loggedIn) {
     return redirect('/auth/login')
@@ -14,7 +14,7 @@ export default function ({store, redirect}) {
     user = store.$auth.user
   }
   user.roles.forEach((auth) => {
-    if(auth.name === role) {
+    if(auth.name === role ||auth.name === 'ROLE_ADMIN') {
       hasRoleEmployee = true
     }
   })

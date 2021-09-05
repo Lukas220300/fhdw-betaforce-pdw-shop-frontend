@@ -10,13 +10,15 @@
       <nuxt-link to="/admin" v-if="isBackendAllowedUser($auth.user)" class="button is-fullwidth is-info is-light">Shop Backend</nuxt-link>
       <hr />
       <button @click="$auth.logout()" class="button is-danger is-fullwidth">Logout</button>
+      <div class="box">
+        Wenn du deinen Account löschen möchtest, dann schick uns bitte von der E-Mail-Adresse mit der du dich angemledet hast eine E-Mail an siphydrated@gmail.com mit deinem Anliegen.
+      </div>
     </div>
 
   </div>
 </template>
 
 <script>
-// @todo validierung für admin bereich
 export default {
   name: "Index",
   middleware: ['loggedIn'],
@@ -25,10 +27,9 @@ export default {
       if(!user.roles) {
         location.reload()
       } else {
-        console.log(user.roles)
         let hasRights = false
         user.roles.forEach((role) => {
-          if (role.name === 'ROLE_ADMIN') {
+          if (role.name === 'ROLE_EMPLOYEE' || role.name === 'ROLE_ADMIN') {
             hasRights = true
           }
         })
@@ -36,7 +37,6 @@ export default {
       }
       return false
     }
-
 
     return {
       isBackendAllowedUser
