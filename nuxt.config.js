@@ -19,6 +19,9 @@ export default {
       {rel: 'apple-touch-icon', size:'144x144', href: '/apple-icon-144x144.png'},
       {rel: 'apple-touch-icon', size:'152x15', href: '/apple-icon-152x15.png'},
       {rel: 'apple-touch-icon', size:'180x180', href: '/apple-icon-180x180.png'}
+    ],
+    script: [
+      {src: 'https://js.stripe.com/v3/'}
     ]
   },
 

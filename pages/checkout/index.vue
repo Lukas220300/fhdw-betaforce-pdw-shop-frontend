@@ -51,7 +51,25 @@
       </div>
     </div>
     <div v-else-if="activeStep === 1" class="c-stepView card">
-      <button class="button is-primary" @click="pay">Bezahlen</button>
+      <div class="tableContainerPrice">
+        <table>
+          <tr style="border: 1px solid black; font-weight: bold;">
+            <td class="td-one">Zahlungssumme</td>
+            <td class="td-two">{{ totalPrice + 3.00 }} €</td>
+          </tr>
+        </table>
+      </div>
+      <button :disabled="!paymentBlocked" class="button is-primary" @click="pay">Bezahlen</button>
+      <div class="pay">
+        <form id="payment-form" v-show="!paymentBlocked">
+          <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+          <button id="submit" :disabled="payed">
+            <div class="spinner hidden" id="spinner"></div>
+            <span id="button-text">Jetzt bezahlen</span>
+          </button>
+          <p id="card-error" role="alert"></p>
+        </form>
+      </div>
     </div>
     <div v-else-if="activeStep === 2" class="c-stepView card ">
       <div class="c-stepView__tableContainer">
@@ -109,7 +127,7 @@
       <button v-bind:disabled="activeStep < 1" @click="setStepActive(activeStep - 1)"
               class="button is-second c-backButton">Zurück
       </button>
-      <button v-bind:disabled="activeStep === numberOfSteps-1 || ageBlocked || (activeStep === 1 && paymentBlocked)"
+      <button v-bind:disabled="activeStep === numberOfSteps-1 || ageBlocked || (activeStep === 1 && !payed)"
               @click="setStepActive(activeStep + 1)" class="button is-primary c-nextButton">Weiter
       </button>
       <button v-if="activeStep === numberOfSteps-1" v-bind:disabled="ageBlocked"
@@ -150,6 +168,17 @@ const {useApi} = require("@/composable/api");
 export default {
   name: "Index",
   setup() {
+
+    const mapOrderItemListFromEntries = (entries) => {
+      const orderItemList = []
+      entries.value.forEach((element) => {
+        orderItemList.push({
+          quantity: element.amount,
+          productVariantId: element.variant.id
+        })
+      })
+      return orderItemList
+    }
 
     const getMinAge = (entries) => {
       let minAge = 0
@@ -201,6 +230,7 @@ export default {
     const ageCheckModalBool = ref(false)
     const numberOfSteps = 3
     const paymentBlocked = ref(true)
+    const payed = ref(false)
     if ($auth.user.hasVerifiedAge) {
       if (minAge > calcAge($auth.user.birthday)) {
         ageCheckModalBool.value = true
@@ -213,8 +243,60 @@ export default {
       percentage.value = newIndex * 25 + 25
     }
 
+    const loading = (isLoading) => {
+      if (isLoading) {
+        // Disable the button and show a spinner
+        document.querySelector("#submit").disabled = true;
+        document.querySelector("#spinner").classList.remove("hidden");
+        document.querySelector("#button-text").classList.add("hidden");
+      } else {
+        document.querySelector("#submit").disabled = false;
+        document.querySelector("#spinner").classList.add("hidden");
+        document.querySelector("#button-text").classList.remove("hidden");
+      }
+    }
+
+    const payWithCard = (stripe, card, clientSecret) => {
+      loading(true)
+      stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card
+        }
+      }).then((result) => {
+        loading(false);
+        if (result.error) {
+          const errorMsg = document.querySelector("#card-error")
+          errorMsg.textContent = result.error.message;
+          setTimeout(() => {
+            errorMsg.textContent = ""
+          }, 4000)
+        } else {
+            payed.value = true
+        }
+      })
+    }
+
     const pay = () => {
-      paymentBlocked.value = false
+      const orderItemList = mapOrderItemListFromEntries(entries)
+      $axios.$post('/api/order/pay', orderItemList).then((session) => {
+        const stripe = Stripe("pk_test_51JU4cZIq8uZYbB1MFvZeWkjyOJxhxVnRZsyp10DrqNFZtU798tCsuS0BxEhOcjilDy4eveuwu2aycwnad9lQPeGS00pjo71QoB");
+        const elements = stripe.elements()
+        const card = elements.create('card')
+        card.mount('#card-element')
+        card.on("change", (event) => {
+          // Disable the Pay button if there are no card details in the Element
+          document.querySelector("#submit").disabled = event.empty;
+          document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+        });
+        const form = document.getElementById("payment-form");
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          payWithCard(stripe, card, session.message);
+        });
+        paymentBlocked.value = false
+      }).catch((error) => {
+        app.router.push('/checkout/failed')
+      })
     }
 
     const checkAgeMethod = () => {
@@ -257,13 +339,7 @@ export default {
     }
 
     const order = () => {
-      const orderItemList = []
-      entries.value.forEach((element) => {
-        orderItemList.push({
-          quantity: element.amount,
-          productVariantId: element.variant.id
-        })
-      })
+      const orderItemList = mapOrderItemListFromEntries(entries)
       $axios.$post('/api/order', orderItemList)
         .then(() => {
           store.commit('shoppingCart/clear')
@@ -291,6 +367,7 @@ export default {
       totalPrice,
       order,
       ageCheckModalBool,
+      payed,
     }
   },
 }
@@ -433,6 +510,174 @@ export default {
           margin-left: -2rem;
         }
       }
+    }
+  }
+
+}
+
+.pay {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  form {
+    width: 30vw;
+    min-width: 450px;
+    align-self: center;
+    box-shadow: 0 0 0 0.5px rgba(50, 50, 93, 0.1),
+      0 2px 5px 0 rgba(50, 50, 93, 0.1), 0 1px 1.5px 0 rgba(0, 0, 0, 0.07);
+    border-radius: 7px;
+    padding: 40px;
+  }
+
+  input {
+    border-radius: 6px;
+    margin-bottom: 6px;
+    padding: 12px;
+    border: 1px solid rgba(50, 50, 93, 0.1);
+    height: 44px;
+    font-size: 16px;
+    width: 100%;
+    background: white;
+  }
+
+  .result-message {
+    line-height: 22px;
+    font-size: 16px;
+  }
+
+  .result-message a {
+    color: rgb(89, 111, 214);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #card-error {
+    color: rgb(105, 115, 134);
+    text-align: left;
+    font-size: 13px;
+    line-height: 17px;
+    margin-top: 12px;
+  }
+
+  #card-element {
+    border-radius: 4px 4px 0 0 ;
+    padding: 12px;
+    border: 1px solid rgba(50, 50, 93, 0.1);
+    height: 44px;
+    width: 100%;
+    background: white;
+  }
+
+  #payment-request-button {
+    margin-bottom: 32px;
+  }
+
+  /* Buttons and links */
+  button {
+    background: #5469d4;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    border-radius: 0 0 4px 4px;
+    border: 0;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 5.5px 0 rgba(0, 0, 0, 0.07);
+    width: 100%;
+  }
+  button:hover {
+    filter: contrast(115%);
+  }
+  button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  /* spinner/processing state, errors */
+  .spinner,
+  .spinner::before,
+  .spinner::after {
+    border-radius: 50%;
+  }
+  .spinner {
+    color: #fff;
+    font-size: 22px;
+    text-indent: -99999px;
+    margin: 0 auto;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    box-shadow: inset 0 0 0 2px;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  .spinner::before,
+  .spinner::after {
+    position: absolute;
+    content: "";
+  }
+  .spinner::before {
+    width: 10.4px;
+    height: 20.4px;
+    background: #5469d4;
+    border-radius: 20.4px 0 0 20.4px;
+    top: -0.2px;
+    left: -0.2px;
+    -webkit-transform-origin: 10.4px 10.2px;
+    transform-origin: 10.4px 10.2px;
+    -webkit-animation: loading 2s infinite ease 1.5s;
+    animation: loading 2s infinite ease 1.5s;
+  }
+  .spinner::after {
+    width: 10.4px;
+    height: 10.2px;
+    background: #5469d4;
+    border-radius: 0 10.2px 10.2px 0;
+    top: -0.1px;
+    left: 10.2px;
+    -webkit-transform-origin: 0 10.2px;
+    transform-origin: 0 10.2px;
+    -webkit-animation: loading 2s infinite ease;
+    animation: loading 2s infinite ease;
+  }
+
+  @-webkit-keyframes loading {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loading {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    form {
+      width: 80vw;
     }
   }
 
